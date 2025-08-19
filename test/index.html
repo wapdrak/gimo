@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Click the button to display the platform of the browser.</p>
+
+<button onclick="geo()">Try it</button>
+
+<p id="demo"></p>
+
+<script>
+function geo() {
+
+var x = navigator.userAgent.toLowerCase();
+
+var w = x.indexOf("windows") > -1;
+if(w) {
+  document.getElementById("demo").innerHTML = "windows";}
+
+var a = x.indexOf("android") > -1;
+if(a) {
+  document.getElementById("demo").innerHTML = "android";}
+
+var i = x.indexOf("iphone") > -1;
+if(i) {
+  document.getElementById("demo").innerHTML = "iphone";}
+}
+
+</script>
+
+</body>
+</html>

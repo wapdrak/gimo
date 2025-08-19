@@ -1,0 +1,1 @@
+http://gimo.co.il/url/test/txt.php?text=test&nazev=test2

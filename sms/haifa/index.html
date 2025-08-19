@@ -1,0 +1,44 @@
+<html lang="he">
+<head>
+
+<meta charset="UTF-8">
+
+<title>
+שליחת אסאםאס - גימו בע"מ סניף חיפה
+</title>
+
+</head>
+
+<html>
+
+<body onload="sms();">
+
+<h2>
+שליחת אסאםאס - גימו בע"מ סניף חיפה
+</h2>
+
+<button onclick="sms()">
+שלח
+</button>
+
+<input type="button" value="סגור" onclick="self.close()">
+
+<script>
+function windowClose() {
+window.open('','_parent','');
+setTimeout(function () {window.close();}, 3);
+}
+</script>
+
+<script>
+function sms() {
+  var uri = "sms:+972545349291";
+  var body = "?body=";
+  var body2 = encodeURIComponent("test"); 
+  
+  location.replace(uri + body + body2);
+}
+</script>
+
+</body>
+</html>

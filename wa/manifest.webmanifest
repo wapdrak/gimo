@@ -1,0 +1,15 @@
+{
+  "background_color": "black",
+  "description": "שליחת הודעת ואטסאפ גם לאנשים שלא שמורים בספר טלפונים",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "//gimo.co.il/url/img/whatsapp-lilach2.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "name": "שליחת הודעות ואטסאפ לכל מספר מבלי לשמור אותו בספר טלונים",
+  "short_name": "WhatsApp-sender",
+  "start_url": "//gimo.co.il/url/wa"
+}

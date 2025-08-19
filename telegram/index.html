@@ -1,0 +1,42 @@
+<html lang="he">
+<head>
+
+<meta charset="UTF-8">
+
+<title>
+שליחת הודעה לטלגרם - גימו בע"מ
+</title>
+
+</head>
+
+<html>
+
+<body onload="telegram();">
+
+<h2>
+שליחת הודעה לטלגרם - גימו בע"מ
+</h2>
+
+<button onclick="telegram()">
+שלח
+</button>
+
+<input type="button" value="סגור" onclick="self.close()">
+
+<script>
+function windowClose() {
+window.open('','_parent','');
+setTimeout(function () {window.close();}, 3);
+}
+</script>
+
+<script>
+function telegram() {
+  var uri = "https://t.me/gimoltd";
+  
+  location.replace(uri);
+}
+</script>
+
+</body>
+</html>
