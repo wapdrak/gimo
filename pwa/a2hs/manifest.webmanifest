@@ -1,0 +1,15 @@
+{
+  "background_color": "black",
+  "description": "Send message",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "src": "//gimo.co.il/url/img/whatsapp4.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "name": "Send whatsapp message",
+  "short_name": "whatsapp",
+  "start_url": "//gimo.co.il/url/wa/index.php"
+}

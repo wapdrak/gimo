@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="he" dir="auto">
+<head>
+
+<meta charset="UTF-8">
+
+</head>
+
+<html>
+
+<body onload="mail();">
+
+<h2>
+מייל לגימו סניף חיפה
+</h2>
+
+<button onclick="mail()">
+שלח
+</button>
+
+<input type="button" value="סגור" onclick="self.close()">
+
+<script>
+function windowClose() {
+window.open('','_parent','');
+setTimeout(function () {window.close();}, 3);
+}
+</script>
+
+<script>
+function mail() {
+  var uri = "mailto:haifa@gimo.co.il";
+  var subject = "?subject=";
+  var subject2 = encodeURIComponent("");
+  var body = "&body=";
+  var body2 = encodeURIComponent(""); 
+  
+  location.replace(uri + subject + subject2 + body + body2);
+}
+</script>
+
+</body>
+</html> 

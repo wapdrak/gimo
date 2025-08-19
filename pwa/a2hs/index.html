@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>A2HS demo</title>
+    <script src="//gimo.co.il/url/wa/index.js" defer></script>
+    <link rel="manifest" href="//gimo.co.il/url/pwa/a2hs/manifest.webmanifest">
+  </head>
+  <body>
+
+    <button class="add">Add to home screen</button>
+	
+	<script type="text/javascript">
+ if ('serviceWorker' in navigator) {
+    console.log("Will the service worker register?");
+    navigator.serviceWorker.register('service-worker.js')
+      .then(function(reg){
+        console.log("Yes, it did.");
+     }).catch(function(err) {
+        console.log("No it didn't. This happened:", err)
+    });
+ }
+</script>
+  </body>
+</html>
