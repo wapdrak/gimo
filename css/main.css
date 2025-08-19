@@ -1,0 +1,802 @@
+@import url('https://fonts.googleapis.com/css?family=Anton|Bree+Serif|Lobster|Oswald:400,600|Wellfleet|Alegreya:400,900');
+
+/* ⚫ru font⚫ */ 
+.oswald {font-family: 'Oswald', sans-serif;} 
+
+/* ⚫cs font⚫ */ 
+.wellfleet {font-family: 'Wellfleet';} .anton {font-family: 'Anton', sans-serif;} .alegreya {font-family: 'Alegreya', serif;} .breeserif {font-family: 'Bree Serif', serif;} 
+
+/* ⚫cs ru font⚫ */
+.lobster {font-family: 'Lobster';} 
+	
+/* ⚫he font⚫ */ 
+
+@font-face {
+    font-family: 'Mono Social Icons Font';
+    src: url('/css/fonts/social/mono/MonoSocialIconsFont-1.10.eot');
+    src: url('/css/fonts/social/mono/MonoSocialIconsFont-1.10.eot?#iefix') format('embedded-opentype'),
+         url('/css/fonts/social/mono/MonoSocialIconsFont-1.10.woff') format('woff'),
+         url('/css/fonts/social/mono/MonoSocialIconsFont-1.10.ttf') format('truetype'),
+         url('/css/fonts/social/mono/MonoSocialIconsFont-1.10.svg#MonoSocialIconsFont') format('svg');
+    src: url('/css/fonts/social/mono/MonoSocialIconsFont-1.10.ttf') format('truetype');
+}
+
+.symbol {
+    font-family: 'Mono Social Icons Font';
+}
+
+/* ⚫desktop⚫ */
+@media screen and (min-width: 600px) {
+
+.whatsappmobile {display: none;}
+button.whatsappmobile {display: none;}
+
+.mobile {display: none;}
+button.mobile {display: none;} 
+input.mobile {display: none;}
+.vw {font-size: 5vw;}
+button.vw {font-size: 5vw;} 
+input.vw {font-size: 5vw;}
+} 
+
+/* ⚫mobile⚫ */
+@media screen and (max-width: 599px) {
+
+.whatsappdesktop {display: none;}
+button.whatsappdesktop {display: none;}
+
+.desktop {display: none;}
+button.desktop {display: none;} 
+input.desktop {display: none;}
+.vw {font-size: 8vw;}
+button.vw {font-size: 8vw;} 
+input.vw {font-size: 8vw;}
+} 
+
+/* ⚫ validate */
+
+    .validace :invalid+span#span:after,
+    .validace :valid+span#span:after {
+      content: "✘";
+    color: red;
+    }
+    .validace :valid+span#span:after {
+      content: "✔";
+    color: white;
+    }
+	
+    input:invalid {
+            border-color: red;
+    }
+	
+/* validate konec ⚫ */
+
+
+#machshevon {
+    width: 100%;
+}
+
+
+/* ⚫ stránka */
+
+.reklama1 { 
+    background-color: white;
+    border-radius: 20px;
+    background-clip: border-box;
+    min-height: 400px;
+} 
+
+.imgreklama1 { 
+    max-width: 40%;
+    height: auto;
+    margin: 5px;
+} 
+/* stránka konec ⚫ */
+
+
+/* ⚫The Modal (background) */
+.modalbuttonpodminky, .modalbuttonnapoveda, .modaldetektorpodminky, .modaldetektornapoveda, .modalbacklinksbutton, .modalbuttonreklamapopup {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index:  9999999; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-contentbuttonpodminky, .modal-contentbuttonnapoveda, .modal-contentdetektorpodminky, .modal-contentdetektornapoveda, .modal-contentbacklinksbutton, .modal-contentbuttonreklamapopup {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0} 
+    to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+
+/* The Close Button */
+.closebuttonpodminky, .closebuttonnapoveda, .closedetektorpodminky, .closedetektornapoveda, .closebacklinksbutton, .closebuttonreklamapopup {
+    color: blue;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.closebuttonpodminky:hover, .closebuttonnapoveda:hover, .closedetektorpodminky:hover, .closedetektornapoveda:hover, .closebacklinksbutton:hover,  .closebuttonreklamapopup:hover, 
+.closebuttonpodminky:focus, .closebuttonnapoveda:focus, .closedetektorpodminky:focus, .closedetektornapoveda:focus, .closebacklinksbutton:focus, .closebuttonreklamapopup:focus { 
+    color: darkred;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-headerbuttonpodminky, .modal-headerbuttonnapoveda, .modal-headerdetektorpodminky, .modal-headerdetektornapoveda, .modal-headerbacklinksbutton, .modal-headerbuttonreklamapopup {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+}
+
+.modal-bodybuttonpodminky, .modal-bodybuttonnapoveda, .modal-bodydetektorpodminky, .modal-bodydetektornapoveda, .modal-bodybacklinksbutton, .modal-bodybuttonreklamapopup { 
+padding: 2px 16px;}
+
+.modal-footerbuttonpodminky, .modal-footerbuttonnapoveda, .modal-footerdetektorpodminky, .modal-footerdetektornapoveda, .modal-footerbacklinksbutton, .modal-footerbuttonreklamapopup {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+} 
+/* End Modal⚫ */
+
+
+
+
+/* ⚫blikání */ 
+.blink {
+    background-color: white;
+    color: black;
+    -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
+    -webkit-animation-iteration-count: infinite; /* Safari 4.0 - 8.0 */
+    animation-name: example;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;   
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes example {
+    0%   {color:black;}
+    100% {color:white;}
+}
+
+
+/* Standard syntax */
+@keyframes example {
+    0%   {color:black;}
+    100% {color:white;}
+}
+
+.blinkpoz {
+    background-color: white;
+    color: black;
+    -webkit-animation-name: pozadi; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
+    -webkit-animation-iteration-count: infinite; /* Safari 4.0 - 8.0 */
+
+    animation-name: pozadi;
+    animation-duration: 1s;
+    animation-iteration-count: infinite; 
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes pozadi {
+    0%   {color:white;background-color:black;}
+    100% {color:black;background-color:white;}
+} 
+
+/* Standard syntax */
+@keyframes pozadi {
+    0%   {color:white;background-color:black;}
+    100% {color:black;background-color:white;}
+} 
+
+.blinkpoz2 {
+    background-color: limegreen;
+    -webkit-animation-name: pozadi2; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 2s; /* Safari 4.0 - 8.0 */
+    -webkit-animation-iteration-count: infinite; /* Safari 4.0 - 8.0 */
+
+    animation-name: pozadi2;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;   
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes pozadi2 {
+    0%   {color:white;background-color:ellow;}
+    50%   {color:white;background-color:limegreen;}
+    100% {color:black;background-color:green;}
+} 
+
+/* Standard syntax */
+@keyframes pozadi2 {
+    0%   {color:white;background-color:yellow;}
+    50%   {color:white;background-color:limegreen;}
+    100% {color:black;background-color:green;}
+} 
+
+.blinkpomalu {
+    background-color: transparent;
+    color: black;
+    -webkit-animation-name: pomalu; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 6s; /* Safari 4.0 - 8.0 */
+    -webkit-animation-iteration-count: infinite; /* Safari 4.0 - 8.0 */
+
+    animation-name: pomalu;
+    animation-duration: 6s;
+    animation-iteration-count: infinite;  
+} 
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes pomalu {
+    0%   {color:black;}
+    25%   {color:green;}
+    50%   {color:blue;}
+    75%   {color:red;}
+    100% {color:white;}
+} 
+
+/* Standard syntax */
+@keyframes pomalu {
+    0%   {color:black;}
+    25%   {color:green;}
+    50%   {color:blue;}
+    75%   {color:red;}
+    100% {color:white;}
+} 
+/* blikání konec⚫ */ 
+
+
+
+
+
+
+/* ⚫social*/
+
+.soc2 {
+    color:blue;
+    -webkit-transition: all 1s;
+	-moz-transition:    all 1s;
+	-o-transition:      all 1s;
+	-ms-transition:     all 1s;
+    transition:         all 1s;
+} 
+
+.soc2:hover, .soc2:focus, .soc2:active {
+    font-size:36px;
+    color:red;
+    -webkit-transform: rotate(1turn)  scale(1.5);
+	-moz-transform:    rotate(1turn)  scale(1.5);
+	-o-transform:      rotate(1turn)  scale(1.5);
+	-ms-transform:     rotate(1turn)  scale(1.5);
+    transform:         rotate(1turn)  scale(1.5);
+}
+
+.soc { 
+  box-shadow: 0 8px 12px 0 gray;
+  margin: 0.3%;
+  font-weight:bold;
+  border: 1px inset CornflowerBlue;
+  border-radius: 10px;
+  padding: 0.3%;
+} 
+
+
+.soc:hover, .soc:active, .soc:focus, span.soc:hover, span.soc:active, span.soc:focus {
+    color:red;
+	-webkit-animation: sanimace2 1.5s forwards;
+	-moz-animation:    sanimace2 1.5s forwards;
+	-o-animation:      sanimace2 1.5s forwards;
+	-ms-animation:     sanimace2 1.5s forwards;
+    animation:         sanimace2 1.5s forwards;
+}
+
+
+@-webkit-keyframes sanimace2 {
+ 0% {
+ -webkit-transform: rotate(0turn) scale(1) translate(0, 0);
+ -moz-transform:    rotate(0turn) scale(1) translate(0, 0);
+ -o-transform:      rotate(0turn) scale(1) translate(0, 0);
+ -ms-transform:     rotate(0turn) scale(1) translate(0, 0);
+ transform:         rotate(0turn) scale(1) translate(0, 0);
+}
+ 100% {
+ -webkit-transform: rotate(0.85turn) scale(1.7) translate(0, 10%);
+ -moz-transform:    rotate(0.85turn) scale(1.7) translate(0, 10%);
+ -o-transform:      rotate(0.85turn) scale(1.7) translate(0, 10%);
+ -ms-transform:     rotate(0.85turn) scale(1.7) translate(0, 10%);
+ transform:         rotate(0.85turn) scale(1.7) translate(0, 10%);
+}
+}
+
+.soc3 {
+-webkit-transition: -webkit-transform 2s ease-in-out;
+}
+
+.soc3:hover, .soc3:focus, .soc3:active {
+-webkit-transform: rotate(360deg) scale(1.5);
+}
+
+/* social konec ⚫ */
+
+
+
+/* ⚫nápověda */
+.napoveda {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted limegreen;
+}
+
+.napoveda .napovedatext {
+    visibility: hidden;
+    width: 325px;
+    background-color: limegreen;
+    color: black;
+    text-align: left;
+    top: -20%;
+    border-radius: 6px;
+    padding: 2%;
+    position: absolute;
+    z-index: 1;
+    left: 110%;
+}
+
+.napoveda .napovedatext::after {
+    content: "";
+    position: absolute;
+    top: 3%;
+    right: 100%;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent limegreen transparent transparent;
+}
+
+.napoveda:hover .napovedatext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.napovedaa:hover:after {
+ white-space: pre-wrap;
+ word-wrap: break-word; 
+ display: block;
+ padding: 2%;
+ position: absolute;
+} 
+
+.texta1:hover:after {
+ content: "\A \2022 fggh \A \2022 erlkgjrjhejhjh \A \2022 erůgkerjlhgh \A \2022 ergreegre \A \2022 egthhhregr \A \2022 ergerhtrhrh \A \2022 ergrerhtthtrhttr \A \2022 regghtrhtrhtterre \A \2022 gthth \A \2022 regthtrhhtrtr \A \2022 regththhhgrr \A \2022 thymhtyryrtytty \A \2022 regrhtjyjtyrrt \A \2022 erigegeriigrrggh wefhhguighegurho eowifhghughguohfeow eoifhfohofhohoijeijioj oifiohoghoghoiwieroihiogh woiighgiohgohgoighwoihiohioghoighoighoigiog";
+} 
+ 
+.contenta1:hover:after {
+ width: 50%;
+ font-size: 100%;
+ border: 1px dashed;
+ background: limegreen; 
+ color: black;
+ margin-left: 0;
+ margin-right: auto;
+ text-align: left;
+ border-radius: 10%;
+ border-width: 5px;
+ border-color: transparent limegreen transparent transparent;
+} 
+
+.napovedab:hover:before {
+ white-space: pre-wrap;
+ word-wrap: break-word; 
+ display: block;
+ padding: 2%;
+ position: absolute;
+} 
+
+.textb1:hover:before {
+ content: "Nápověda: \A \A \2022  fggh \A \2022  erlkgjrjhejhjh \A \2022  erůgkerjlhgh \A \2022  ergreegre \A \2022  egthhhregr \A \2022  ergerhtrhrh \A \2022  ergrerhtthtrhttr \A \2022  regghtrhtrhtterre \A \2022  gthth \A \2022  regthtrhhtrtr \A \2022  regththhhgrr \A \2022  thymhtyryrtytty \A \2022  regrhtjyjtyrrt \A \2022  erigegeriigrrggh wefhhguighegurho eowifhghughguohfeow eoifhfohofhohoijeijioj oifiohoghoghoiwieroihiogh woiighgiohgohgoighwoihiohioghoighoighoigiog";
+} 
+ 
+.contentb1:hover:before {
+ width: 20%;
+ font-size: 100%; border: 1px solid;
+ background: limegreen; 
+ color: black;
+ margin-left: auto;
+ margin-right: auto;
+ bottom: 6%;
+ text-align: left;
+ border-radius: 10%;
+ border-width: 1px;
+ border-style: dashed;
+ border-color: darkblue;
+} 
+
+.textasmartlation:hover:after {
+ content: "Profesionální překlad rychle a kvalitně: \A \A \2022  Okamžité cenové nabídky \A \2022  Výběr z více než 10 000 profesionálních překladatelů \A \2022  Překlad z a do více než 150ti jazyků ve všech oborech \A \A \261B  Soudní překlady \261B  Technické překlady  \261B  Turistika \261B  Doprava \A \261B  Lékařské překlady \261B  Finanční překlady \261B  Obchodní překlady \A \261B  Překlady webů a aplikací \261B  Lokalizace \A  A mnohé další obory...... \A \A  Vyzkoušejte platformu profesionálních překladatelů, která nemá obdoby";
+} 
+ 
+.contentasmartlation:hover:after {
+ width: 50%;
+ font-size: 100%;
+ background: blue; 
+ color: white;
+ top: 25%;
+ margin-left: 15%;
+ margin-right: auto;
+ text-align: left;
+ border-radius: 10%;
+ border-width: 1px;
+ border-style: inherit;
+ border-color: aqua;
+ box-shadow: 5px 5px grey;
+ z-index: 1;
+} 
+/* nápověda konec⚫ */
+
+
+
+
+/* ⚫button */
+.href {
+ margin:1%; 
+ padding:4px; 
+ color: white; 
+ background-color: blue;
+ border: 5px outset aqua;
+ border-radius: 15px;
+ white-space:nowrap;
+ -webkit-box-decoration-break: clone;
+ -o-box-decoration-break: clone;
+ box-decoration-break: clone;
+ box-shadow: 6px 4px gray;
+} 
+
+.href:hover, .href:focus {
+ margin: 1%; 
+ padding:4px; 
+ color: white; 
+ background-color: black;
+ border: 5px outset aqua;
+ border-radius: 15px;
+ white-space:nowrap;
+ -webkit-box-decoration-break: clone;
+ -o-box-decoration-break: clone;
+ box-decoration-break: clone;
+ box-shadow: 6px 4px lightblue;
+} 
+/* button konec⚫ */
+
+
+
+
+
+/* ⚫push button */
+.smartlation { 
+    padding: 2%;
+    width: 45px;
+    height: 45px;
+    color: white;
+    font-size: 120%;
+    border-radius:0 10px 10px 0;
+    cursor: pointer;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    -webkit-transition: width 0.5s; /* For Safari 3.1 to 6.0 */
+    transition: width 0.5s;
+} 
+
+/* desktop */
+@media screen and (min-width: 400px) {
+.smartlation:hover {
+    width: 265px;
+}  
+} 
+
+/* mobile */
+@media screen and (max-width: 399px) {
+.smartlation:hover {
+    width: 90%;
+} 
+} 
+
+.smartlationhe { 
+    padding: 2%;
+    width: 45px;
+    height: 45px;
+    color: white;
+    font-size: 120%;
+    border-radius:10px 0 0 10px;
+    cursor: pointer;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    -webkit-transition: width 0.5s; /* For Safari 3.1 to 6.0 */
+    transition: width 0.5s;
+} 
+
+/* desktop */
+@media screen and (min-width: 400px) {
+.smartlationhe:hover {
+    width: 265px;
+}  
+} 
+
+/* mobile */
+@media screen and (max-width: 399px) {
+.smartlationhe:hover {
+    width: 90%;
+} 
+} 
+/* push button konec⚫ */
+
+
+
+.bwhatsapp {background-image: url("////gimo.co.il/url/img/bwhatsapp.jpg");}
+
+
+/* ⚫Umístění⚫ */ 
+
+p.over {
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.ohidden {overflow: hidden;}
+
+.right {text-align: right;} .left {text-align: left;} .center {text-align: center;} .pcenter::placeholder {text-align: center;} .itemscenter {align-items: center;} .itemsflex {align-items: flex-start;} .itemsend {align-items: flex-end;} .itemsstretch {align-items: stretch;} .itemsbaseline {align-items: baseline;} .itemsinitial {align-items: initial;} .selfcenter {align-self: center;} .selfstart {align-self: flex-start;} .selfend {align-self: flex-end;} .selfstretch {align-self: stretch;} .selfbaseline {align-self: baseline;} .selfinitial {align-self: initial;} .contentcenter {align-content: center;} .contentstretch {align-content: stretch;} .contentstart {align-content: flex-start;} .contentend {align-content: flex-end;} .contentbetween {align-content: space-between;} .contentaround {align-content: space-around;} .contentinitial {align-content: initial;}
+
+/* ⚫Rozměr textu⚫ */
+.fsize10vmin {font-size: 10vmin;} .fsize1vw {font-size: 1vw;} .fsize2vw {font-size: 2vw;} .fsize3vw {font-size: 3vw;} .fsize4vw {font-size: 4vw;} .fsize5vw {font-size: 5vw;} .fsize8vw {font-size: 8vw;} .fsize10vw {font-size: 10vw;} .fsize15vw {font-size: 15vw;} .fsize10px {font-size: 10px;} .fsize15px {font-size: 15px;} .fsize20px {font-size: 20px;} .fsize25px {font-size: 25px;} .fsize36px {font-size: 36px;} .fsize50 {font-size: 50%;} .fsize100 {font-size: 100%;} .fsize110 {font-size: 110%;} .fsize120 {font-size: 120%;} .fsize130 {font-size: 130%;} .fsize150 {font-size: 150%;} .fsize180 {font-size: 180%;} .fsize200 {font-size: 200%;} .fsize300 {font-size: 300%;} .fsize350 {font-size: 350%;} .fsize400 {font-size: 400%;}
+.fweightb {font-weight: bold;}.fweight900 {font-weight: 900;}
+
+/* ⚫šířka⚫ */
+.widthauto {width: auto;} .width15 {width: 15%;} .width25 {width: 25%;} .width50 {width: 50%;} .width60 {width: 60%;} .width70 {width: 70%;} .width80 {width: 80%;} .width90 {width: 90%;} .width100 {width: 100%;} .width15px {width: 15px;} .width100px {width: 100px;} .width150px {width: 150px;} .width200px {width: 200px;} .width300px {width: 300px;}
+
+/* ⚫maximální šířka⚫ */
+.maxwidth5 {max-width: 5%;} .maxwidth10 {max-width: 10%;} .maxwidth15 {max-width: 15%;} .maxwidth20 {max-width: 20%;} .maxwidth25 {max-width: 25%;} .maxwidth33 {max-width: 33%;} .maxwidth50 {max-width: 50%;} .maxwidth25px {max-width: 25px;} .maxwidth150px {max-width: 150px;} .maxwidth200px {max-width: 200px;} .maxwidth400px {max-width: 400px;} 
+
+/* ⚫výška⚫ */
+.heightauto {height: auto;} .height26px {height: 26px;} .height30px {height: 30px;} .height15 {height: 15%;} .height25 {height: 25%;} .height50 {height: 50%;} .height60 {height: 60%;} .height70 {height: 70%;} .height80 {height: 80%;} .height90 {height: 90%;} .height100 {height: 100%;} .height15px {height: 15px;} .height100px {height: 100px;} .height150px {height: 150px;}
+
+/* ⚫maximální výška⚫ */
+.maxheight25 {max-height: 25px;} .maxheight150 {max-height: 150px;} .maxheight200 {max-height: 200px;} .maxheight400 {max-height: 400px;} 
+
+/* ⚫Obtékání⚫ */
+.floatright {float: right;} .floatleft {float: left;}
+
+/* ⚫display⚫ */
+.inline {display: inline;} .inlineblock {display: inline-block;} .block {display: block;} .none {display: none;} .flex {display: flex;} .hidden {visibility:hidden;} .contents {display: contents;} .table {display: table;} .tcaption {display: table-caption;} .tcolumngroup {display: table-column-group;} .theadergroup {display: table-header-group;} .tfootergroup {display: table-footer-group;} .trowgroup {display: table-row-group;} .tcell {display: table-cell;} .tcolumn {display: table-column;} .trow {display: table-row;} .list {display: list-item;}
+
+/* ⚫vnější mezera zleva⚫ */
+.marginlauto {margin-left: auto;}.marginl1v {margin-left: vw;} .marginl2px {margin-left: 2px;} .marginl1 {margin-left: 1%;} .marginl3 {margin-left: 3%;} .marginl2 {margin-left: 2%;} .marginl5 {margin-left: 5%;} .marginl8 {margin-left: 8%;} .marginl10 {margin-left: 10%;} .marginl20 {margin-left: 20%;}
+
+/* ⚫vnější mezera zprava⚫ */
+.marginpauto {margin-right: auto;} .marginp1v {margin-right: 1vw;} .marginp2px {margin-right: 2px;} .marginp1 {margin-right: 1%;} .marginp3 {margin-right: 3%;} .marginp2 {margin-right: 2%;} .marginp5 {margin-right: 5%;} .marginp8 {margin-right: 8%;} .marginp10 {margin-right: 10%;} .marginp20 {margin-right: 20%;}
+
+/* ⚫vnější mezera zhora⚫ */
+.marginnauto {margin-top: auto;} .marginn1v {margin-top: vw;} .marginn2px {margin-top: 2px;} .marginn1 {margin-top: 1%;} .marginn3 {margin-top: 3%;} .marginn2 {margin-top: 2%;} .marginn5 {margin-top: 5%;} .marginn8 {margin-top: 8%;} .marginn10 {margin-top: 10%;}
+
+/* ⚫vnější mezera zdola⚫ */
+.margindauto {margin-bottom: auto;} .margind1v {margin-bottom: vw;} .margind2px {margin-bottom: 2px;} .margind1 {margin-bottom: 1%;} .margind2 {margin-bottom: 2%;} .margind3 {margin-bottom: 3%;} .margind5 {margin-bottom: 5%;} .margind8 {margin-bottom: 8%;} .margind10 {margin-bottom: 10%;}
+
+/* ⚫vnější mezera⚫ */
+.marginauto {margin: auto;} .margin1v {margin: 1vw;} .margin2px {margin: 2px;} .margin1 {margin: 1%;} .margin3 {margin: 3%;} .margin5 {margin: 5%;} .margin8 {margin: 8%;} .margin10 {margin: 10%;} .margin20 {margin: 20%;}
+
+/* ⚫vnitřní mezera zleva⚫ */
+.paddinglauto {padding-left: auto;} .paddingl1v {padding-left: vw;} .paddingl2px {padding-left: 2px;} .paddingl1 {padding-left: 1%;} .paddingl3 {padding-left: 3%;} .paddingl5 {padding-left: 5%;} .paddingl8 {padding-left: 8%;} .paddingl10 {padding-left: 10%;}
+
+/* ⚫vnitřní mezera zprava⚫ */
+.paddingpauto {padding-right: auto;} .paddingp1v {padding-right: vw;} .paddingp2px {padding-right: 2px;} .paddingp1 {padding-right: 1%;} .paddingp3 {padding-right: 3%;} .paddingp5 {padding-right: 5%;} .paddingp8 {padding-right: 8%;}.paddingp10 {padding-right: 10%;} .paddingp20 {padding-right: 20%;}
+
+/* ⚫vnitřní mezera zhora⚫ */
+.paddingnauto {padding-top: auto;} .paddingn1v {padding-top: vw;} .paddingn2px {padding-top: 2px;} .paddingn1 {padding-top: 1%;} .paddingn3 {padding-top: 3%;} .paddingn5 {padding-top: 5%;} .paddingn8 {padding-top: 8%;}  .paddingn10 {padding-top: 10%;}
+
+/* ⚫vnitřní mezera zdola⚫ */
+.paddingdauto {padding-bottom: auto;} .paddingd1v {padding-bottom: vw;} .paddingd2px {padding-bottom: 2px;} .paddingd1 {padding-bottom: 1%;} .paddingd3 {padding-bottom: 3%;} .paddingd5 {padding-bottom: 5%;} .paddingd8 {padding-bottom: 8%;}.paddind10 {padding-bottom: 10%;} .paddingd20 {padding-bottom: 20%;} 
+
+/* ⚫vnitřní mezera⚫ */
+.paddingauto {padding: auto;} .padding1v {padding: 1vw;} .padding2px {padding: 2px;} .padding1 {padding: 1%;} .padding2 {padding: 2%;} .padding3 {padding: 3%;} .padding5 {padding: 5%;} .padding8 {padding: 8%;} .padding10 {padding: 10%;} .padding20 {padding: 20%;} .padding1px {padding: 1px;} .padding2px {padding: 2px;} .padding3px {padding: 3px;} .padding5px {padding: 5px;} .padding8px {padding: 8px;} .padding10px {padding: 10px;} .padding20px {padding: 20px;}
+
+/* ⚫barva pozadí⚫ */
+.bdark {background-color:#1f1f1f;} .bcrimson {background-color: crimson;} .bred {background-color: red;} .bgreen {background-color: green;} .baqua {background-color: aqua;} .blightblue {background-color: lightblue;} .byellow {background-color: yellow;} .blihgtyellow {background-color: lightyellow;} .bpink {background-color: pink;} .bwhite {background-color: white;} .bblue {background-color: blue;} .bblack {background-color: black;} .blightgreen {background-color: lightgreen;} .blimegreen {background-color: limegreen;} .bdarkgray {background-color: darkgray;} .transparent {background: transparent;} 
+
+/* ⚫barva pozadí hover⚫ */
+.bdarkh:hover {background-color:#1f1f1f;} .bcrimsonh:hover {background-color: crimson;} .bredh:hover {background-color: red;} .bgreenh:hover {background-color: green;} .baquah:hover {background-color: aqua;} .blightblueh:hover {background-color: lightblue;} .byellowh:hover {background-color: yellow;} .bpinkh:hover {background-color: pink;} .bwhiteh:hover {background-color: white;} .bblueh:hover {background-color: blue;} .bblackh:hover {background-color: black;} .blightgreenh:hover {background-color: lightgreen;} .blimegreenh:hover {background-color: limegreen;} .bdarkgrayh:hover {background-color: darkgray;} .transparenth:hover {background: transparent;} 
+
+/* ⚫druh pozadí⚫ */
+.bsizeauto {background-size: auto;} .bsize100 {background-size: 100% 100%;} .bsizecover {background-size: cover;} .bsizecontain {background-size: contain;} .bsizeinitial {background-size: initial;} 
+
+/* ⚫barva textu⚫ */
+.dark {color:#1f1f1f;} .blue {color:blue;} .black {color:black;} .yellow {color:yellow;} .lightblue {color:lightblue;} .green {color:green;} .red {color: red;} .white {color: white;} .darkred {color: darkred;} .darkblue {color: darkblue;} .darkgreen {color: darkgreen;} .lime {color: lime;} .forestgreen {color: forestgreen;} .crime {color: crime;} .limegreen {color: limegreen;} .fuchsia {color: fuchsia;} .darkgray {color: darkgray;} .orange {color: orange;}
+
+/* ⚫barva textu hover⚫ */
+.darkh:hover {color:#1f1f1f;} .blueh:hover {color:blue;} .blackh:hover {color:black;} .yellowh:hover {color:yellow;} .lightblueh:hover {color:lightblue;} .greenh:hover {color:green;} .redh:hover {color: red;} .whiteh:hover {color: white;} .darkredh:hover {color: darkred;} .darkblueh:hover {color: darkblue;} .darkgreenh:hover {color: darkgreen;} .darkgray:hover {color: darkgray;} .limeh:hover {color: lime;} .forestgreenh:hover {color: forestgreen;} .crimeh:hover {color: crime;} .limegreenh:hover {color: limegreen;} .fuchsiah:hover {color: fuchsia;}  .orangeh:hover {color: orange;}
+
+/* ⚫barva textu placeholder⚫ */
+.pdark::placeholder {color:#1f1f1f;} .pblue::placeholder {color:blue;} .pblack::placeholder {color:black;} .pyellow::placeholder {color:yellow;} .plightblue::placeholder {color:lightblue;} .pgreen::placeholder {color:green;} .pred::placeholder {color: red;} .pwhite::placeholder {color: white;} .pdarkred::placeholder {color: darkred;} .pdarkblue::placeholder {color: darkblue;} .pdarkgray::placeholder {color: darkgray;} .pdarkgreen::placeholder {color: darkgreen;} .plime::placeholder {color: lime;} .pforestgreen::placeholder {color: forestgreen;} .pcrime::placeholder {color: crime;} .plimegreen::placeholder {color: limegreen;} .pfuchsia::placeholder {color: fuchsia;} .porange::placeholder {color: orange;}  
+
+/* ⚫barva textu placeholder hover⚫ */
+.pdarkh:hover::placeholder {color:#1f1f1f;} .pblueh:hover::placeholder {color:blue;} .pblackh:hover::placeholder {color:black;} .pyellowh:hover::placeholder {color:yellow;} .plightblueh:hover::placeholder {color:lightblue;} .pgreenh:hover::placeholder {color:green;} .predh:hover::placeholder {color: red;} .pwhiteh:hover::placeholder {color: white;} .pdarkredh:hover::placeholder {color: darkred;} .pdarkgrayh:hover::placeholder {color: darkgray;} .pdarkblueh:hover::placeholder {color: darkblue;} .pdarkgreenh:hover::placeholder {color: darkgreen;} .plimeh:hover::placeholder {color: lime;} .pforestgreenh:hover::placeholder {color: forestgreen;} .pcrimeh:hover::placeholder {color: crime;} .plimegreenh:hover::placeholder {color: limegreen;} .pfuchsiah:hover::placeholder {color: fuchsia;} .porangeh:hover::placeholder {color: orange;}  
+
+/* ⚫druh pozice⚫ */
+.fixed {position: -webkit-fixed; position: fixed;} .sticky {position: -webkit-sticky; position: sticky;}.absolute {position: -webkit-absolute; position: absolute;}.relative {position: -webkit-relative; position: relative;}
+
+/* ⚫pozice zhora⚫ */
+.top0 {top: 0;} .top1 {top: 1%;} .top2 {top: 2%;} .top3 {top: 3%;} .top7 {top: 7%;} .top10 {top: 10%;} .top15 {top: 15%;} .top18 {top: 18%;} .top20 {top: 20%;} .top25 {top: 25%;} .top30 {top: 30%;} .top35 {top: 35%;} .top50 {top: 50%;} .top-10 {top: -10%;} .topauto {top: auto;}
+
+/* ⚫pozice zprava⚫ */
+.right0 {right: 0;} .right2 {right: 2%;} .right3 {right: 3%;} .right5 {right: 5%;} .right10 {right: 10%;} .right15 {right: 15%;} .right20 {right: 20%;} .rightauto {right: auto;}
+
+/* ⚫pozice zleva⚫ */
+.left0 {left: 0;} .left1 {left: 1%;} .left2 {left: 2%;} .left-1 {left:-1%;} .left-5 {left:-5%;} .left10 {left: 10%;} .left50 {left: 50%;} .leftauto {left: auto;}
+
+/* ⚫pozice zdola⚫ */
+.bottom0 {bottom: 0;} .bottom1 {bottom: 1%;} .bottom2 {bottom: 2%;} .bottom5 {bottom: 5%;} .bottom10 {bottom: 10%;} .bottom15 {bottom: 15%;} .bottom20 {bottom: 20%;} .bottom25 {bottom: 25%;} .bottom-5 {bottom: -5%;} .bottom-15 {bottom: -15%;} .bottom-20 {bottom: -20%;}  .bottomauto {bottom: auto;}
+} 
+
+/* ⚫vrstvy⚫ */
+.index1 {z-index: 1;} .index2 {z-index: 2;} .index3 {z-index: 3;} .index4 {z-index: 4;} .index5 {z-index: 5;} .index6 {z-index: 6;} .index7 {z-index: 7;} .index8 {z-index: 8;} .index9 {z-index: 9;} .index10 {z-index: 10;} .index11 {z-index: 11;} .index12 {z-index: 12;} .index13 {z-index: 13;} .index14 {z-index: 14;} .index15 {z-index: 15;} .index20 {z-index: 20;} .indexhl {z-index: 99999999;} 
+
+/* ⚫rámečky⚫ */
+.bordernone {border-style: none;} .borderhidden {border-style: hidden;} .borderdotted {border-style: dotted;} .borderdashed {border-style: dashed;} .bordersolid {border-style: solid;} .borderdouble {border-style: double;} .bordergroove {border-style: groove;} .borderridge {border-style: ridge;} .borderinset {border-style: inset;} .borderoutset {border-style: outset;} .borderinitial {border-style: initial;} .borderinherit {border-style: inherit;} 
+
+/* ⚫rámečky tlouštka⚫ */
+.border1px {border-width: 1px;} .border2px {border-width: 2px;} .border3px {border-width: 3px;} .border4px {border-width: 4px;} .border5px {border-width: 5px;} .border10px {border-width: 10px;} .border15px {border-width: 15px;} .border20px {border-width: 20px;}
+
+/* ⚫úhel⚫ */
+.radius1 {border-radius: 1%;}. radius2 {border-radius: 2%;} .radius5 {border-radius: 5%;} .radius8 {border-radius: 8%;} .radius10 {border-radius: 10%;} .radius25 {border-radius: 25%;} .radius35 {border-radius: 35%;} .radius50 {border-radius: 50%;} .radius1px {border-radius: 1px;}. radius2px {border-radius: 2px;} .radius5px {border-radius: 5px;} .radius8px {border-radius: 8px;} .radius10px {border-radius: 10px;} .radius15px {border-radius: 15px;} .radius20px {border-radius: 20px;} .radius25px {border-radius: 25px;} .radius35px {border-radius: 35px;} .radius50px {border-radius: 50px;} 
+
+/* ⚫barva rámečku⚫ */
+.bordercrimson {border-color: crimson;} .borderred {border-color: red;} .bordergreen {border-color: green;} .borderaqua {border-color: aqua;} .borderlightblue {border-color: lightblue;} .borderyellow {border-color: yellow;} .borderpink {border-color: pink;} .borderwhite {border-color: white;} .borderblue {border-color: blue;} .borderblack {border-color: black;} .borderlightgreen {border-color: lightgreen;} .borderlimegreen {border-color: limegreen;}
+
+/* ⚫stín⚫ */
+.stin {
+ text-shadow: blue 1px 1px 1px, white 2px 2px 1px;
+} 
+
+/* ⚫průhlednost⚫ */
+.opacity7 {opacity: 0.7;} .opacity8 {opacity: 0.8;} .opacity9 {opacity: 0.9;} .opacity10 {opacity: 1.0;} 
+
+/* ⚫list⚫ */
+.listcircle {list-style-type: circle;} .listsquare {list-style-type: square;} .listroman {list-style-type: upper-roman;} .listalpha {list-style-type: lower-alpha;} .listimg {list-style-image: url('sqpurple.gif');} .listout {list-style-position: outside;} .listin {list-style-position: inside;} .listnone {list-style-type: none;margin: 0;padding: 0;} 
+
+/* ⚫myš⚫ */
+.pointeralias {cursor: alias;}
+.pointerall-scroll {cursor: all-scroll;}
+.pointerauto {cursor: auto;}
+.pointercell {cursor: cell;}
+.pointercontext-menu {cursor: context-menu;}
+.pointercol-resize {cursor: col-resize;}
+.pointercopy {cursor: copy;}
+.pointercrosshair {cursor: crosshair;}
+.pointerdefault {cursor: default;}
+.pointere-resize {cursor: e-resize;}
+.pointerew-resize {cursor: ew-resize;}
+.pointergrab {cursor: grab;}
+.pointergrabbing {cursor: grabbing;}
+.pointerhelp {cursor: help;}
+.pointermove {cursor: move;}
+.pointern-resize {cursor: n-resize;}
+.pointerne-resize {cursor: ne-resize;}
+.pointernesw-resize {cursor: nesw-resize;}
+.pointerns-resize {cursor: ns-resize;}
+.pointernw-resize {cursor: nw-resize;}
+.pointernwse-resize {cursor: nwse-resize;}
+.pointerno-drop {cursor: no-drop;}
+.pointernone {cursor: none;}
+.pointernot-allowed {cursor: not-allowed;}
+.pointer {cursor: pointer;}
+.pointerprogress {cursor: progress;}
+.pointerrow-resize {cursor: row-resize;}
+.pointers-resize {cursor: s-resize;}
+.pointerse-resize {cursor: se-resize;}
+.pointersw-resize {cursor: sw-resize;}
+.pointertext {cursor: text;}
+.pointertranslate {cursor: url(/img/translate24.png),auto;} 
+.pointerrefresh24 {cursor: url(/img/refresh24.png),auto;}
+.pointerw-resize {cursor: w-resize;}
+.pointerwait {cursor: wait;}
+.pointerzoom-in {cursor: zoom-in;}
+.pointerzoom-out {cursor: zoom-out;}
+
+
+
+span.title:hover {
+    position: relative;
+}
+
+span.title[title]:hover:after {
+     content: attr(title);
+     padding: 4px 8px;
+     position: absolute;
+     left: 0;
+     top: 100%;
+     white-space: nowrap;
+     z-index: 20px;
+     background:red;
+}
+
+.tip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tip .tiptext {
+    visibility: hidden;
+    max-width: 200px;
+    background-color: limegreen;
+    color: white;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    left: 50%;
+    margin-left: -50px;
+}
+
+.tip:hover .tiptext {
+    visibility: visible;
+} 
+
+
+.glow {
+  font-size: 80px;
+  color: #fff;
+  text-align: center;
+  -webkit-animation: glow 1s ease-in-out infinite alternate;
+  -moz-animation: glow 1s ease-in-out infinite alternate;
+  animation: glow 1s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes glow {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+  }
+  
+  to {
+    text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+  }
+}
+
+.stick1{
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+
+.stick2 {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 5%;
+}

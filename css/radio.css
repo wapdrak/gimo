@@ -1,0 +1,178 @@
+
+
+/* ⚫Rádio */ 
+div#zobrazradio {
+ border: 4px solid #a1a1a1;
+ border-radius: 50px;
+ box-shadow: 15px 15px 10px #888888;
+ margin: 2% 1% 2% 1%;
+ padding: 1%;
+ background-color: black;
+ color: yellow;
+ text-align: center;
+}
+
+div#hledat {
+  text-align: center;
+  margin: 1%;
+}
+
+div#radio {
+ background-color: aqua;
+ color: yellow;
+ border: 6px inset;
+ border-radius: 30px;
+ margin: 2%;
+ padding: 1%;
+ text-align: center;
+ box-shadow: 15px 15px 10px #888888;
+}
+
+div#radio button {
+ margin: 2%;
+ text-shadow: red 2px 2px 1px;
+ font-weight: bold;
+ font-size: 150%;
+ border: 3px outset white;
+ border-radius: 30px;
+ background-color: mintcream;
+ color: black;
+ text-align: center;
+ box-shadow: 15px 15px 10px #888888;
+}
+
+div#seznam {
+ color: black;
+ text-align: center;
+ }
+
+img, .radius8 {
+    border-radius: 8px;
+} 
+
+.select {
+ max-width: 95%;
+ font-weight: bold;
+ font-size: 150%;
+ background-image:url("noty003.gif");
+ background-repeat: repeat;
+ background-attachment: fixed;
+ text-align: center;
+}
+
+.button {
+ margin: 2%;
+ text-shadow: blue 2px 2px 1px;
+ font-weight: bold;
+ font-size: 150%;
+ border: 3px outset white;
+ border-radius: 30px;
+ background-color: aqua;
+ text-align: center;
+ box-shadow: 6px 6px 4px #888888;
+}
+
+.span {
+ font-weight: bold;
+ font-size: 150%;
+ text-shadow: blue 2px 2px 1px;
+ }
+
+.audio {
+ max-width: 95%;
+ border-radius: 30px;
+ margin: 3%;
+ text-align: center;
+ box-shadow: 10px 10px 6px #888888;
+}
+
+.fieldset {
+ max-width: 98%;
+ text-align: center;
+ margin: 1% 1% 1% 1%;
+ border-radius: 30px;
+ border: 3px outset lightblue;
+}
+
+.legend {
+ text-align: center;
+}
+
+.option {
+ font-weight: bold;
+ font-size: 150%;
+ background-image:url("/radio/platnoj001.jpg");
+ background-repeat: repeat;
+ background-attachment: fixed;
+ text-align: center;
+} 
+
+.details {
+ border: 4px solid #a1a1a1;
+ border-radius: 30px;
+ box-shadow: 6px 6px 3px #888888;
+ margin: 4% 1% 4% 1%;
+ padding: 1%;
+ background-color: black;
+ color: yellow;
+ max-width: 250px;
+}
+
+.summary {
+ border: 4px solid #a1a1a1;
+ border-radius: 20px;
+ box-shadow: 6px 6px 3px #888888;
+ margin: 4% 1% 4% 1%;
+ padding: 1%;
+ background-color: black;
+ color: white;
+} 
+
+.blinkradio {
+    background-color: black;
+    color: white;
+    -webkit-animation-name: radio; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 10s; /* Safari 4.0 - 8.0 */
+    -webkit-animation-iteration-count: infinite; /* Safari 4.0 - 8.0 */
+    animation-name: radio;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes radio {
+    0%    {color:white;}
+    25%   {color:lightgreen;}
+    50%   {color:lihgtblue;}
+    75%   {color:limegreen;}
+    100%  {color:yellow;}
+} 
+
+/* Standard syntax */
+@keyframes radio {
+    0%    {color:white;}
+    25%   {color:lightgreen;}
+    50%   {color:lightblue;}
+    75%   {color:limegreen;}
+    100%  {color:yellow;}
+} 
+
+.test:before {
+ content: "https://emetblog.blogspot.com";
+ background-image:url("/radio/platnoj001.jpg");
+ background-repeat: repeat;
+ background-attachment: fixed;
+ background-color: #02066f;
+ color: white;
+ border: 3px outset #1e90ff;
+ border-radius: 30px;
+ box-shadow: 15px 15px 10px #888888;
+ padding: 1%;
+ margin: 3%;
+ text-align: center;
+ text-decoration: blink;
+ display: block;
+ font-family: Impact, fantasy;
+} 
+/* Rádio konec⚫ */ 
+
