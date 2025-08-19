@@ -1,0 +1,61 @@
+<html>
+<head>
+
+<meta charset="UTF-8">
+
+<title>
+גימו בע"מ - ציוד משדרי | דרכי הגעה לחנות  | שדרות הפלי"ם 2 | קומת קרקע | חיפה 
+</title>
+
+<style>
+
+textarea {
+height: 14mm;
+width: 38mm;
+}
+
+</style>
+
+</head>
+
+<html>
+<body>
+
+<h2>
+דרכי הגעה
+</h2>
+
+<textarea>
+</textarea>
+
+<button onclick="geo()">
+מפה
+</button>
+
+
+<script>
+function geo() {
+  var search = encodeURIComponent("גימו+ציוד+משרדי+חיפה");
+  var x = "Platform: " + navigator.userAgent;
+  
+var x = navigator.userAgent.toLowerCase();
+var w = x.indexOf("windows") > -1; //&& x.indexOf("mobile");
+if(w) {
+  location.replace("https://maps.google.com/maps?q=" + search);
+}
+
+var a = x.indexOf("android") > -1; //&& x.indexOf("mobile");
+if(a) {
+  location.replace("geo:0,0?q=" + search);
+}
+
+var i = x.indexOf("iphone") > -1; //&& x.indexOf("mobile");
+if(i) {
+  location.replace("maps:?q=" + search);
+}
+
+}
+</script>
+
+</body>
+</html> 
