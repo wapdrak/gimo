@@ -1,0 +1,42 @@
+<html lang="he">
+<head>
+
+<meta charset="UTF-8">
+
+<title>
+שליחת וואטסאפ - גימו בע"מ - סניף בני ברק
+</title>
+
+</head>
+
+<html>
+
+<body onload="wa();">
+
+<h2>
+שליחת וואטסאפ - גימו בע"מ - סניף בני ברק
+</h2>
+
+<button onclick="wa()">
+שלח
+</button>
+
+<input type="button" value="סגור" onclick="self.close()">
+
+<script>
+function windowClose() {
+window.open('','_parent','');
+setTimeout(function () {window.close();}, 3);
+}
+</script>
+
+<script>
+function wa() {
+  var uri = "https://wa.me/972722151290";
+  
+  location.replace(uri);
+}
+</script>
+
+</body>
+</html>

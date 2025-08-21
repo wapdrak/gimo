@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="he" dir="auto">
+<head>
+
+<meta charset="UTF-8">
+
+<title>
+לקוח חדש - גימו בע"מ
+</title>
+
+</head>
+
+<html>
+
+<body onload="client();">
+
+<h2>
+לקוח חדש - גימו בע"מ
+</h2>
+
+<button onclick="client()">
+שלח
+</button>
+
+<input type="button" value="סגור" onclick="self.close()">
+
+<script>
+function windowClose() {
+window.open('','_parent','');
+setTimeout(function () {window.close();}, 3);
+}
+</script>
+
+<script>
+function client() {
+  var uri = "https://drive.google.com/file/d/1RONKSBPjeU1toruZNBlFPD4ApuQTtjvN/view?usp=drive_web";
+  
+  location.replace(uri);
+}
+</script>
+
+</body>
+</html>

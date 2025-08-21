@@ -1,0 +1,186 @@
+﻿<!DOCTYPE html>
+<html lang="he">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<style>
+
+/* If the screen size is 601px wide or more, set the font-size of <div> to 80px */
+@media screen and (min-width: 601px) {
+  body {
+  font-size: 100%;
+  }
+}
+
+/* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
+@media screen and (max-width: 600px) {
+  body {
+  font-size: 2.5vw;
+  }
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.avatar {
+  float: right;
+  border-radius: 50%;
+  width: 100px;
+  height:100px;
+  margin-right: 10%;
+}
+
+.hlavni{
+  max-width: 401px;
+  margin: auto;
+}
+
+.nadpis{
+  width: 400px;
+  background-image: url("computer003.png");
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: cover;
+  color: white;
+}
+
+
+.nadpis2 {
+  margin: auto;
+  -webkit-animation-name: nadpis; /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration: 4s; /* Safari 4.0 - 8.0 */
+  -webkit-animation-iteration-count: infinite; /* Safari 4.0 - 8.0 */
+  animation-name: nadpis;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes nadpis {
+  0%   {color:white;}
+  25%  {color:yellow;}
+  50%  {color:lightblue;}
+  75%  {color:lightgreen;}
+  100% {color:white;}
+}
+
+/* Standard syntax */
+@keyframes nadpis {
+  0%   {color:white;}
+  25%  {color:yellow;}
+  50%  {color:lightblue;}
+  75%  {color:lightgreen;}
+  100% {color:white;}
+}
+
+.center {
+  text-align: center;
+}
+
+.right {
+  text-align: right;
+}
+
+.left {
+  text-align: left;
+}
+
+.flip-card {
+  background-color: transparent;
+  width: 400px;
+  height: 350px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  border-radius: 25px;
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+  border-radius: 25px;
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 25px;
+}
+
+.flip-card-front {
+  padding-right: 4%;
+  padding-left: 4%;
+  color: black;
+  background-color: lightblue;
+  font-weight: bold;
+  border-radius: 25px;
+}
+
+.flip-card-back {
+  background-color: #2980b9;
+  color: white;
+  transform: rotateY(180deg);
+  border-radius: 25px;
+}
+</style>
+
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
+</head>
+<body dir="rtl">
+
+<div class="center hlavni">
+
+<div class="center nadpis">
+<h1 class="nadpis2 center">שימ-אקספרס</h1>
+<br><br><br><br>
+</div>
+
+<div class="flip-card">
+  <div class="flip-card-inner">
+    <div class="flip-card-front right">
+      <h1 class="center">טכנאי מחשבים</h1> 
+	  <br>
+      <p> <i class='fas fa-arrow-circle-left'></i> תיקון מחשבים</p> 
+      <p> <i class='fas fa-arrow-circle-left'></i> התקנות תוכנה, תיקון, החלפות חומרה</p>
+	  <p> <i class='fas fa-arrow-circle-left'></i> תיקון והתקנת רשת ביתית</p>
+	  <p> <i class='fas fa-arrow-circle-left'></i> פינוי זיכרון, פרמוט מלא כל סוגי מערכת הפעלה</p>
+	  <p> <i class='fas fa-arrow-circle-left'></i> הדרכה בסיסית על אופן שימוש במערכת הפעלה למתחילים</p>
+	  <br>
+	  <p class="center">מחירים הוגנים ושירות אישי מהלב עד הבית</p>
+    </div>
+    <div class="flip-card-back">
+	<div class="center">
+	<img src="shimon002.png" alt="שמעון בוזגלו" class="avatar">
+      <h1>שמעון בוזגלו</h1>	  
+      <h2>טכנאי מוסמך</h2> 
+	  </div>
+	  <br>
+	  <p>
+         <a href="tel:0557271193" title="חייג" style="font-size:20px;color:white;" class="fas" target="_blank">055-7271193 &#xf095;</a>&nbsp; (לא בשבת)
+	  </p>
+	  <p>
+         <a href="https://wa.me/972557271193" title="ואטסאפ" style="font-size:20px;color:white;" class="fab" target="_blank">ואטסאפ &#xf232;</a>&nbsp;
+
+	     <a href="mailto:shimiexpress@gmail.com" title="מייל" style="font-size:20px;color:white;" class="fas" target="_blank">דוא"ל &#xf674;</a>
+	  </p>
+	  <br>
+      <p class="nadpis2">בעל תעודה - Microsoft IT Academy MCTS</p>
+	  <p class="nadpis2">מעל 7 שנות ניסיון</p> 
+    </div>
+  </div>
+</div>
+</div>
+
+</body>
+</html>

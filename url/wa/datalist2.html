@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<form>
+  <input list="browsers" name="browser">
+  <datalist id="browsers">
+    <option value="Explorer" title="Explorer" ontoggle="myFunction()">Explorer</option>
+    <option value="Firefox" title="Firefox" ontoggle="myFunction()">Firefox</option>
+    <option value="Chrome" title="Chrome" ontoggle="myFunction()">Chrome</option>
+    <option value="Opera" title="Opera" ontoggle="myFunction()">Opera</option>
+    <option value="Safari" title="Safari" ontoggle="myFunction()">Safari</option>
+  </datalist>
+</form>
+
+<p>Click the button to display the value of the first option in the datalist.</p>
+
+<button onclick="myFunction()">Try it</button>
+
+<p><strong>Note:</strong> The datalist element is not supported in Internet Explorer 9 and earlier versions, or in Safari.</p>
+
+<p id="demo"></p>
+
+<script>
+function myFunction() {
+  var x = document.getElementsByTagName("option").title;
+  document.getElementById("demo").innerHTML = x;
+}
+</script>
+
+  var x = document.getElementById("browsers").selectedIndex;
+  document.getElementById("demo").innerHTML = (document.getElementsByTagName("option")[x].title);
+</body>
+</html>

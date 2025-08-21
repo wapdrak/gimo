@@ -1,0 +1,42 @@
+<html lang="he">
+<head>
+
+<meta charset="UTF-8">
+
+<title>
+הצעת מחיר - גימו בע"מ
+</title>
+
+</head>
+
+<html>
+
+<body onload="offer();">
+
+<h2>
+הצעת מחיר - גימו בע"מ
+</h2>
+
+<button onclick="offer()">
+שלח
+</button>
+
+<input type="button" value="סגור" onclick="self.close()">
+
+<script>
+function windowClose() {
+window.open('','_parent','');
+setTimeout(function () {window.close();}, 3);
+}
+</script>
+
+<script>
+function offer() {
+  var uri = "https://drive.google.com/file/d/1pD7MS8nX5PZGVSn7BmLCk4PRg-mOTjgd/view?usp=drive_web";
+  
+  location.replace(uri);
+}
+</script>
+
+</body>
+</html>

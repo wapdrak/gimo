@@ -1,6 +1,0 @@
-map://?q=
-mapitem://?q=
-maps:?q=
-maps://?q=
-http://maps.apple.com/?q=
-http://maps.apple.com/local/?q=

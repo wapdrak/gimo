@@ -1,0 +1,15 @@
+{
+  "background_color": "black",
+  "description": "מחשבון פשוט",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "//gimo.co.il/url/machshevon/calc-256x256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    }
+  ],
+  "name": "מחשבון פשוט",
+  "Gimo calculator",
+  "mart_url": "//gimo.co.il/url/machshevon"
+}

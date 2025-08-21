@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+Select your favorite fruit:
+<select id="datalistid" onchange="country()">
+  <option value="apple" title="testApple">Apple</option>
+  <option value="orange" title="testOrange">Orange</option>
+  <option value="pineapple" title="testPineapple">Pineapple</option>
+  <option value="banana" title="testBanana">Banana</option>
+</select>
+
+<span id="country"></span>
+
+
+<script>
+function country() {
+  var x = document.getElementById("datalistid").selectedIndex;
+  document.getElementById("country").innerHTML = (document.getElementsByTagName("option")[x].title);
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="he" dir="auto">
+<head>
+
+<meta charset="UTF-8">
+
+<title>
+🗺 גימו בע"מ - ציוד משדרי - סניף בני ברק | דרכי הגעה לחנות | רחוב מצדה 7 | בניין בסר 4 | קומת קרקע | בני ברק 5126112 | https://gimo.co.il 
+</title>
+
+</head>
+
+<html>
+<body onload="geo();">
+
+<h2>
+דרכי הגעה
+</h2>
+
+
+<button onclick="geo()">
+מפה
+</button>
+
+<input type="button" value="Close this window" onclick="self.close()">
+
+<script>
+function windowClose() {
+window.open('','_parent','');
+setTimeout(function () {window.close();}, 10);
+}
+</script>
+
+<script>
+function geo() {
+  var search = encodeURIComponent("גימו בעמ ציוד משרדי סניף בני ברק");
+  var x = "Platform: " + navigator.userAgent;
+  
+var x = navigator.userAgent.toLowerCase();
+var w = x.indexOf("windows") > -1; //&& x.indexOf("mobile");
+if(w) {
+  location.replace("https://g.page/gimo-besser");
+}
+
+var a = x.indexOf("android") > -1; //&& x.indexOf("mobile");
+if(a) {
+  location.replace("geo:0,0?q=" + search);
+}
+
+var i = x.indexOf("iphone") > -1; //&& x.indexOf("mobile");
+if(i) {
+  location.replace("maps:?q=" + search);
+}
+
+}
+</script>
+
+</body>
+</html> 

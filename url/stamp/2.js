@@ -1,0 +1,11 @@
+
+
+window.onload = q10b() {
+  replace();
+}
+
+q10b replace() {
+  console.log("replace");
+  document.getElementById("q10b").innerHTML = '<div class="table border4px bordergroove borderblack radius25px margin1 padding1"><div class="trow"><div class="tcell padding1 width15px">✔</div><div class="tcell padding1 fweightb">גודל: </div><div class="tcell padding1">40*11 מ"מ</div></div><div class="trow"><div class="tcell padding1 width15px">✔</div><div class="tcell padding1 fweightb">מלל: </div><div class="tcell padding1">עד 3 שורות</div></div><div class="trow"><div class="tcell padding1 width15px">✔</div><div class="tcell padding1 fweightb">צבע דיו:</div><div class="tcell padding1">שחור</div></div><div class="trow"><div class="tcell padding1 width15px">✔</div><div class="tcell padding1 fweightb">ברקוד:</div><div class="tcell padding1">4599441100154</div></div><div class="trow"><div class="tcell padding1 width15px">✔</div><div class="tcell padding1 fweightb">אפשרות להכניס</div><div class="tcell padding1">לוגו או חתימה</div></div><div class="trow"><div class="tcell padding1 width15px">✔</div><div class="tcell padding1 fweightb">זמן הכנה:</div><div class="tcell padding1">במקום עד 3 דקות מרגע<br>אישור הגהת מלל על ידי הלקוח</div></div><div class="trow"><div class="tcell padding1 width15px">✔</div><div class="tcell padding1 fweightb">החותמת</div><div class="tcell padding1">עובדת 2 דקות לאחר הכנה</div></div></div>';
+  document.getElementById("cell2").innerHTML = "cell2";
+}
