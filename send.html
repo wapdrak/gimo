@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>&#128488; שולח הודעות אוניברסלי</title>
+    
+    <!-- Tailwind CSS Framework -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Latest intl-tel-input CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/20.3.0/css/intlTelInput.css" />
+    
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" xintegrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://gimo.co.il/url/img/whatsapp-lilach2.png">
+
+    <style>
+        /* Minimal custom styles */
+        html, body { height: 100%; margin: 0; padding: 0; overflow-x: hidden; }
+        body { 
+            font-family: 'Arial', sans-serif; 
+            background-image: url("https://gimo.co.il/url/img/bwhatsapp.jpg");
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+        .border-groove { border-style: groove; }
+        
+        .iti {
+            direction: ltr;
+        }
+        #phone {
+            text-align: left;
+        }
+        
+        .iti__country-list {
+            left: 0 !important;
+            right: auto !important;
+            direction: ltr;
+        }
+        .iti__country, .iti__search-input {
+            direction: ltr;
+            text-align: left;
+        }
+        
+        .iti__country-list { 
+            background-color: #1f2937; 
+            border-color: #4b5563; 
+        }
+        .iti__country { color: #d1d5db; }
+        .iti__country:hover { background-color: #374151; }
+        .iti__dial-code { color: #9ca3af; }
+        .iti__search-input {
+            background-color: #374151;
+            color: #d1d5db;
+            border-color: #4b5563;
+        }
+        
+        .iti--invalid .iti__tel-input {
+            border-color: red !important;
+        }
+        .iti--valid .iti__tel-input {
+            border-color: limegreen !important;
+        }
+        .validation-icon-container {
+            direction: rtl;
+        }
+        .validation-icon-container.invalid:after {
+            content: "✘"; color: red; font-size: 1.5rem; vertical-align: middle;
+        }
+        .validation-icon-container.valid:after {
+            content: "✔"; color: limegreen; font-size: 1.5rem; vertical-align: middle;
+        }
+
+        #phone, #username {
+            font-size: 16px;
+        }
+        @media (min-width: 640px) {
+            #phone, #username { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-200 flex justify-center p-1 sm:p-2 pt-8">
+
+    <main class="w-full max-w-2xl" x-data="contactForm" x-init="init()">
+        <div class="text-center border-4 border-groove border-black rounded-3xl p-4 sm:p-6 bg-black bg-opacity-70 text-white">
+            <section>
+                <h1 class="text-2xl sm:text-4xl font-bold">
+                    <i class="fab fa-whatsapp" style="color:limegreen;"></i>
+                    <i class="fab fa-viber" style="color:#7360F2;"></i>
+                    <i class="fab fa-telegram-plane" style="color:#2AABEE;"></i>
+                    שולח הודעות
+                </h1>
+                <h2 class="text-base sm:text-lg text-gray-300 mt-2">
+                    שלח הודעה לכל מספר או שם משתמש מבלי לשמור באנשי הקשר.
+                </h2>
+
+                <form id="contact-form" class="m-1" @submit.prevent>
+                    
+                    <textarea name="t" id="text" x-model="message" class="bg-black text-white placeholder-white rounded-2xl m-0.5 p-1 border-4 w-full max-w-md mx-auto mt-4" rows="4" placeholder="   תוכן ההודעה..." title="תוכן ההודעה (לוואטסאפ, טלגרם, SMS)" style="font-size:100%;"></textarea>
+
+                    <!-- Phone Number Section -->
+                    <div class="my-4">
+                        <div class="flex items-center gap-2">
+                            <div class="flex-grow">
+                                <!-- ADDED PLACEHOLDER ATTRIBUTE -->
+                                <input id="phone" type="tel" @input="validateNumber" placeholder="מספר טלפון" class="bg-black text-yellow rounded-md border-4 border-gray-500 m-0.5 p-2 w-full">
+                            </div>
+                            <span id="validation-icon" class="validation-icon-container"></span>
+                        </div>
+                        
+                        <button type="button" @click="selectContact()" x-show="contactPickerSupported" class="flex items-center justify-center gap-2 mx-auto text-white bg-gray-700 rounded-lg border-4 py-2 px-3 w-full text-base sm:text-lg mt-2" title="בחר מתוך אנשי הקשר"><i class="fas fa-address-book"></i> בחר מתוך אנשי הקשר</button>
+                        
+                        <div x-show="contactApiError" x-text="contactApiError" class="text-red-500 bg-black bg-opacity-70 rounded-lg p-2 mt-2 text-sm" x-transition></div>
+
+                        <div class="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-2">
+                            <button type="button" @click="handleAction('whatsapp')" class="flex items-center justify-center gap-2 mx-auto text-lime-500 bg-black rounded-lg border-4 py-2 px-3 w-full text-base sm:text-lg" title="שלח באמצעות WhatsApp"><i class="fab fa-whatsapp"></i> וואטסאפ</button>
+                            <button type="button" @click="handleAction('viber')" class="flex items-center justify-center gap-2 mx-auto bg-black rounded-lg border-4 py-2 px-3 w-full text-base sm:text-lg" style="color:#7360F2;" title="פתח ב-Viber"><i class="fab fa-viber"></i> וייבר</button>
+                            <button type="button" @click="handleAction('signal')" class="flex items-center justify-center gap-2 mx-auto text-blue-600 bg-black rounded-lg border-4 py-2 px-3 w-full text-base sm:text-lg" title="פתח ב-Signal"><i class="fas fa-comments"></i> סיגנל</button>
+                            <button type="button" @click="handleAction('sms')" class="flex items-center justify-center gap-2 mx-auto text-yellow bg-black rounded-lg border-4 py-2 px-3 w-full text-base sm:text-lg" title="שלח כהודעה"><i class="far fa-comment-alt"></i> הודעה</button>
+                            <button type="button" @click="handleAction('tel')" class="flex items-center justify-center gap-2 mx-auto text-yellow bg-black rounded-lg border-4 py-2 px-3 w-full text-base sm:text-lg col-span-2 sm:col-span-1" title="התקשר"><i class="fas fa-phone"></i> התקשר</button>
+                        </div>
+                    </div>
+
+                    <!-- Separator -->
+                    <div class="my-6 text-xl sm:text-2xl font-bold text-gray-400">
+                        או
+                    </div>
+
+                    <!-- Username Section -->
+                    <div class="my-4">
+                         <input id="username" type="text" x-model="username" placeholder="שם משתמש..." title="הזן שם משתמש לטלגרם או למסנג'ר" class="bg-black text-yellow rounded-md border-4 border-gray-500 m-0.5 p-2 text-center w-full">
+                        <div class="mt-4 grid grid-cols-2 gap-2">
+                            <button type="button" @click="handleAction('telegram')" class="flex items-center justify-center gap-2 mx-auto text-blue-400 bg-black rounded-lg border-4 py-2 px-3 w-full text-base sm:text-lg" title="שלח באמצעות Telegram"><i class="fab fa-telegram-plane"></i> טלגרם</button>
+                            <button type="button" @click="handleAction('messenger')" class="flex items-center justify-center gap-2 mx-auto text-blue-500 bg-black rounded-lg border-4 py-2 px-3 w-full text-base sm:text-lg" title="שלח באמצעות Messenger"><i class="fab fa-facebook-messenger"></i> מסנג'ר</button>
+                        </div>
+                    </div>
+                                        
+                    <hr class="my-6 border-gray-600">
+
+                    <input type="reset" value="&#xf021; איפוס" @click="resetForm" class="fa mx-auto text-white bg-black rounded-lg border-4 p-2 cursor-pointer w-full text-xl sm:text-3xl" title="אפס טופס" />
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <!-- Latest intl-tel-input JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/20.3.0/js/intlTelInput.min.js"></script>
+    
+    <!-- Alpine.js Component Definition -->
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('contactForm', () => ({
+                phoneInput: null, message: '', username: '', phoneEl: null,
+                contactPickerSupported: false,
+                contactApiError: '',
+                isUtilsLoaded: false,
+                init() {
+                    this.phoneEl = document.querySelector("#phone");
+                    
+                    const originalDir = document.documentElement.dir;
+                    document.documentElement.dir = 'ltr';
+
+                    this.phoneInput = window.intlTelInput(this.phoneEl, {
+                        initialCountry: "il",
+                        showSearchBox: true,
+                        separateDialCode: true,
+                        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/20.3.0/js/utils.js",
+                    });
+                    
+                    document.documentElement.dir = originalDir;
+                    
+                    this.phoneInput.promise.then(() => {
+                        console.log("Utils script loaded successfully. Full validation is now enabled.");
+                        this.isUtilsLoaded = true;
+                        this.phoneEl.addEventListener('countrychange', () => this.validateNumber());
+                        this.validateNumber();
+                    }).catch(error => {
+                        console.error("Error loading utils script:", error);
+                    });
+
+                    if ('contacts' in navigator && 'select' in navigator.contacts) {
+                        this.contactPickerSupported = true;
+                    }
+                },
+                isNumberValid() {
+                    const country = this.phoneInput.getSelectedCountryData().iso2;
+
+                    // --- HYBRID VALIDATION ---
+                    if (country === 'il') {
+                        // Use our battle-tested custom logic for Israel
+                        const number = this.phoneEl.value;
+                        if (!number.trim()) return false;
+                        let sanitizedNumber = number.replace(/\D/g, '');
+
+                        if (sanitizedNumber.startsWith('0')) {
+                            if (sanitizedNumber.startsWith('05')) {
+                                return sanitizedNumber.length === 10;
+                            } else {
+                                return sanitizedNumber.length === 9;
+                            }
+                        } else {
+                            if (sanitizedNumber.length === 9 && (sanitizedNumber.startsWith('5'))) {
+                                return true;
+                            }
+                            if (sanitizedNumber.length === 8 && !(sanitizedNumber.startsWith('5'))) {
+                                return true;
+                            }
+                            return false;
+                        }
+                    } else {
+                        // For all other countries, use the reliable library validation
+                        if (!this.isUtilsLoaded) return false; // Guard clause
+                        return this.phoneInput.isValidNumber();
+                    }
+                },
+                validateNumber() {
+                    const itiElement = this.phoneInput.a;
+                    const iconElement = document.querySelector("#validation-icon");
+                    
+                    itiElement.classList.remove('iti--valid', 'iti--invalid');
+                    iconElement.classList.remove('valid', 'invalid');
+                    
+                    if (this.phoneEl.value.trim()) {
+                        if (this.isNumberValid()) {
+                            itiElement.classList.add('iti--valid');
+                            iconElement.classList.add('valid');
+                        } else {
+                            itiElement.classList.add('iti--invalid');
+                            iconElement.classList.add('invalid');
+                        }
+                    }
+                },
+                async selectContact() {
+                    this.contactApiError = '';
+                    try {
+                        const contacts = await navigator.contacts.select(['tel'], {multiple: false});
+                        if (contacts.length > 0 && contacts[0].tel.length > 0) {
+                            this.phoneInput.setNumber(contacts[0].tel[0]);
+                            this.validateNumber();
+                        }
+                    } catch (ex) {
+                        console.error("Error selecting contact.", ex);
+                        this.contactApiError = 'Výběr kontaktů není v tomto náhledu podporován.';
+                        setTimeout(() => { this.contactApiError = ''; }, 5000);
+                    }
+                },
+                handleAction(type) {
+                    const isNumberGood = this.isNumberValid();
+                    this.validateNumber();
+                    
+                    const encodedMessage = encodeURIComponent(this.message.trim());
+                    let url = '';
+                    switch(type) {
+                        case 'whatsapp': case 'sms': case 'tel': case 'signal': case 'viber':
+                            if (isNumberGood) {
+                                this.phoneInput.setNumber(this.phoneEl.value);
+                                const fullNumber = this.phoneInput.getNumber();
+                                
+                                if (type === 'whatsapp') url = `https://api.whatsapp.com/send?phone=${fullNumber.substring(1)}&text=${encodedMessage}`;
+                                if (type === 'sms') url = `sms:${fullNumber}?body=${encodedMessage}`;
+                                if (type === 'tel') url = `tel:${fullNumber}`;
+                                if (type === 'signal') url = `signal://send?recipient=${fullNumber.substring(1)}`;
+                                if (type === 'viber') url = `viber://chat?number=${fullNumber.substring(1)}`;
+                            } else {
+                                this.phoneEl.focus();
+                            }
+                            break;
+                        case 'telegram': case 'messenger':
+                            if (this.username.trim()) {
+                                const cleanUsername = this.username.trim();
+                                if (type === 'telegram') url = `https://t.me/${cleanUsername}?text=${encodedMessage}`;
+                                if (type === 'messenger') url = `https://m.me/${cleanUsername}`;
+                            } else {
+                                document.querySelector("#username").focus();
+                            }
+                            break;
+                    }
+                    if(url) window.open(url, '_blank');
+                },
+                resetForm() {
+                    this.phoneInput.setNumber(''); 
+                    this.message = ''; 
+                    this.username = '';
+                    this.validateNumber();
+                }
+            }));
+        });
+    </script>
+    
+    <!-- Alpine.js Framework - DEFER is critical for correct initialization -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+</body>
+</html>
