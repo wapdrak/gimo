@@ -358,38 +358,56 @@
 
                 getStationsData() {
                     const stations = [
-                        // Israeli Stations (Updated & Verified)
+                        // Israeli Stations
                         { name: 'גלגלצ', url: 'https://glzwizzlv.bynetcdn.com/glglz_mp3', genre: 'תחנות ישראליות', language: 'עברית', format: 'MP3', bitrate: '128kbps' },
                         { name: 'כאן 88', url: 'https://29053.live.streamtheworld.com/KAN_88.mp3', genre: 'תחנות ישראליות', language: 'עברית', format: 'MP3', bitrate: '128kbps' },
                         { name: 'רדיו תל אביב', url: 'https://cdn88.mediacast.co.il/102fm-tlv/102fm_mp3/icecast.audio', genre: 'תחנות ישראליות', language: 'עברית', format: 'Audio', bitrate: '128kbps' },
-                        { name: 'רדיוס 100FM', url: 'https://100fm.livecdn.biz/100fm_mp3', genre: 'תחנות ישראליות', language: 'עברית', format: 'MP3', bitrate: '128kbps' },
-                        { name: 'Eco 99 FM', url: 'https://eco-live.mediacast.co.il/99fm_mp3', genre: 'תחנות ישראליות', language: 'עברית', format: 'MP3', bitrate: '128kbps' },
-                        { name: 'רדיו לב המדינה', url: 'https://91.livecdn.biz/91fm_mp3', genre: 'תחנות ישראליות', language: 'עברית', format: 'MP3', bitrate: '128kbps' },
                         { name: 'כאן גימל', url: 'https://27913.live.streamtheworld.com/KAN_GIMMEL.mp3', genre: 'תחנות ישראליות', language: 'עברית', format: 'MP3', bitrate: '128kbps' },
-                        { name: 'רדיו חיפה', url: 'https://1075.livecdn.biz/1075fm', genre: 'תחנות ישראליות', language: 'עברית', format: 'MP3', bitrate: '128kbps' },
-                        { name: 'כאן תרבות', url: 'https://28943.live.streamtheworld.com/KAN_TARBUT.mp3', genre: 'תחנות ישראליות', language: 'עברית', format: 'MP3', bitrate: '128kbps' },
                         { name: 'כאן קול המוסיקה', url: 'https://27863.live.streamtheworld.com/KAN_KOL_HAMUSICA.mp3', genre: 'תחנות ישראליות', language: 'עברית', format: 'MP3', bitrate: '128kbps' },
-                        { name: 'רדיו מזרחית', url: 'https://cdn.cybercdn.live/Radio-Mizrahit/Live/icecast.audio', genre: 'תחנות ישראליות', language: 'עברית', format: 'Audio', bitrate: '128kbps' },
-                        { name: 'רדיו 90', url: 'https://90.livecdn.biz/90fm_mp3', genre: 'תחנות ישראליות', language: 'עברית', format: 'MP3', bitrate: '128kbps' },
-                        { name: 'קול ברמה', url: 'https://kb.mediacast.co.il/kb_mp3', genre: 'תחנות ישראליות', language: 'עברית', format: 'MP3', bitrate: '128kbps' },
-                        { name: 'קול הקמפוס', url: 'https://106fm.livecast.co.il/live', genre: 'תחנות ישראליות', language: 'עברית', format: 'Stream', bitrate: '' },
-                        { name: 'ClickIL', url: 'https://listen.clickfm.co.il/clickil', genre: 'תחנות ישראליות', language: 'עברית', format: 'MP3', bitrate: '128kbps' },
                         { name: 'רשת ב', url: 'https://playerservices.streamtheworld.com/api/livestream-redirect/KAN_BET.mp3', genre: 'תחנות ישראליות', language: 'עברית', format: 'MP3', bitrate: '128kbps' },
-                        { name: 'כאן מורשת', url: 'https://playerservices.streamtheworld.com/api/livestream-redirect/KAN_MORESHET.mp3', genre: 'תחנות ישראליות', language: 'עברית', format: 'MP3', bitrate: '128kbps' },
                         { name: 'רדיו מכאן', url: 'https://playerservices.streamtheworld.com/api/livestream-redirect/RADIO_MAKAN.mp3', genre: 'תחנות ישראליות', language: 'ערבית', format: 'MP3', bitrate: '128kbps' },
                         { name: 'גלי צה"ל', url: 'https://glzicylv01.bynetcdn.com/glz_mp3', genre: 'תחנות ישראליות', language: 'עברית', format: 'MP3', bitrate: '128kbps' },
-                        { name: 'גלי ישראל', url: 'https://cdn.cybercdn.live/Galei_Israel/Live/icecast.audio', genre: 'תחנות ישראליות', language: 'עברית', format: 'Audio', bitrate: '' },
                         { name: 'Eco 99 FM (AAC)', url: 'https://eco01.livecdn.biz/ecolive/99fm_aac/icecast.audio', genre: 'תחנות ישראליות', language: 'עברית', format: 'AAC', bitrate: '' },
                         { name: 'רדיו חיפה (2)', url: 'https://cp11.livecdn.biz/radiohaifa', genre: 'תחנות ישראליות', language: 'עברית', format: 'Stream', bitrate: '' },
 
-                        // Dance
-                        { name: 'ClubRadio.cz', url: 'https://icecast2.play.cz/Clubradio.mp3', genre: 'דאנס', language: 'צ׳כית', format: 'MP3', bitrate: '128kbps' },
-                        { name: 'Helax 93.7', url: 'https://20853.live.streamtheworld.com/RADIO_HELAX.mp3', genre: 'דאנס', language: 'צ׳כית', format: 'MP3', bitrate: '128kbps' },
-                        { name: 'Hotmixradio Dance', url: 'https://streaming.hotmixradio.fr/hotmixradio-dance-128.mp3', genre: 'דאנס', language: 'צרפתית', format: 'MP3', bitrate: '128kbps' },
-                        { name: 'Intense Radio', url: 'https://intenseradio.out.airtime.pro/intenseradio_a', genre: 'דאנס', language: 'בינלאומי', format: 'AAC', bitrate: '' },
-                        { name: 'Basslover.fm', url: 'https://streams.basslover.de/main.mp3', genre: 'דאנס', language: 'גרמנית', format: 'MP3', bitrate: '' },
-                        { name: 'DJ Buzz Radio', url: 'https://str.dj-buzz.com/live.mp3', genre: 'דאנס', language: 'בינלאומי', format: 'MP3', bitrate: '' },
-                        { name: 'Click2Dance', url: 'https://listen.clickfm.co.il/click2dance', genre: 'דאנס', language: 'בינלאומי', format: 'MP3', bitrate: '128kbps' },
+                        // Pop
+                        { name: 'Capital FM UK', url: 'https://media-ssl.musicradio.com/CapitalUK', genre: 'פופ', language: 'אנגלית', format: 'AAC', bitrate: '128kbps' },
+                        { name: '538 Netherlands', url: 'https://22533.live.streamtheworld.com/RADIO538.mp3', genre: 'פופ', language: 'הולנדית', format: 'MP3', bitrate: '128kbps' },
+                        
+                        // Rock
+                        { name: 'Radio Paradise', url: 'https://stream.radioparadise.com/mp3-192', genre: 'רוק', language: 'אנגלית', format: 'MP3', bitrate: '192kbps' },
+                        { name: 'Rádio Rock', url: 'https://nashe1.hostingradio.ru/rock-128.mp3', genre: 'רוק', language: 'רוסית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'Radio Beat', url: 'https://icecast2.play.cz/radiobeat128.mp3', genre: 'רוק', language: 'צ׳כית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'Čas Rock Radio', url: 'https://icecast7.play.cz/casrock128.mp3', genre: 'רוק', language: 'צ׳כית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'ROCK ANTENNE', url: 'https://mp3channels.webradio.antenne.de/rockantenne', genre: 'רוק', language: 'גרמנית', format: 'MP3', bitrate: '' },
+                        
+                        // Indie / Alternative
+                        { name: 'KEXP 90.3 FM', url: 'https://kexp-mp3-128.streamguys1.com/kexp128.mp3', genre: 'אינדי / אלטרנטיב', language: 'אנגלית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'Radio X UK', url: 'https://media-ssl.musicradio.com/RadioXUK', genre: 'אינדי / אלטרנטיב', language: 'אנגלית', format: 'AAC', bitrate: '128kbps' },
+                        { name: 'FluxFM', url: 'https://streams.fluxfm.de/fluxfm-live/mp3-320/audio/', genre: 'אינדי / אלטרנטיב', language: 'גרמנית', format: 'MP3', bitrate: '320kbps' },
+                        { name: 'Indie88 (CA)', url: 'https://streams.indie88.com/indie88', genre: 'אינדי / אלטרנטיב', language: 'אנגלית', format: 'MP3', bitrate: '' },
+
+                        // Dance / Electronic
+                        { name: 'ClubRadio.cz', url: 'https://icecast2.play.cz/Clubradio.mp3', genre: 'דאנס / אלקטרוני', language: 'צ׳כית', format: 'MP3', bitrate: '128kbps' },
+
+                        // Dark Music / Goth
+                        { name: 'SomaFM: Doomed', url: 'https://ice1.somafm.com/doomed-128-mp3', genre: 'דארק / גותי', language: 'בינלאומי', format: 'MP3', bitrate: '128kbps' },
+
+                        // Chillout / Ambient
+                        { name: 'SomaFM: Groove Salad', url: 'https://ice1.somafm.com/groovesalad-128-mp3', genre: 'צ\'ילאאוט / אמביינט', language: 'בינלאומי', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'SomaFM: Drone Zone', url: 'https://ice1.somafm.com/dronezone-128-mp3', genre: 'צ\'ילאאוט / אמביינט', language: 'בינלאומי', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'NPO Soul & Jazz (NL)', url: 'https://icecast.omroep.nl/radio6-bb-mp3', genre: 'צ\'ילאאוט / אמביינט', language: 'הולנדית', format: 'MP3', bitrate: '' },
+                        { name: 'ANTENNE BAYERN Chillout', url: 'https://mp3channels.webradio.de/chillout', genre: 'צ\'ילאאוט / אמביינט', language: 'גרמנית', format: 'MP3', bitrate: '' },
+
+                        // Jazz
+                        { name: 'Radio Swiss Jazz', url: 'https://stream.srg-ssr.ch/m/rsj/mp3_128', genre: 'ג`אז', language: 'בינלאומי', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'TSF Jazz (FR)', url: 'https://tsfjazz.ice.infomaniak.ch/tsfjazz-high.mp3', genre: 'ג`אז', language: 'צרפתית', format: 'MP3', bitrate: '128kbps' },
+                        
+                        // Classical
+                        { name: 'WQXR Classical NY', url: 'https://stream.wqxr.org/wqxr', genre: 'קלאסית', language: 'אנגלית', format: 'AAC', bitrate: '' },
+
+                        // World Music
+                        { name: 'RFI Monde (FR)', url: 'https://rfimonde64k.ice.infomaniak.ch/rfimonde-64.mp3', genre: 'מוזיקת עולם', language: 'צרפתית', format: 'MP3', bitrate: '64kbps' },
 
                         // Oldies
                         { name: 'ANTENNE BAYERN Oldies', url: 'https://mp3channels.webradio.antenne.de/oldies-but-goldies', genre: 'להיטי פעם', language: 'גרמנית', format: 'MP3', bitrate: '128kbps' },
@@ -397,41 +415,10 @@
                         // Country
                         { name: '181.FM - Highway 181', url: 'https://listen.181fm.com/181-highway_128k.mp3', genre: 'קאנטרי פולק', language: 'אנגלית', format: 'MP3', bitrate: '128kbps' },
 
-                        // Classical
-                        { name: 'Classical WETA 90.9 FM', url: 'https://weta.streamguys1.com/weta-classical', genre: 'קלאסית', language: 'אנגלית', format: 'MP3', bitrate: '' },
-                        { name: 'M2 CLASSIC', url: 'https://streams.m2radio.fr/m2classic_128k.mp3', genre: 'קלאסית', language: 'צרפתית', format: 'MP3', bitrate: '128kbps' },
-                        { name: 'WKSU Classical', url: 'https://wksu.streamguys1.com/wksu-classical-mp3', genre: 'קלאסית', language: 'אנגלית', format: 'MP3', bitrate: '' },
-
-                        // DnB
-                        { name: 'DNBRADIO', url: 'https://dnb.dnbradio.com/dnbradio_main.mp3', genre: 'דראם נ בייס', language: 'בינלאומי', format: 'MP3', bitrate: '' },
-                        { name: 'Bassdrive', url: 'https://streams.bassdrive.com/bassdrive_1.mp3', genre: 'דראם נ בייס', language: 'בינלאומי', format: 'MP3', bitrate: '128kbps' },
-                        { name: 'JungleTrain.net', url: 'https://stream.jungletrain.net/', genre: 'דראם נ בייס', language: 'בינלאומי', format: 'Stream', bitrate: '' },
-                        
-                        // Electro
-                        { name: 'Proton Radio', url: 'https://radio.protonradio.com/stream/320', genre: 'אלקטרו', language: 'בינלאומי', format: 'Stream', bitrate: '320kbps' },
-                        { name: 'Teuto Radio', url: 'https://teutoradio.stream.laut.fm/teutoradio', genre: 'אלקטרו', language: 'גרמנית', format: 'MP3', bitrate: '' },
-
-                        // Funk
-                        { name: 'Hotmixradio Funky', url: 'https://streaming.hotmixradio.fr/hotmixradio-funky-128.mp3', genre: 'פאנק', language: 'צרפתית', format: 'MP3', bitrate: '128kbps' },
-                        { name: 'LUXFUNK RADIO', url: 'https://live.luxfunkradio.com:8200/', genre: 'פאנק', language: 'הונגרית', format: 'Stream', bitrate: '' },
-                        { name: 'WEFUNK Radio', url: 'https://www.wefunkradio.com/play/stream.mp3', genre: 'פאנק', language: 'אנגלית', format: 'MP3', bitrate: '64kbps' },
-                        
                         // Hip Hop
                         { name: 'HOT 108 JAMZ', url: 'https://jbmedia-edge1.cdnstream.com/hot108', genre: 'היפ הופ', language: 'אנגלית', format: 'MP3', bitrate: '' },
-                        { name: 'Radio HipHop', url: 'https://listen.clickfm.co.il/hip.mp3', genre: 'היפ הופ', language: 'בינלאומי', format: 'MP3', bitrate: '' },
+                        { name: 'Hot 97 (USA)', url: 'https://playerservices.streamtheworld.com/api/livestream-redirect/WQHTFMAAC.aac', genre: 'היפ הופ', language: 'אנגלית', format: 'AAC', bitrate: '' },
                         
-                        // Rock
-                        { name: 'Rádio Rock', url: 'https://nashe1.hostingradio.ru/rock-128.mp3', genre: 'רוק', language: 'רוסית', format: 'MP3', bitrate: '128kbps' },
-                        { name: 'Radio Beat', url: 'https://icecast2.play.cz/radiobeat128.mp3', genre: 'רוק', language: 'צ׳כית', format: 'MP3', bitrate: '128kbps' },
-                        { name: 'Čas Rock Radio', url: 'https://icecast7.play.cz/casrock128.mp3', genre: 'רוק', language: 'צ׳כית', format: 'MP3', bitrate: '128kbps' },
-                        { name: 'ROCK ANTENNE', url: 'https://mp3channels.webradio.antenne.de/rockantenne', genre: 'רוק', language: 'גרמנית', format: 'MP3', bitrate: '' },
-
-                        // Jazz
-                        { name: 'Cesky Rozhlas Jazz', url: 'https://icecast1.play.cz/crojazz128.mp3', genre: 'ג`אז', language: 'צ׳כית', format: 'MP3', bitrate: '128kbps' },
-
-                        // Metal
-                        { name: 'Rádio Metál', url: 'https://jfm1.hostingradio.ru/metal.mp3', genre: 'מטאל', language: 'רוסית', format: 'MP3', bitrate: '' },
-
                         // Punk
                         { name: 'Rádio Nashe Punks', url: 'https://nashe1.hostingradio.ru/nashepunks.mp3', genre: 'פאנק', language: 'רוסית', format: 'MP3', bitrate: '' },
 
@@ -441,11 +428,8 @@
                         { name: 'Nashe 2.0', url: 'https://nashe1.hostingradio.ru:18000/nashe20-128.mp3', genre: 'רדיו רוסי', language: 'רוסית', format: 'MP3', bitrate: '128kbps' },
                         
                         // Czech
-                        { name: 'Černá Hora', url: 'https://20853.live.streamtheworld.com/HITRADIO_CERNAHORA.mp3', genre: 'תחנות צ`כיות', language: 'צ׳כית', format: 'MP3', bitrate: '' },
                         { name: 'Radiožurnál', url: 'https://icecast8.play.cz/cro1-128.mp3', genre: 'תחנות צ`כיות', language: 'צ׳כית', format: 'MP3', bitrate: '128kbps' },
                         { name: 'Vltava', url: 'https://icecast5.play.cz/cro3-128.mp3', genre: 'תחנות צ`כיות', language: 'צ׳כית', format: 'MP3', bitrate: '128kbps' },
-                        { name: 'ČRo Hradec Králové', url: 'https://icecast2.play.cz/crohk128.mp3', genre: 'תחנות צ`כיות', language: 'צ׳כית', format: 'MP3', bitrate: '128kbps' },
-                        { name: 'ČRo Plus', url: 'https://icecast1.play.cz/croplus32.mp3', genre: 'תחנות צ`כיות', language: 'צ׳כית', format: 'MP3', bitrate: '32kbps' },
                         { name: 'Český Impuls', url: 'https://icecast6.play.cz/cesky-impuls.mp3', genre: 'תחנות צ`כיות', language: 'צ׳כית', format: 'MP3', bitrate: '' },
                         { name: 'Evropa 2', url: 'https://playerservices.streamtheworld.com/api/livestream-redirect/EVROPA2AAC.aac', genre: 'תחנות צ`כיות', language: 'צ׳כית', format: 'AAC', bitrate: '' },
                         { name: 'Frekvence 1', url: 'https://playerservices.streamtheworld.com/api/livestream-redirect/FREKVENCE1AAC.aac', genre: 'תחנות צ`כיות', language: 'צ׳כית', format: 'AAC', bitrate: '' },
@@ -453,19 +437,8 @@
                         // Miscellaneous
                         { name: 'ANTENNE BAYERN', url: 'https://mp3channels.webradio.antenne.de/antenne', genre: 'שונות', language: 'גרמנית', format: 'MP3', bitrate: '' },
                         { name: '95.5 Charivari', url: 'https://rs5.stream24.net/stream', genre: 'שונות', language: 'גרמנית', format: 'Stream', bitrate: '' },
-                        { name: 'Ballermann Radio', url: 'https://rs40.stream24.net/ballermann-radio.mp3', genre: 'שונות', language: 'גרמנית', format: 'MP3', bitrate: '' },
-                        { name: 'ANTENNE BAYERN Chillout', url: 'https://mp3channels.webradio.de/chillout', genre: 'שונות', language: 'גרמנית', format: 'MP3', bitrate: '' },
-                        { name: 'esRadio', url: 'https://livestreaming2.esradio.fm:8000/stream64.mp3', genre: 'שונות', language: 'ספרדית', format: 'MP3', bitrate: '64kbps' },
-                        { name: 'Jamendo Lounge', url: 'https://prod-1.jamendo.com/JamendoLounge.mp3', genre: 'שונות', language: 'בינלאומי', format: 'MP3', bitrate: '' },
-                        { name: 'Monte Carlo', url: 'https://air.radiorecord.ru:8104/monte', genre: 'שונות', language: 'רוסית', format: 'MP3', bitrate: '' },
                         { name: 'Offradio', url: 'https://s3.yesstreaming.net:7062/stream', genre: 'שונות', language: 'יוונית', format: 'Stream', bitrate: '' },
-                        { name: 'RADIO 1 (Bulgaria)', url: 'https://stream.radioreklama.bg:80/radio1128', genre: 'שונות', language: 'בולגרית', format: 'MP3', bitrate: '128kbps' },
                         { name: 'Radio Arabella', url: 'https://rs6.stream24.net/stream', genre: 'שונות', language: 'גרמנית', format: 'Stream', bitrate: '' },
-                        { name: 'RADIO ENERGY', url: 'https://stream.radioreklama.bg:80/nrj128', genre: 'שונות', language: 'בולגרית', format: 'MP3', bitrate: '128kbps' },
-                        { name: 'Radio Record', url: 'https://air.radiorecord.ru:8101/rr_128', genre: 'שונות', language: 'רוסית', format: 'MP3', bitrate: '128kbps' },
-                        { name: 'Radio Shtorm', url: 'https://live.shtorm.fm:8000/mp3', genre: 'שונות', language: 'רוסית', format: 'MP3', bitrate: '' },
-                        { name: 'RadioClick FM', url: 'https://listen.clickfm.co.il/clickfm', genre: 'שונות', language: 'בינלאומי', format: 'MP3', bitrate: '' },
-                        { name: 'Z88.3', url: 'https://ice2.zradio.org/z/high.mp3', genre: 'שונות', language: 'אנגלית', format: 'MP3', bitrate: '' },
                     ];
 
                     const genresMap = new Map();
@@ -476,7 +449,10 @@
                         genresMap.get(station.genre).stations.push(station);
                     });
 
-                    return Array.from(genresMap.values());
+                    // Sort genres alphabetically by name for better organization
+                    const sortedGenres = Array.from(genresMap.values()).sort((a, b) => a.name.localeCompare(b.name, 'he'));
+
+                    return sortedGenres;
                 }
             }));
         });
