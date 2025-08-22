@@ -181,11 +181,15 @@
                         
                         <!-- Show station details when playing or paused -->
                         <template x-if="currentStation">
-                            <div x-show="(playerStatus === 'playing' || playerStatus === 'paused')" class="text-xs text-gray-400 flex flex-wrap gap-x-2 items-center">
-                                <span x-show="currentStation.genre" x-text="currentStation.genre"></span>
-                                <span x-show="currentStation.language" class="flex items-center gap-1">| <span x-text="currentStation.language"></span></span>
-                                <span x-show="currentStation.format" class="flex items-center gap-1">| <span x-text="currentStation.format"></span></span>
-                                <span x-show="currentStation.bitrate" class="flex items-center gap-1">| <span x-text="currentStation.bitrate"></span></span>
+                            <div x-show="(playerStatus === 'playing' || playerStatus === 'paused')" class="text-xs text-gray-400 leading-tight">
+                                <div>
+                                    <span x-show="currentStation.genre" x-text="currentStation.genre"></span>
+                                    <span x-show="currentStation.language" x-text="' | ' + currentStation.language"></span>
+                                </div>
+                                <div>
+                                    <span x-show="currentStation.format" x-text="currentStation.format"></span>
+                                    <span x-show="currentStation.bitrate" x-text="' | ' + currentStation.bitrate"></span>
+                                </div>
                             </div>
                         </template>
 
