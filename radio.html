@@ -136,7 +136,7 @@
 
                         <!-- Station List -->
                         <template x-if="selectedGenre">
-                            <div class="mt-8">
+                            <div class="mt-8" x-ref="stationListContainer">
                                 <h3 class="text-lg font-bold mb-4" x-text="`תחנות בז'אנר: ${selectedGenre.name}`"></h3>
                                 <div class="station-list max-h-80 overflow-y-auto p-2 bg-gray-800 rounded-lg border border-gray-700">
                                     <template x-for="station in selectedGenre.stations" :key="station.name">
@@ -170,11 +170,13 @@
         <!-- Player Controls (Sticky Footer) -->
         <div class="sticky bottom-0 z-40 bg-gray-800 border-t-2 border-gray-700 p-3 shadow-lg" x-show="currentStation" x-cloak>
             <div class="max-w-4xl mx-auto flex items-center justify-between gap-4">
-                <div class="flex items-center gap-3 min-w-0">
+                <!-- Left part: Button and Text Info -->
+                <div class="flex-1 flex items-center gap-3 min-w-0">
                     <button @click="togglePlayPause()" class="w-12 h-12 flex-shrink-0 flex items-center justify-center bg-blue-600 hover:bg-blue-500 text-white rounded-full text-2xl">
                         <i :class="isPlaying ? 'fas fa-pause' : 'fas fa-play'"></i>
                     </button>
-                    <div class="min-w-0">
+                    <!-- Text container -->
+                    <div class="flex-1 min-w-0">
                         <p class="font-bold text-white truncate" x-text="currentStation ? currentStation.name : 'בחר תחנה'"></p>
                         
                         <!-- Show station details when playing or paused -->
@@ -191,6 +193,7 @@
                         <p x-show="playerStatus !== 'playing' && playerStatus !== 'paused'" class="text-xs" :class="{'text-red-400': playerStatus === 'error', 'text-gray-400': playerStatus !== 'error'}" x-text="getStatusText()"></p>
                     </div>
                 </div>
+                <!-- Right part: Volume and Close button -->
                 <div class="flex items-center gap-2">
                     <button @click="toggleMute()" class="text-gray-400 hover:text-white text-xl w-8 h-8">
                         <i class="fas" :class="{'fa-volume-up': volume > 0.5 && !isMuted, 'fa-volume-down': volume > 0 && volume <= 0.5 && !isMuted, 'fa-volume-mute': isMuted || volume == 0}"></i>
@@ -268,6 +271,10 @@
 
                 selectGenre(genre) {
                     this.selectedGenre = genre;
+                    // Scroll to the station list after it becomes visible
+                    this.$nextTick(() => {
+                        this.$refs.stationListContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    });
                 },
 
                 playStation(station) {
