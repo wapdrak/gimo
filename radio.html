@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -10,11 +11,11 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" xintegrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/jpg" href="img/gimologo2.jpg">
+    <!-- Favicon (Emoji) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📻</text></svg>">
 
     <style>
-        /* --- סגנונות בסיסיים --- */
+        /* --- Basic Styles --- */
         html, body { 
             height: 100%; 
             margin: 0; 
@@ -31,11 +32,13 @@
             border-style: groove; 
         }
         
+        /* --- Custom Scrollbar for Station List --- */
         .station-list::-webkit-scrollbar { width: 8px; }
         .station-list::-webkit-scrollbar-track { background: #1f2937; border-radius: 10px; }
         .station-list::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 10px; }
         .station-list::-webkit-scrollbar-thumb:hover { background: #6b7280; }
 
+        /* --- Blinking Animation for Header --- */
         @keyframes blink {
             0%, 100% { color: white; }
             25% { color: lightgreen; }
@@ -49,8 +52,10 @@
 </head>
 <body class="bg-gray-900 text-gray-200 flex flex-col min-h-screen">
 
+    <!-- Alpine.js Component -->
     <div class="flex flex-col min-h-screen" x-data="radioPlayer" x-init="init()">
         
+        <!-- Navigation Bar -->
         <nav class="z-50 bg-black bg-opacity-50 backdrop-blur-sm border-b border-gray-700 shadow-lg">
             <div class="max-w-7xl mx-auto px-4">
                 <ul class="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-sm sm:text-base h-12">
@@ -65,50 +70,105 @@
             </div>
         </nav>
 
+        <!-- Header -->
         <header class="w-full p-4 text-center">
             <h1 class="text-2xl sm:text-4xl font-bold text-white blink-radio">♬ און ליין רדיו 📻</h1>
         </header>
 
+        <!-- Main Content -->
         <main class="w-full max-w-4xl mx-auto flex-grow p-1 sm:p-2">
             <div class="text-center border-4 border-groove border-black rounded-3xl p-4 sm:p-6 bg-black bg-opacity-70 text-white">
                 
-                <!-- Žánry -->
+                <!-- Search Input -->
                 <div class="mb-6">
-                    <h2 class="text-xl font-bold mb-4">בחר סגנון</h2>
-                    <div class="flex flex-wrap justify-center gap-2">
-                        <template x-for="genre in genres" :key="genre.name">
-                            <button @click="selectGenre(genre)" 
-                                    :class="{'bg-indigo-700 ring-2 ring-white': selectedGenre && selectedGenre.name === genre.name, 'bg-gray-700 hover:bg-gray-600': !selectedGenre || selectedGenre.name !== genre.name}"
-                                    class="text-white font-semibold py-2 px-4 rounded-lg transition-all text-sm">
-                                <span x-text="genre.name"></span>
-                            </button>
-                        </template>
-                    </div>
+                    <input type="text" x-model.debounce.300ms="searchQuery" placeholder="חפש תחנה..."
+                           class="w-full max-w-md mx-auto bg-gray-800 border-2 border-gray-600 text-white rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition">
                 </div>
 
-                <!-- Seznam stanic -->
-                <template x-if="selectedGenre">
-                    <div class="mt-8">
-                        <h3 class="text-lg font-bold mb-4" x-text="selectedGenre ? `תחנות בז'אנר: ${selectedGenre.name}` : ''"></h3>
-                        <div class="station-list max-h-80 overflow-y-auto p-2 bg-gray-800 rounded-lg border border-gray-700">
-                            <template x-for="station in selectedGenre ? selectedGenre.stations : []" :key="station.name">
-                                 <button @click="playStation(station)" 
-                                         :class="{'bg-blue-600 text-white': currentStation && currentStation.url === station.url, 'hover:bg-gray-700': !currentStation || currentStation.url !== station.url}"
-                                         class="w-full text-right p-3 rounded-md transition-colors flex items-center justify-between">
-                                     <span x-text="station.name"></span>
-                                     <i x-show="currentStation && currentStation.url === station.url && isPlaying" class="fas fa-volume-up text-green-400"></i>
-                                     <i x-show="currentStation && currentStation.url === station.url && !isPlaying" class="fas fa-pause text-yellow-400"></i>
-                                 </button>
+                <!-- Conditional View: Search Results -->
+                <template x-if="searchQuery.trim() !== ''">
+                    <div>
+                        <h3 class="text-lg font-bold mb-4">תוצאות חיפוש</h3>
+                        <div class="station-list max-h-96 overflow-y-auto p-2 bg-gray-800 rounded-lg border border-gray-700">
+                             <template x-if="filteredStations.length === 0">
+                                <p class="text-gray-400 p-4">לא נמצאו תחנות תואמות.</p>
+                            </template>
+                            <template x-for="station in filteredStations" :key="station.url">
+                                <button @click="playStation(station)" 
+                                        :class="{'bg-blue-600 text-white': currentStation && currentStation.url === station.url, 'hover:bg-gray-700': !currentStation || currentStation.url !== station.url}"
+                                        class="w-full text-right p-3 rounded-md transition-colors flex items-center justify-between">
+                                    <div class="flex-grow">
+                                        <span x-text="station.name"></span>
+                                        <div class="text-xs text-gray-400">
+                                            <span x-text="station.genre"></span>
+                                            <span x-show="station.language" x-text="' | ' + station.language"></span>
+                                            <span x-show="station.format" x-text="' | ' + station.format"></span>
+                                            <span x-show="station.bitrate" x-text="' | ' + station.bitrate"></span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center flex-shrink-0 pl-2">
+                                        <a :href="station.url" target="_blank" @click.stop class="text-gray-400 hover:text-white mx-2 text-lg" title="Direct Stream Link">🔗</a>
+                                        <i x-show="currentStation && currentStation.url === station.url && isPlaying" class="fas fa-volume-up text-green-400"></i>
+                                        <i x-show="currentStation && currentStation.url === station.url && !isPlaying" class="fas fa-pause text-yellow-400"></i>
+                                    </div>
+                                </button>
                             </template>
                         </div>
+                    </div>
+                </template>
+
+                <!-- Conditional View: Genre Selection -->
+                <template x-if="searchQuery.trim() === ''">
+                    <div>
+                        <!-- Genres -->
+                        <div class="mb-6">
+                            <h2 class="text-xl font-bold mb-4">בחר סגנון</h2>
+                            <div class="flex flex-wrap justify-center gap-2">
+                                <template x-for="genre in genres" :key="genre.name">
+                                    <button @click="selectGenre(genre)" 
+                                            :class="{'bg-indigo-700 ring-2 ring-white': selectedGenre && selectedGenre.name === genre.name, 'bg-gray-700 hover:bg-gray-600': !selectedGenre || selectedGenre.name !== genre.name}"
+                                            class="text-white font-semibold py-2 px-4 rounded-lg transition-all text-sm">
+                                        <span x-text="genre.name"></span>
+                                    </button>
+                                </template>
+                            </div>
+                        </div>
+
+                        <!-- Station List -->
+                        <template x-if="selectedGenre">
+                            <div class="mt-8">
+                                <h3 class="text-lg font-bold mb-4" x-text="`תחנות בז'אנר: ${selectedGenre.name}`"></h3>
+                                <div class="station-list max-h-80 overflow-y-auto p-2 bg-gray-800 rounded-lg border border-gray-700">
+                                    <template x-for="station in selectedGenre.stations" :key="station.name">
+                                        <button @click="playStation(station)" 
+                                                :class="{'bg-blue-600 text-white': currentStation && currentStation.url === station.url, 'hover:bg-gray-700': !currentStation || currentStation.url !== station.url}"
+                                                class="w-full text-right p-3 rounded-md transition-colors flex items-center justify-between">
+                                            <div class="flex-grow">
+                                                <span x-text="station.name"></span>
+                                                <div class="text-xs text-gray-400">
+                                                    <span x-show="station.language" x-text="station.language"></span>
+                                                    <span x-show="station.format" x-text="' | ' + station.format"></span>
+                                                    <span x-show="station.bitrate" x-text="' | ' + station.bitrate"></span>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center flex-shrink-0 pl-2">
+                                                <a :href="station.url" target="_blank" @click.stop class="text-gray-400 hover:text-white mx-2 text-lg" title="Direct Stream Link">🔗</a>
+                                                <i x-show="currentStation && currentStation.url === station.url && isPlaying" class="fas fa-volume-up text-green-400"></i>
+                                                <i x-show="currentStation && currentStation.url === station.url && !isPlaying" class="fas fa-pause text-yellow-400"></i>
+                                            </div>
+                                        </button>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
                     </div>
                 </template>
 
             </div>
         </main>
 
-        <!-- Přehrávač -->
-        <div class="sticky bottom-0 z-40 bg-gray-800 border-t-2 border-gray-700 p-3 shadow-lg" x-show="currentStation">
+        <!-- Player Controls (Sticky Footer) -->
+        <div class="sticky bottom-0 z-40 bg-gray-800 border-t-2 border-gray-700 p-3 shadow-lg" x-show="currentStation" x-cloak>
             <div class="max-w-4xl mx-auto flex items-center justify-between gap-4">
                 <div class="flex items-center gap-3 min-w-0">
                     <button @click="togglePlayPause()" class="w-12 h-12 flex-shrink-0 flex items-center justify-center bg-blue-600 hover:bg-blue-500 text-white rounded-full text-2xl">
@@ -116,7 +176,19 @@
                     </button>
                     <div class="min-w-0">
                         <p class="font-bold text-white truncate" x-text="currentStation ? currentStation.name : 'בחר תחנה'"></p>
-                        <p class="text-xs" :class="{'text-red-400': playerStatus === 'error', 'text-gray-400': playerStatus !== 'error'}" x-text="getStatusText()"></p>
+                        
+                        <!-- Show station details when playing or paused -->
+                        <template x-if="currentStation">
+                            <div x-show="(playerStatus === 'playing' || playerStatus === 'paused')" class="text-xs text-gray-400 flex flex-wrap gap-x-2 items-center">
+                                <span x-show="currentStation.genre" x-text="currentStation.genre"></span>
+                                <span x-show="currentStation.language" class="flex items-center gap-1">| <span x-text="currentStation.language"></span></span>
+                                <span x-show="currentStation.format" class="flex items-center gap-1">| <span x-text="currentStation.format"></span></span>
+                                <span x-show="currentStation.bitrate" class="flex items-center gap-1">| <span x-text="currentStation.bitrate"></span></span>
+                            </div>
+                        </template>
+
+                        <!-- Show status text for loading, error, etc. -->
+                        <p x-show="playerStatus !== 'playing' && playerStatus !== 'paused'" class="text-xs" :class="{'text-red-400': playerStatus === 'error', 'text-gray-400': playerStatus !== 'error'}" x-text="getStatusText()"></p>
                     </div>
                 </div>
                 <div class="flex items-center gap-2">
@@ -131,16 +203,19 @@
                        @pause="isPlaying = false; if(playerStatus !== 'error') playerStatus = 'paused'" 
                        @ended="isPlaying = false; playerStatus = 'idle'"
                        @error="handleError"
-                       class="hidden"></audio>
+                       class="hidden"
+                       crossorigin="anonymous"></audio>
             </div>
         </div>
 
+        <!-- Footer -->
         <footer class="w-full p-2 text-center text-gray-400 mt-4">
             <p class="text-sm">&copy; 2024 <a href="https://www.gimo.co.il" target="_blank" rel="noopener noreferrer" class="underline hover:text-white">גימו בע"מ</a>. כל הזכויות שמורות.</p>
         </footer>
 
     </div>
     
+    <!-- Alpine.js -->
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
     <script>
@@ -155,16 +230,46 @@
                 volume: 1,
                 isMuted: false,
                 previousVolume: 1,
+                searchQuery: '',
+
                 init() {
                     this.genres = this.getStationsData();
+                    // Load volume from localStorage
+                    const savedVolume = localStorage.getItem('radioPlayerVolume');
+                    if (savedVolume !== null) {
+                        this.volume = parseFloat(savedVolume);
+                    }
+                    this.$refs.audioPlayer.volume = this.volume;
+
                     this.$watch('volume', value => {
-                        this.$refs.audioPlayer.volume = value;
-                        this.isMuted = parseFloat(value) === 0;
+                        const newVolume = parseFloat(value);
+                        this.$refs.audioPlayer.volume = newVolume;
+                        this.isMuted = newVolume === 0;
+                        // Save volume to localStorage
+                        localStorage.setItem('radioPlayerVolume', newVolume);
                     });
                 },
+                
+                // Computed property for all stations
+                get allStations() {
+                    return this.genres.flatMap(genre => genre.stations);
+                },
+
+                // Computed property for filtered stations based on search
+                get filteredStations() {
+                    if (!this.searchQuery.trim()) {
+                        return [];
+                    }
+                    const query = this.searchQuery.toLowerCase().trim();
+                    return this.allStations.filter(station =>
+                        station.name.toLowerCase().includes(query)
+                    );
+                },
+
                 selectGenre(genre) {
                     this.selectedGenre = genre;
                 },
+
                 playStation(station) {
                     clearTimeout(this.loadingTimeout);
                     this.playerStatus = 'loading';
@@ -177,20 +282,23 @@
                         const playPromise = this.$refs.audioPlayer.play();
                         if (playPromise !== undefined) {
                             playPromise.catch(error => {
+                                // Ignore AbortError which happens when we switch stations quickly
                                 if (error.name !== 'AbortError') {
-                                    console.warn('Chyba při přehrávání (stanice může být nedostupná):', error.message);
+                                    console.warn('Error playing station (might be unavailable):', error.message);
                                     this.handleError();
                                 }
                             });
                         }
                     }
                     
+                    // Set a timeout to catch streams that never load
                     this.loadingTimeout = setTimeout(() => {
                         if (this.playerStatus === 'loading') {
                             this.handleError();
                         }
-                    }, 15000);
+                    }, 15000); // 15 seconds
                 },
+
                 togglePlayPause() {
                     if (this.isPlaying) {
                         this.$refs.audioPlayer.pause();
@@ -199,23 +307,26 @@
                         if (playPromise !== undefined) {
                              playPromise.catch(error => {
                                 if (error.name !== 'AbortError') {
-                                    console.warn('Chyba při spuštění přehrávání:', error.message);
+                                    console.warn('Error resuming playback:', error.message);
                                     this.handleError();
                                 }
                             });
                         }
                     }
                 },
+
                 handlePlay() {
                     this.isPlaying = true;
                     this.playerStatus = 'playing';
                     clearTimeout(this.loadingTimeout);
                 },
+
                 handleError() {
                     this.playerStatus = 'error';
                     this.isPlaying = false;
                     clearTimeout(this.loadingTimeout);
                 },
+
                 closePlayer() {
                     this.$refs.audioPlayer.pause();
                     this.$refs.audioPlayer.src = '';
@@ -223,14 +334,18 @@
                     this.isPlaying = false;
                     this.playerStatus = 'idle';
                 },
+
                 toggleMute() {
                     if (this.isMuted || this.volume == 0) {
+                        // Unmute: restore to previous volume or 1 if previous was 0
                         this.volume = this.previousVolume > 0 ? this.previousVolume : 1;
                     } else {
+                        // Mute: save current volume and set to 0
                         this.previousVolume = this.volume;
                         this.volume = 0;
                     }
                 },
+
                 getStatusText() {
                     switch (this.playerStatus) {
                         case 'loading': return 'טוען...';
@@ -240,152 +355,117 @@
                         default: return 'בחר תחנה';
                     }
                 },
+
                 getStationsData() {
                     const stations = [
-                        // Israeli Stations - Updated
-                        { name: 'Galgalatz', url: 'https://glz-live.bynetcdn.com/glglz_mp3', genre: 'תחנות ישראליות' },
-                        { name: 'Kan 88 FM', url: 'https://kan-88.kan.org.il/icecast/live/ipbc_88fm', genre: 'תחנות ישראליות' },
-                        { name: 'Radio Tel Aviv 102FM', url: 'https://102.livecdn.biz/102fm_mp3', genre: 'תחנות ישראליות' },
-                        { name: 'Radius 100FM', url: 'https://100fm.livecdn.biz/100fm', genre: 'תחנות ישראליות' },
-                        { name: 'Eco 99 FM', url: 'https://eco-live.mediacast.co.il/99fm_mp3', genre: 'תחנות ישראליות' },
-                        { name: 'Radio Lev HaMedina 91FM', url: 'https://91.livecdn.biz/91fm_mp3', genre: 'תחנות ישראליות' },
-                        { name: 'Kan Gimel', url: 'https://kan-gimel.kan.org.il/icecast/live/ipbc_gimel', genre: 'תחנות ישראליות' },
-                        { name: 'Radio Haifa 107.5', url: 'https://1075.livecdn.biz/1075fm', genre: 'תחנות ישראליות' },
-                        { name: 'Kan Tarbut', url: 'https://kan-tarbut.kan.org.il/icecast/live/ipbc_tarbut', genre: 'תחנות ישראליות' },
-                        { name: 'Kan Kol HaMusica', url: 'https://kan-kollamusica.kan.org.il/icecast/live/ipbc_kolhamusica', genre: 'תחנות ישראליות' },
-                        { name: 'Radio Mizrahit', url: 'https://cdn.cybercdn.live/Radio-Mizrahit/Live/icecast.audio', genre: 'תחנות ישראליות' },
-                        { name: 'Radio 90 FM', url: 'https://90.livecdn.biz/90fm_mp3', genre: 'תחנות ישראליות' },
-                        { name: 'Kol Barama', url: 'https://kb.mediacast.co.il/kb_mp3', genre: 'תחנות ישראליות' },
-                        { name: 'Kol HaCampus 106FM', url: 'https://106fm.livecast.co.il:8123/live', genre: 'תחנות ישראליות' },
-                        { name: 'All For Peace Radio', url: 'https://188.225.225.28:88/all4peace', genre: 'תחנות ישראליות' },
-                        { name: 'ClickIL', url: 'https://listen.clickfm.co.il/clickil', genre: 'תחנות ישראליות' },
+                        // Israeli Stations (Updated & Verified)
+                        { name: 'גלגלצ', url: 'https://glzwizzlv.bynetcdn.com/glglz_mp3', genre: 'תחנות ישראליות', language: 'עברית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'כאן 88', url: 'https://29053.live.streamtheworld.com/KAN_88.mp3', genre: 'תחנות ישראליות', language: 'עברית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'רדיו תל אביב', url: 'https://cdn88.mediacast.co.il/102fm-tlv/102fm_mp3/icecast.audio', genre: 'תחנות ישראליות', language: 'עברית', format: 'Audio', bitrate: '128kbps' },
+                        { name: 'רדיוס 100FM', url: 'https://100fm.livecdn.biz/100fm_mp3', genre: 'תחנות ישראליות', language: 'עברית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'Eco 99 FM', url: 'https://eco-live.mediacast.co.il/99fm_mp3', genre: 'תחנות ישראליות', language: 'עברית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'רדיו לב המדינה', url: 'https://91.livecdn.biz/91fm_mp3', genre: 'תחנות ישראליות', language: 'עברית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'כאן גימל', url: 'https://27913.live.streamtheworld.com/KAN_GIMMEL.mp3', genre: 'תחנות ישראליות', language: 'עברית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'רדיו חיפה', url: 'https://1075.livecdn.biz/1075fm', genre: 'תחנות ישראליות', language: 'עברית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'כאן תרבות', url: 'https://28943.live.streamtheworld.com/KAN_TARBUT.mp3', genre: 'תחנות ישראליות', language: 'עברית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'כאן קול המוסיקה', url: 'https://27863.live.streamtheworld.com/KAN_KOL_HAMUSICA.mp3', genre: 'תחנות ישראליות', language: 'עברית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'רדיו מזרחית', url: 'https://cdn.cybercdn.live/Radio-Mizrahit/Live/icecast.audio', genre: 'תחנות ישראליות', language: 'עברית', format: 'Audio', bitrate: '128kbps' },
+                        { name: 'רדיו 90', url: 'https://90.livecdn.biz/90fm_mp3', genre: 'תחנות ישראליות', language: 'עברית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'קול ברמה', url: 'https://kb.mediacast.co.il/kb_mp3', genre: 'תחנות ישראליות', language: 'עברית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'קול הקמפוס', url: 'https://106fm.livecast.co.il/live', genre: 'תחנות ישראליות', language: 'עברית', format: 'Stream', bitrate: '' },
+                        { name: 'ClickIL', url: 'https://listen.clickfm.co.il/clickil', genre: 'תחנות ישראליות', language: 'עברית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'רשת ב', url: 'https://playerservices.streamtheworld.com/api/livestream-redirect/KAN_BET.mp3', genre: 'תחנות ישראליות', language: 'עברית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'כאן מורשת', url: 'https://playerservices.streamtheworld.com/api/livestream-redirect/KAN_MORESHET.mp3', genre: 'תחנות ישראליות', language: 'עברית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'רדיו מכאן', url: 'https://playerservices.streamtheworld.com/api/livestream-redirect/RADIO_MAKAN.mp3', genre: 'תחנות ישראליות', language: 'ערבית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'גלי צה"ל', url: 'https://glzicylv01.bynetcdn.com/glz_mp3', genre: 'תחנות ישראליות', language: 'עברית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'גלי ישראל', url: 'https://cdn.cybercdn.live/Galei_Israel/Live/icecast.audio', genre: 'תחנות ישראליות', language: 'עברית', format: 'Audio', bitrate: '' },
+                        { name: 'Eco 99 FM (AAC)', url: 'https://eco01.livecdn.biz/ecolive/99fm_aac/icecast.audio', genre: 'תחנות ישראליות', language: 'עברית', format: 'AAC', bitrate: '' },
+                        { name: 'רדיו חיפה (2)', url: 'https://cp11.livecdn.biz/radiohaifa', genre: 'תחנות ישראליות', language: 'עברית', format: 'Stream', bitrate: '' },
 
                         // Dance
-                        { name: 'ClubRadio.cz', url: 'https://icecast2.play.cz/Clubradio.mp3', genre: 'דאנס' },
-                        { name: 'Clubbeat Radio', url: 'https://mp3stream4.abradio.cz/clubbeat128.mp3', genre: 'דאנס' },
-                        { name: 'Helax 93.7', url: 'https://19993.live.streamtheworld.com/RADIO_HELAX_128.mp3', genre: 'דאנס' },
-                        { name: 'Hotmixradio Dance', url: 'https://mp3-6.hotmixradios.net:8080/;dance', genre: 'דאנס' },
-                        { name: 'Intense Radio', url: 'https://stream.intenseradio.net:8000/live', genre: 'דאנס' },
-                        { name: 'Basslover.fm', url: 'https://s4.relay-basslover.de:9000/', genre: 'דאנס' },
-                        { name: 'DJ Buzz Radio', url: 'https://djbuzz.stream2net.eu:8010/', genre: 'דאנס' },
-                        { name: 'Click2Dance', url: 'https://listen.clickfm.co.il/click2dance', genre: 'דאנס' },
-                        
-                        // 80s
-                        { name: 'RAM FM 80s Hit Radio', url: 'https://85.12.6.10:8082/;', genre: '80s' },
-
-                        // 60s
-                        { name: 'All 60s All The Time', url: 'https://23.92.61.227:8500/;', genre: '60s' },
+                        { name: 'ClubRadio.cz', url: 'https://icecast2.play.cz/Clubradio.mp3', genre: 'דאנס', language: 'צ׳כית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'Helax 93.7', url: 'https://20853.live.streamtheworld.com/RADIO_HELAX.mp3', genre: 'דאנס', language: 'צ׳כית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'Hotmixradio Dance', url: 'https://streaming.hotmixradio.fr/hotmixradio-dance-128.mp3', genre: 'דאנס', language: 'צרפתית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'Intense Radio', url: 'https://intenseradio.out.airtime.pro/intenseradio_a', genre: 'דאנס', language: 'בינלאומי', format: 'AAC', bitrate: '' },
+                        { name: 'Basslover.fm', url: 'https://streams.basslover.de/main.mp3', genre: 'דאנס', language: 'גרמנית', format: 'MP3', bitrate: '' },
+                        { name: 'DJ Buzz Radio', url: 'https://str.dj-buzz.com/live.mp3', genre: 'דאנס', language: 'בינלאומי', format: 'MP3', bitrate: '' },
+                        { name: 'Click2Dance', url: 'https://listen.clickfm.co.il/click2dance', genre: 'דאנס', language: 'בינלאומי', format: 'MP3', bitrate: '128kbps' },
 
                         // Oldies
-                        { name: 'ANTENNE BAYERN Oldies', url: 'https://mp3channels.webradio.antenne.de/oldies-but-goldies', genre: 'להיטי פעם' },
+                        { name: 'ANTENNE BAYERN Oldies', url: 'https://mp3channels.webradio.antenne.de/oldies-but-goldies', genre: 'להיטי פעם', language: 'גרמנית', format: 'MP3', bitrate: '128kbps' },
 
                         // Country
-                        { name: 'Hot Country', url: 'https://stream1.accuradio.com:8008', genre: 'קאנטרי פולק' },
-                        { name: 'Rádio Country', url: 'https://mp3stream4.abradio.cz/country128.mp3', genre: 'קאנטרי פולק' },
-                        { name: '181.FM - Highway 181', url: 'https://108.61.73.119:8018', genre: 'קאנטרי פולק' },
-                        { name: 'Nashville R&R', url: 'https://us2.internet-radio.com:8362/stream', genre: 'קאנטרי פולק' },
+                        { name: '181.FM - Highway 181', url: 'https://listen.181fm.com/181-highway_128k.mp3', genre: 'קאנטרי פולק', language: 'אנגלית', format: 'MP3', bitrate: '128kbps' },
 
                         // Classical
-                        { name: 'AccuClassical', url: 'https://stream1.accuradio.com:8038', genre: 'קלאסית' },
-                        { name: 'Classical WETA 90.9 FM', url: 'https://stream.weta.org:8011/fmlive', genre: 'קלאסית' },
-                        { name: 'M2 CLASSIC', url: 'https://87.98.151.43:9000', genre: 'קלאסית' },
+                        { name: 'Classical WETA 90.9 FM', url: 'https://weta.streamguys1.com/weta-classical', genre: 'קלאסית', language: 'אנגלית', format: 'MP3', bitrate: '' },
+                        { name: 'M2 CLASSIC', url: 'https://streams.m2radio.fr/m2classic_128k.mp3', genre: 'קלאסית', language: 'צרפתית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'WKSU Classical', url: 'https://wksu.streamguys1.com/wksu-classical-mp3', genre: 'קלאסית', language: 'אנגלית', format: 'MP3', bitrate: '' },
 
                         // DnB
-                        { name: 'DNBRADIO', url: 'https://nrgetik.streams.dnbradio.at.ilovedrumnbass.com:8000', genre: 'דראם נ בייס' },
-                        { name: 'Bassdrive', url: 'https://stream-06.shoutcast.com:8002/bassdrive_mp3_56kbps', genre: 'דראם נ בייס' },
-                        { name: 'JungleTrain.net', url: 'https://stream1.jungletrain.net:8000/', genre: 'דראם נ בייס' },
-                        { name: 'Bassjunkees', url: 'https://plays.on.128.cause.too.poor.for.192.at.bassjunkees.com:8128/', genre: 'דראם נ בייס' },
+                        { name: 'DNBRADIO', url: 'https://dnb.dnbradio.com/dnbradio_main.mp3', genre: 'דראם נ בייס', language: 'בינלאומי', format: 'MP3', bitrate: '' },
+                        { name: 'Bassdrive', url: 'https://streams.bassdrive.com/bassdrive_1.mp3', genre: 'דראם נ בייס', language: 'בינלאומי', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'JungleTrain.net', url: 'https://stream.jungletrain.net/', genre: 'דראם נ בייס', language: 'בינלאומי', format: 'Stream', bitrate: '' },
                         
                         // Electro
-                        { name: 'Insomniafm.com', url: 'https://75.126.64.105:8077/', genre: 'אלקטרו' },
-                        { name: 'Space Station Soma', url: 'https://207.200.96.231:8012', genre: 'אלקטרו' },
-                        { name: 'Proton Radio', url: 'https://www.protonradio.com/proton.m3u', genre: 'אלקטרו' },
-                        { name: 'Teuto Radio', url: 'https://rs3.radiostreamer.de:8200/', genre: 'אלקטרו' },
+                        { name: 'Proton Radio', url: 'https://radio.protonradio.com/stream/320', genre: 'אלקטרו', language: 'בינלאומי', format: 'Stream', bitrate: '320kbps' },
+                        { name: 'Teuto Radio', url: 'https://teutoradio.stream.laut.fm/teutoradio', genre: 'אלקטרו', language: 'גרמנית', format: 'MP3', bitrate: '' },
 
                         // Funk
-                        { name: 'Hotmixradio Funky', url: 'https://87.98.129.133:1755', genre: 'פאנק' },
-                        { name: 'LUXFUNK RADIO', url: 'https://live.luxfunkradio.com:8200/', genre: 'פאנק' },
-                        { name: 'WEFUNK Radio', url: 'https://207.200.96.226:8018/;stream.mp3', genre: 'פאנק' },
-
-                        // Hardcore
-                        { name: 'Fajn Rádio Hardcore', url: 'https://ice.abradio.cz:8000/fajnhardcore128.mp3', genre: 'הארדקור' },
+                        { name: 'Hotmixradio Funky', url: 'https://streaming.hotmixradio.fr/hotmixradio-funky-128.mp3', genre: 'פאנק', language: 'צרפתית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'LUXFUNK RADIO', url: 'https://live.luxfunkradio.com:8200/', genre: 'פאנק', language: 'הונגרית', format: 'Stream', bitrate: '' },
+                        { name: 'WEFUNK Radio', url: 'https://www.wefunkradio.com/play/stream.mp3', genre: 'פאנק', language: 'אנגלית', format: 'MP3', bitrate: '64kbps' },
                         
                         // Hip Hop
-                        { name: 'beatbasement.com', url: 'https://serv1.beatbasement.com:9622/', genre: 'היפ הופ' },
-                        { name: 'HOT 108 JAMZ', url: 'https://jbmedia-edge1.cdnstream.com/hot108', genre: 'היפ הופ' },
-                        { name: 'Radio HipHop', url: 'https://listen.clickfm.co.il/hip.mp3', genre: 'היפ הופ' },
+                        { name: 'HOT 108 JAMZ', url: 'https://jbmedia-edge1.cdnstream.com/hot108', genre: 'היפ הופ', language: 'אנגלית', format: 'MP3', bitrate: '' },
+                        { name: 'Radio HipHop', url: 'https://listen.clickfm.co.il/hip.mp3', genre: 'היפ הופ', language: 'בינלאומי', format: 'MP3', bitrate: '' },
                         
                         // Rock
-                        { name: 'Rádio Rock', url: 'https://nashe1.hostingradio.ru:80/rock-128.mp3', genre: 'רוק' },
-                        { name: 'Rádio Rock 90', url: 'https://jfm1.hostingradio.ru:14536/rock90.mp3', genre: 'רוק' },
-                        { name: 'Rádio Rock 80', url: 'https://jfm1.hostingradio.ru:14536/rock80.mp3', genre: 'רוק' },
-                        { name: 'Rádio Rock 70', url: 'https://jfm1.hostingradio.ru:14536/rock70.mp3', genre: 'רוק' },
-                        { name: 'Best of Rock', url: 'https://mp3stream4.abradio.cz/bestofrock128.mp3', genre: 'רוק' },
-                        { name: 'Oldies Rock', url: 'https://mp3stream4.abradio.cz/oldiesrock128.mp3', genre: 'רוק' },
-                        { name: 'Radio Beat', url: 'https://icecast2.play.cz/radiobeat128.mp3', genre: 'רוק' },
-                        { name: 'Čas Rock Radio', url: 'https://icecast7.play.cz/casrock128.mp3', genre: 'רוק' },
-                        { name: 'ROCK ANTENNE', url: 'https://mp3channels.webradio.antenne.de/rockantenne', genre: 'רוק' },
+                        { name: 'Rádio Rock', url: 'https://nashe1.hostingradio.ru/rock-128.mp3', genre: 'רוק', language: 'רוסית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'Radio Beat', url: 'https://icecast2.play.cz/radiobeat128.mp3', genre: 'רוק', language: 'צ׳כית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'Čas Rock Radio', url: 'https://icecast7.play.cz/casrock128.mp3', genre: 'רוק', language: 'צ׳כית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'ROCK ANTENNE', url: 'https://mp3channels.webradio.antenne.de/rockantenne', genre: 'רוק', language: 'גרמנית', format: 'MP3', bitrate: '' },
 
                         // Jazz
-                        { name: 'Rádio Jazz Legends', url: 'https://jfm1.hostingradio.ru:14536/jlstream.mp3', genre: 'ג`אז' },
-                        { name: 'Rádio Smooth Jazz', url: 'https://jfm1.hostingradio.ru:14536/sjstream.mp3', genre: 'ג`אז' },
-                        { name: 'Rádio Jazz Vocal', url: 'https://jfm1.hostingradio.ru:14536/jvstream.mp3', genre: 'ג`אז' },
-                        { name: 'Rádio Instrumental Jazz', url: 'https://jfm1.hostingradio.ru:14536/ijstream.mp3', genre: 'ג`אז' },
-                        { name: 'Cesky Rozhlas Jazz', url: 'https://icecast1.play.cz/crojazz128.mp3', genre: 'ג`אז' },
-                        { name: 'Love Smooth Jazz', url: 'https://airspectrum.cdnstream1.com:8102/1283_192', genre: 'ג`אז' },
-                        { name: 'Smooth Jazz Tampa Bay', url: 'https://us2.internet-radio.com:8208/', genre: 'ג`אז' },
-                        { name: 'Smooth Jazz CD101.9 New York', url: 'https://us1.internet-radio.com:8144/', genre: 'ג`אז' },
-                        { name: 'Smooth Jazz Florida', url: 'https://us1.internet-radio.com:11094/', genre: 'ג`אז' },
+                        { name: 'Cesky Rozhlas Jazz', url: 'https://icecast1.play.cz/crojazz128.mp3', genre: 'ג`אז', language: 'צ׳כית', format: 'MP3', bitrate: '128kbps' },
 
                         // Metal
-                        { name: 'Rádio Metál', url: 'https://jfm1.hostingradio.ru:14536/metal.mp3', genre: 'מטאל' },
+                        { name: 'Rádio Metál', url: 'https://jfm1.hostingradio.ru/metal.mp3', genre: 'מטאל', language: 'רוסית', format: 'MP3', bitrate: '' },
 
                         // Punk
-                        { name: 'Rádio Nashe Punks', url: 'https://nashe1.hostingradio.ru/nashepunks.mp3', genre: 'פאנק' },
+                        { name: 'Rádio Nashe Punks', url: 'https://nashe1.hostingradio.ru/nashepunks.mp3', genre: 'פאנק', language: 'רוסית', format: 'MP3', bitrate: '' },
 
                         // Russian
-                        { name: 'Rádio Ultra', url: 'https://nashe1.hostingradio.ru:80/ultra-192.mp3', genre: 'רדיו רוסי' },
-                        { name: 'Rádio Nashe', url: 'https://nashe1.hostingradio.ru:80/nashe-128.mp3', genre: 'רדיו רוסי' },
-                        { name: 'Nashe 2.0', url: 'https://nashe1.hostingradio.ru:18000/nashe20-128.mp3', genre: 'רדיו רוסי' },
-                        { name: 'Nashe Ekb 94.8', url: 'https://nasheekt.hostingradio.ru:80/nasheekt128.mp3', genre: 'רדיו רוסי' },
-                        { name: 'Nashe St. Peterburg', url: 'https://nashe1.hostingradio.ru:80/nashespb128.mp3', genre: 'רדיו רוסי' },
-                        { name: 'Nashe Classic', url: 'https://nashe1.hostingradio.ru/nasheclassic.mp3', genre: 'רדיו רוסי' },
-                        { name: 'Nashe Songs', url: 'https://nashe1.hostingradio.ru/nashesongs.mp3', genre: 'רדיו רוסי' },
+                        { name: 'Rádio Ultra', url: 'https://nashe1.hostingradio.ru/ultra-192.mp3', genre: 'רדיו רוסי', language: 'רוסית', format: 'MP3', bitrate: '192kbps' },
+                        { name: 'Rádio Nashe', url: 'https://nashe1.hostingradio.ru/nashe-128.mp3', genre: 'רדיו רוסי', language: 'רוסית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'Nashe 2.0', url: 'https://nashe1.hostingradio.ru:18000/nashe20-128.mp3', genre: 'רדיו רוסי', language: 'רוסית', format: 'MP3', bitrate: '128kbps' },
                         
                         // Czech
-                        { name: 'Černá Hora', url: 'https://20853.live.streamtheworld.com/HITRADIO_CERNAHORA.mp3', genre: 'תחנות צ`כיות' },
-                        { name: 'Radiožurnál', url: 'https://icecast8.play.cz/cro1-128.mp3', genre: 'תחנות צ`כיות' },
-                        { name: 'Vltava', url: 'https://icecast5.play.cz/cro3-128.mp3', genre: 'תחנות צ`כיות' },
-                        { name: 'ČRo Hradec Králové', url: 'https://icecast2.play.cz/crohk128.mp3', genre: 'תחנות צ`כיות' },
-                        { name: 'ČRo Plus', url: 'https://icecast1.play.cz/croplus32.mp3', genre: 'תחנות צ`כיות' },
-                        { name: 'Český Impuls', url: 'https://icecast6.play.cz/cesky-impuls.mp3', genre: 'תחנות צ`כיות' },
-                        { name: 'Evropa 2', url: 'https://playerservices.streamtheworld.com/api/livestream-redirect/EVROPA2AAC.aac', genre: 'תחנות צ`כיות' },
-                        { name: 'Frekvence 1', url: 'https://playerservices.streamtheworld.com/api/livestream-redirect/FREKVENCE1AAC.aac', genre: 'תחנות צ`כיות' },
+                        { name: 'Černá Hora', url: 'https://20853.live.streamtheworld.com/HITRADIO_CERNAHORA.mp3', genre: 'תחנות צ`כיות', language: 'צ׳כית', format: 'MP3', bitrate: '' },
+                        { name: 'Radiožurnál', url: 'https://icecast8.play.cz/cro1-128.mp3', genre: 'תחנות צ`כיות', language: 'צ׳כית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'Vltava', url: 'https://icecast5.play.cz/cro3-128.mp3', genre: 'תחנות צ`כיות', language: 'צ׳כית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'ČRo Hradec Králové', url: 'https://icecast2.play.cz/crohk128.mp3', genre: 'תחנות צ`כיות', language: 'צ׳כית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'ČRo Plus', url: 'https://icecast1.play.cz/croplus32.mp3', genre: 'תחנות צ`כיות', language: 'צ׳כית', format: 'MP3', bitrate: '32kbps' },
+                        { name: 'Český Impuls', url: 'https://icecast6.play.cz/cesky-impuls.mp3', genre: 'תחנות צ`כיות', language: 'צ׳כית', format: 'MP3', bitrate: '' },
+                        { name: 'Evropa 2', url: 'https://playerservices.streamtheworld.com/api/livestream-redirect/EVROPA2AAC.aac', genre: 'תחנות צ`כיות', language: 'צ׳כית', format: 'AAC', bitrate: '' },
+                        { name: 'Frekvence 1', url: 'https://playerservices.streamtheworld.com/api/livestream-redirect/FREKVENCE1AAC.aac', genre: 'תחנות צ`כיות', language: 'צ׳כית', format: 'AAC', bitrate: '' },
 
-                        // Různé
-                        { name: 'ANTENNE BAYERN', url: 'https://mp3channels.webradio.antenne.de/antenne', genre: 'שונות' },
-                        { name: '95.5 Charivari', url: 'https://rs5.stream24.net/stream', genre: 'שונות' },
-                        { name: 'Radio Chantre TWO', url: 'https://62.75.220.151:8008/live.mp3', genre: 'שונות' },
-                        { name: 'Ballermann Radio', url: 'https://rs40.stream24.net/ballermann-radio.mp3', genre: 'שונות' },
-                        { name: 'Brum Radio', url: 'https://uk3.internet-radio.com:11168/live', genre: 'שונות' },
-                        { name: 'ANTENNE BAYERN Chillout', url: 'https://mp3channels.webradio.de/chillout', genre: 'שונות' },
-                        { name: 'esRadio', url: 'https://livestreaming2.esradio.fm:8000/stream64.mp3', genre: 'שונות' },
-                        { name: 'Jamendo Lounge', url: 'https://streaming208.radionomy.com:80/JamendoLounge', genre: 'שונות' },
-                        { name: 'Joy Radio', url: 'https://uk5.internet-radio.com:8174/stream', genre: 'שונות' },
-                        { name: 'MEGATON CAFE RADIO', url: 'https://us2.internet-radio.com:8443/stream', genre: 'שונות' },
-                        { name: 'Monte Carlo', url: 'https://air.radiorecord.ru:8104/monte', genre: 'שונות' },
-                        { name: 'Offradio', url: 'https://s3.yesstreaming.net:7062/stream', genre: 'שונות' },
-                        { name: 'Pandashow Radio', url: 'https://streaming308.radionomy.com/pandashowradio', genre: 'שונות' },
-                        { name: 'RADIO 1 (Bulgaria)', url: 'https://stream.radioreklama.bg:80/radio1128', genre: 'שונות' },
-                        { name: 'Radio Arabella', url: 'https://rs6.stream24.net/stream', genre: 'שונות' },
-                        { name: 'Radio Corporacion', url: 'https://streaming312.radionomy.com/RadioCorporacion', genre: 'שונות' },
-                        { name: 'RADIO ENERGY', url: 'https://stream.radioreklama.bg:80/nrj128', genre: 'שונות' },
-                        { name: 'Eskador Radio Holland', url: 'https://212.96.160.160:8012/', genre: 'שונות' },
-                        { name: 'Radio Sonic Romania', url: 'https://37.157.195.23:8038/', genre: 'שונות' },
-                        { name: 'RadioTop20 107.4FM', url: 'https://37.157.195.23:8012/', genre: 'שונות' },
-                        { name: 'Radio Record', url: 'https://air.radiorecord.ru:8101/rr_128', genre: 'שונות' },
-                        { name: 'Radio Shtorm', url: 'https://live.shtorm.fm:8000/mp3', genre: 'שונות' },
-                        { name: 'RadioClick FM', url: 'https://listen.clickfm.co.il/clickfm', genre: 'שונות' },
+                        // Miscellaneous
+                        { name: 'ANTENNE BAYERN', url: 'https://mp3channels.webradio.antenne.de/antenne', genre: 'שונות', language: 'גרמנית', format: 'MP3', bitrate: '' },
+                        { name: '95.5 Charivari', url: 'https://rs5.stream24.net/stream', genre: 'שונות', language: 'גרמנית', format: 'Stream', bitrate: '' },
+                        { name: 'Ballermann Radio', url: 'https://rs40.stream24.net/ballermann-radio.mp3', genre: 'שונות', language: 'גרמנית', format: 'MP3', bitrate: '' },
+                        { name: 'ANTENNE BAYERN Chillout', url: 'https://mp3channels.webradio.de/chillout', genre: 'שונות', language: 'גרמנית', format: 'MP3', bitrate: '' },
+                        { name: 'esRadio', url: 'https://livestreaming2.esradio.fm:8000/stream64.mp3', genre: 'שונות', language: 'ספרדית', format: 'MP3', bitrate: '64kbps' },
+                        { name: 'Jamendo Lounge', url: 'https://prod-1.jamendo.com/JamendoLounge.mp3', genre: 'שונות', language: 'בינלאומי', format: 'MP3', bitrate: '' },
+                        { name: 'Monte Carlo', url: 'https://air.radiorecord.ru:8104/monte', genre: 'שונות', language: 'רוסית', format: 'MP3', bitrate: '' },
+                        { name: 'Offradio', url: 'https://s3.yesstreaming.net:7062/stream', genre: 'שונות', language: 'יוונית', format: 'Stream', bitrate: '' },
+                        { name: 'RADIO 1 (Bulgaria)', url: 'https://stream.radioreklama.bg:80/radio1128', genre: 'שונות', language: 'בולגרית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'Radio Arabella', url: 'https://rs6.stream24.net/stream', genre: 'שונות', language: 'גרמנית', format: 'Stream', bitrate: '' },
+                        { name: 'RADIO ENERGY', url: 'https://stream.radioreklama.bg:80/nrj128', genre: 'שונות', language: 'בולגרית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'Radio Record', url: 'https://air.radiorecord.ru:8101/rr_128', genre: 'שונות', language: 'רוסית', format: 'MP3', bitrate: '128kbps' },
+                        { name: 'Radio Shtorm', url: 'https://live.shtorm.fm:8000/mp3', genre: 'שונות', language: 'רוסית', format: 'MP3', bitrate: '' },
+                        { name: 'RadioClick FM', url: 'https://listen.clickfm.co.il/clickfm', genre: 'שונות', language: 'בינלאומי', format: 'MP3', bitrate: '' },
+                        { name: 'Z88.3', url: 'https://ice2.zradio.org/z/high.mp3', genre: 'שונות', language: 'אנגלית', format: 'MP3', bitrate: '' },
                     ];
 
                     const genresMap = new Map();
