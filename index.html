@@ -13,6 +13,14 @@
     <!-- Favicon (můžete změnit) -->
     <link rel="icon" type="image/jpg" href="/img/gimologo2.jpg">
 
+    <!-- PWA & Mobile App Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#111827">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Gimo Nástroje">
+    <link rel="apple-touch-icon" href="img/icons/icon-192x192.png">
+
     <style>
         /* --- סגנונות בסיסיים --- */
         html, body { 
@@ -44,7 +52,7 @@
                     <li><a href="index.html" class="text-gray-300 hover:text-white transition-colors">ראשי</a></li>
                     <li><a href="send.html" class="text-gray-300 hover:text-white transition-colors">שולח הודעות</a></li>
                     <li><a href="machsevon.html" class="text-gray-300 hover:text-white transition-colors">מחשבון</a></li>
-                    <li><a href="barcode.html" class="text-gray-300 hover:text-white transition-colors">יצירת קודים</a></li>
+                    <li><a href="qr.html" class="text-gray-300 hover:text-white transition-colors">יצירת קודים</a></li>
                     <li><a href="radio.html" class="text-gray-300 hover:text-white transition-colors">אוליין רדיו</a></li>
                     <li><a href="#" class="text-gray-300 hover:text-white transition-colors">קישור 2</a></li>
                     <li><a href="#" class="text-gray-300 hover:text-white transition-colors">קישור 3</a></li>
@@ -63,24 +71,16 @@
             <!-- מסגרת עם רקע כהה -->
             <div class="text-center border-4 border-groove border-black rounded-3xl p-4 sm:p-6 bg-black bg-opacity-70 text-white">
                 
-                <!-- ====================================================== -->
-                <!-- כאן יוכנס תוכן הדף שלך -->
-                <!-- ====================================================== -->
-                
                 <section>
                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-4">
                         <a href="send.html" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 px-4 rounded-lg transition-colors flex items-center justify-center text-center">שולח הודעות</a>
                         <a href="machsevon.html" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 px-4 rounded-lg transition-colors flex items-center justify-center text-center">מחשבון</a>
-                        <a href="barcode.html" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 px-4 rounded-lg transition-colors flex items-center justify-center text-center">יצירת קודים</a>
+                        <a href="qr.html" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 px-4 rounded-lg transition-colors flex items-center justify-center text-center">יצירת קודים</a>
                         <a href="radio.html" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 px-4 rounded-lg transition-colors flex items-center justify-center text-center">אונליין רדיו</a>
                         <a href="#" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 px-4 rounded-lg transition-colors flex items-center justify-center text-center">קישור 2</a>
                         <a href="#" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 px-4 rounded-lg transition-colors flex items-center justify-center text-center">קישור 3</a>
                     </div>
                 </section>
-                
-                <!-- ====================================================== -->
-                <!-- סוף תוכן הדף -->
-                <!-- ====================================================== -->
 
             </div>
         </main>
@@ -137,10 +137,7 @@
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('app', () => ({
-                // --- הגדרת משתנים עבור הדף ---
                 title: 'דף הבית',
-                
-                // --- נתונים עבור שיתוף ---
                 isShareModalOpen: false,
                 isNativeShareSupported: false,
                 sharePlatforms: [
@@ -157,16 +154,12 @@
                     { name: 'print', title: 'הדפסה', icon: 'fas fa-print', color: 'text-gray-400', label: 'הדפסה' },
                     { name: 'copy', title: 'העתקת כתובת', icon: 'fas fa-copy', color: 'text-gray-400', label: 'העתק' },
                 ],
-
-                // --- פונקציה שרצה אחרי טעינת הדף ---
                 init() {
                     console.log('תבנית Alpine.js אותחלה.');
                     if (navigator.share) {
                         this.isNativeShareSupported = true;
                     }
                 },
-
-                // --- הגדרת פונקציות מותאמות אישית ---
                 async share(platform) {
                     const url = window.location.href;
                     const title = document.title;
@@ -194,7 +187,6 @@
                     }
                     window.open(shareUrl, '_blank', 'width=600,height=400,scrollbars=yes,toolbar=yes,resizable=yes');
                 },
-
                 copyToClipboard() {
                     const textToCopy = window.location.href;
                     const textArea = document.createElement('textarea');
@@ -213,5 +205,17 @@
         });
     </script>
     
+    <script>
+        // Registrace Service Workeru pro PWA
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js').then(registration => {
+              console.log('ServiceWorker: Registrace úspěšná, rozsah: ', registration.scope);
+            }, err => {
+              console.log('ServiceWorker: Registrace selhala: ', err);
+            });
+          });
+        }
+    </script>
 </body>
 </html>

@@ -14,6 +14,14 @@
     <!-- Favicon -->
     <link rel="icon" type="image/jpg" href="img/gimologo2.jpg">
 
+    <!-- PWA & Mobile App Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#111827">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Gimo Nástroje">
+    <link rel="apple-touch-icon" href="img/icons/icon-192x192.png">
+
     <!-- Vlastní styly -->
     <link rel="stylesheet" href="css/style.css">
     <style>
@@ -72,7 +80,7 @@
                     <li><a href="index.html" class="text-gray-300 hover:text-white transition-colors">ראשי</a></li>
                     <li><a href="send.html" class="text-gray-300 hover:text-white transition-colors">שולח הודעות</a></li>
                     <li><a href="machsevon.html" class="text-gray-300 hover:text-white transition-colors">מחשבון</a></li>
-                    <li><a href="barcode.html" class="text-white font-bold transition-colors">יצירת קודים</a></li>
+                    <li><a href="qr.html" class="text-white font-bold transition-colors">יצירת קודים</a></li>
                     <li><a href="radio.html" class="text-gray-300 hover:text-white transition-colors">אוליין רדיו</a></li>
                 </ul>
             </div>
@@ -157,7 +165,21 @@
 
         <!-- Modální okno pro sdílení -->
         <div x-show="isShareModalOpen" x-transition class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
-           <!-- Obsah modálního okna zde... -->
+           <div @click.away="isShareModalOpen = false" 
+                 class="bg-gray-800 rounded-2xl p-6 border border-gray-700 shadow-xl w-full max-w-lg">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold">שיתוף דף</h3>
+                    <button @click="isShareModalOpen = false" class="text-gray-400 hover:text-white">&times;</button>
+                </div>
+                <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4">
+                    <template x-for="platform in sharePlatforms" :key="platform.name">
+                        <button x-show="platform.name !== 'system' || isNativeShareSupported" @click="share(platform.name)" :title="platform.title" class="flex flex-col items-center justify-center p-2 rounded-lg hover:bg-gray-700 transition-colors">
+                            <i :class="platform.icon + ' ' + platform.color" class="text-3xl mb-1"></i>
+                            <span class="text-xs" x-text="platform.label"></span>
+                        </button>
+                    </template>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -176,12 +198,32 @@
                 generated: { barcode: false, qr: false, ean: false },
                 errors: { ean: '' },
                 isShareModalOpen: false,
+                isNativeShareSupported: false,
+                sharePlatforms: [
+                    { name: 'system', title: 'שיתוף מערכת', icon: 'fas fa-external-link-alt', color: 'text-purple-400', label: 'מערכת' },
+                    { name: 'whatsapp', title: 'שיתוף בואטסאפ', icon: 'fab fa-whatsapp', color: 'text-green-500', label: 'WhatsApp' },
+                    { name: 'facebook', title: 'שיתוף בפייסבוק', icon: 'fab fa-facebook-f', color: 'text-blue-600', label: 'Facebook' },
+                    { name: 'twitter', title: 'שיתוף בטוויטר', icon: 'fab fa-twitter', color: 'text-blue-400', label: 'Twitter' },
+                    { name: 'telegram', title: 'שיתוף בטלגרם', icon: 'fab fa-telegram-plane', color: 'text-blue-500', label: 'Telegram' },
+                    { name: 'linkedin', title: 'שיתוף בלינקדאין', icon: 'fab fa-linkedin-in', color: 'text-blue-700', label: 'LinkedIn' },
+                    { name: 'email', title: 'שיתוף במייל', icon: 'fas fa-envelope', color: 'text-gray-400', label: 'מייל' },
+                    { name: 'sms', title: 'שיתוף בהודעה', icon: 'fas fa-sms', color: 'text-yellow-500', label: 'SMS' },
+                    { name: 'pinterest', title: 'שיתוף בפינטרסט', icon: 'fab fa-pinterest', color: 'text-red-600', label: 'Pinterest' },
+                    { name: 'reddit', title: 'שיתוף ברדיט', icon: 'fab fa-reddit-alien', color: 'text-orange-500', label: 'Reddit' },
+                    { name: 'print', title: 'הדפסה', icon: 'fas fa-print', color: 'text-gray-400', label: 'הדפסה' },
+                    { name: 'copy', title: 'העתקת כתובת', icon: 'fas fa-copy', color: 'text-gray-400', label: 'העתק' },
+                ],
 
                 get activeTitle() {
                     return this.titles[this.activeTab];
                 },
                 
-                init() { console.log('Code Generator initialized.'); },
+                init() {
+                    console.log('Code Generator initialized.');
+                    if (navigator.share) {
+                        this.isNativeShareSupported = true;
+                    }
+                },
 
                 setActiveTab(tab) { this.activeTab = tab; },
 
@@ -272,10 +314,65 @@
                     a.click();
                     document.body.removeChild(a);
                     if (url.startsWith('blob:')) URL.revokeObjectURL(url);
+                },
+                
+                async share(platform) {
+                    const url = window.location.href;
+                    const title = document.title;
+                    let shareUrl = '';
+                    if (platform === 'system') {
+                        try {
+                            await navigator.share({ title, url });
+                        } catch (err) {
+                            console.warn('שיתוף מקורי אינו מותר בסביבה זו:', err.name);
+                        }
+                        return;
+                    }
+                    switch (platform) {
+                        case 'whatsapp': shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(title)}%0A${encodeURIComponent(url)}`; break;
+                        case 'facebook': shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`; break;
+                        case 'twitter': shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`; break;
+                        case 'telegram': shareUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`; break;
+                        case 'linkedin': shareUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`; break;
+                        case 'email': shareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=ממליץ על%0A%0A${encodeURIComponent(url)}`; break;
+                        case 'sms': shareUrl = `sms:?&body=${encodeURIComponent(title)}%0A${encodeURIComponent(url)}`; break;
+                        case 'pinterest': shareUrl = `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(url)}&description=${encodeURIComponent(title)}`; break;
+                        case 'reddit': shareUrl = `https://reddit.com/submit?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`; break;
+                        case 'print': window.print(); return;
+                        case 'copy': this.copyToClipboard(); return;
+                    }
+                    window.open(shareUrl, '_blank', 'width=600,height=400,scrollbars=yes,toolbar=yes,resizable=yes');
+                },
+
+                copyToClipboard() {
+                    const textToCopy = window.location.href;
+                    const textArea = document.createElement('textarea');
+                    textArea.value = textToCopy;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    
+                    const copyButton = this.sharePlatforms.find(p => p.name === 'copy');
+                    const originalLabel = copyButton.label;
+                    copyButton.label = 'הועתק!';
+                    setTimeout(() => { copyButton.label = originalLabel; }, 2000);
                 }
             }));
         });
     </script>
     
+    <script>
+        // Registrace Service Workeru pro PWA
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js').then(registration => {
+              console.log('ServiceWorker: Registrace úspěšná, rozsah: ', registration.scope);
+            }, err => {
+              console.log('ServiceWorker: Registrace selhala: ', err);
+            });
+          });
+        }
+    </script>
 </body>
 </html>

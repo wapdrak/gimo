@@ -13,6 +13,14 @@
     <!-- Favicon -->
     <link rel="icon" type="image/jpg" href="img/gimologo2.jpg">
 
+    <!-- PWA & Mobile App Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#111827">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Gimo Nástroje">
+    <link rel="apple-touch-icon" href="img/icons/icon-192x192.png">
+
     <style>
         /* --- סגנונות בסיסיים --- */
         html, body { 
@@ -51,10 +59,8 @@
                     <li><a href="index.html" class="text-gray-300 hover:text-white transition-colors">ראשי</a></li>
                     <li><a href="send.html" class="text-gray-300 hover:text-white transition-colors">שולח הודעות</a></li>
                     <li><a href="machsevon.html" class="text-white font-bold transition-colors">מחשבון</a></li>
-                    <li><a href="qr.html" class="text-gray-300 hover:text-white transition-colors">יצירת QR</a></li>
-                    <li><a href="radio.html" class="text-gray-300 hover:text-white transition-colors"></a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-white transition-colors">קישור 2</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-white transition-colors">קישור 3</a></li>
+                    <li><a href="qr.html" class="text-gray-300 hover:text-white transition-colors">יצירת קודים</a></li>
+                    <li><a href="radio.html" class="text-gray-300 hover:text-white transition-colors">אוליין רדיו</a></li>
                 </ul>
             </div>
         </nav>
@@ -180,12 +186,6 @@
         </footer>
 
         <div x-show="isShareModalOpen" 
-             x-transition:enter="transition ease-out duration-300"
-             x-transition:enter-start="opacity-0"
-             x-transition:enter-end="opacity-100"
-             x-transition:leave="transition ease-in duration-200"
-             x-transition:leave-start="opacity-100"
-             x-transition:leave-end="opacity-0"
              class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
              style="display: none;">
             <div @click.away="isShareModalOpen = false" 
@@ -361,5 +361,17 @@
         });
     </script>
     
+    <script>
+        // Registrace Service Workeru pro PWA
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js').then(registration => {
+              console.log('ServiceWorker: Registrace úspěšná, rozsah: ', registration.scope);
+            }, err => {
+              console.log('ServiceWorker: Registrace selhala: ', err);
+            });
+          });
+        }
+    </script>
 </body>
 </html>

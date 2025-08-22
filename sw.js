@@ -1,0 +1,41 @@
+// Název cache
+const CACHE_NAME = 'gimo-nastroje-cache-v1';
+// Soubory, které se mají uložit do mezipaměti
+const urlsToCache = [
+  '/',
+  '/index.html',
+  '/send.html',
+  '/machsevon.html',
+  '/qr.html',
+  '/radio.html',
+  '/css/style.css',
+  'https://cdn.tailwindcss.com',
+  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css'
+];
+
+// Instalace Service Workeru a uložení souborů do cache
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => {
+        console.log('Opened cache');
+        return cache.addAll(urlsToCache);
+      })
+  );
+});
+
+// Zachytávání požadavků a servírování z cache (pokud jsou dostupné)
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => {
+        // Pokud je soubor v cache, vrátíme ho
+        if (response) {
+          return response;
+        }
+        // Jinak ho stáhneme ze sítě
+        return fetch(event.request);
+      }
+    )
+  );
+});
