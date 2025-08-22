@@ -1,11 +1,11 @@
 {
-    "name": "Gimo Nástroje",
-    "short_name": "Gimo",
+    "name": "כלים של גימו",
+    "short_name": "גימו",
     "start_url": "/index.html",
     "display": "standalone",
     "background_color": "#111827",
     "theme_color": "#111827",
-    "description": "Sada online nástrojů od Gimo.",
+    "description": "סט כלים אונליין של גימו.",
     "icons": [
       {
         "src": "img/icons/icon-192x192.jpg",
