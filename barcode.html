@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>יצירת קודים</title>
+    
+    <!-- Tailwind CSS Framework -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpg" href="img/gimologo2.jpg">
+
+    <!-- Vlastní styly -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Specific styles for code containers */
+        .code-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 0.5rem;
+            min-height: 150px;
+        }
+        .code-container svg, .code-container img {
+            width: 100%;
+            height: auto;
+            max-width: 256px;
+        }
+        #qrcode-container {
+            min-height: 284px;
+        }
+        /* Style for reset button inside input fields */
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .reset-btn {
+            position: absolute;
+            left: 0.75rem; /* v RTL bude vlevo */
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            padding: 0.25rem;
+        }
+        .reset-btn:hover {
+            color: #e5e7eb;
+        }
+        /* Adjust padding for inputs to not overlap with button */
+        .input-with-reset {
+            padding-left: 2.5rem; /* Přidáme místo pro tlačítko */
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-200 flex flex-col min-h-screen">
+
+    <div class="flex flex-col min-h-screen" x-data="codeGenerator" x-init="init()">
+        
+        <!-- Navigační menu -->
+        <nav class="z-50 bg-black bg-opacity-50 backdrop-blur-sm border-b border-gray-700 shadow-lg">
+            <div class="max-w-7xl mx-auto px-4">
+                <ul class="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-sm sm:text-base h-12">
+                    <li><a href="index.html" class="text-gray-300 hover:text-white transition-colors">ראשי</a></li>
+                    <li><a href="send.html" class="text-gray-300 hover:text-white transition-colors">שולח הודעות</a></li>
+                    <li><a href="machsevon.html" class="text-gray-300 hover:text-white transition-colors">מחשבון</a></li>
+                    <li><a href="barcode.html" class="text-white font-bold transition-colors">יצירת קודים</a></li>
+                    <li><a href="radio.html" class="text-gray-300 hover:text-white transition-colors">אוליין רדיו</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Záhlaví -->
+        <header class="w-full p-4 text-center">
+            <h1 class="text-2xl sm:text-4xl font-bold text-white" x-text="activeTitle"></h1>
+        </header>
+
+        <!-- Hlavní obsah -->
+        <main class="w-full max-w-2xl mx-auto flex-grow p-1 sm:p-2">
+            <div class="text-center border-4 border-groove border-black rounded-3xl p-4 sm:p-6 bg-black bg-opacity-70 text-white">
+                
+                <!-- Přepínače -->
+                <div class="flex justify-center flex-wrap gap-2 sm:gap-4 mb-6">
+                    <button @click="setActiveTab('barcode')" :class="{'bg-blue-700 ring-2 ring-white': activeTab === 'barcode', 'bg-blue-500 hover:bg-blue-600': activeTab !== 'barcode'}" class="text-white font-bold py-1.5 px-3 text-sm sm:text-base rounded-lg transition-all">ברקוד Code 128</button>
+                    <button @click="setActiveTab('qr')" :class="{'bg-green-700 ring-2 ring-white': activeTab === 'qr', 'bg-green-500 hover:bg-green-600': activeTab !== 'qr'}" class="text-white font-bold py-1.5 px-3 text-sm sm:text-base rounded-lg transition-all">קוד QR</button>
+                    <button @click="setActiveTab('ean')" :class="{'bg-yellow-700 ring-2 ring-white': activeTab === 'ean', 'bg-yellow-500 hover:bg-yellow-600': activeTab !== 'ean'}" class="text-white font-bold py-1.5 px-3 text-sm sm:text-base rounded-lg transition-all">ברקוד EAN-13</button>
+                </div>
+
+                <!-- Sekce Code 128 -->
+                <div x-show="activeTab === 'barcode'" class="space-y-4 max-w-md mx-auto">
+                    <p class="mb-4 text-gray-300">הזן טקסט או מספרים ליצירת ברקוד.</p>
+                    <div class="input-wrapper">
+                        <input type="text" x-model="text.barcode" @keydown.enter="generateCode" placeholder="הקלד כאן..." class="w-full p-3 bg-gray-800 border-2 border-gray-600 rounded-lg focus:outline-none focus:border-indigo-500 transition text-center input-with-reset">
+                        <button x-show="text.barcode" @click="text.barcode = ''; generated.barcode = false" class="reset-btn" title="נקה שדה"><i class="fas fa-times"></i></button>
+                    </div>
+                    <button @click="generateCode" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg transition-colors flex items-center justify-center text-lg"><i class="fas fa-barcode mr-2"></i> צור ברקוד</button>
+                    <div class="mt-6 code-container" x-ref="barcodeContainer"><span x-show="!generated.barcode" class="text-gray-500">הברקוד שלך יופיע כאן</span></div>
+                    <div x-show="generated.barcode" x-transition class="mt-4 flex flex-col sm:flex-row gap-2">
+                        <button @click="downloadCode('png')" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg"><i class="fas fa-download mr-2"></i> PNG</button>
+                        <button @click="downloadCode('svg')" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"><i class="fas fa-download mr-2"></i> SVG</button>
+                    </div>
+                </div>
+
+                <!-- Sekce QR Code -->
+                <div x-show="activeTab === 'qr'" class="space-y-4 max-w-md mx-auto">
+                    <p class="mb-4 text-gray-300">הזן טקסט או כתובת אתר ליצירת קוד QR.</p>
+                    <div class="input-wrapper">
+                        <textarea x-model="text.qr" placeholder="הקלד כאן..." rows="4" class="w-full p-3 bg-gray-800 border-2 border-gray-600 rounded-lg focus:outline-none focus:border-indigo-500 transition input-with-reset"></textarea>
+                        <button x-show="text.qr" @click="text.qr = ''; generated.qr = false" class="reset-btn" title="נקה שדה"><i class="fas fa-times"></i></button>
+                    </div>
+                    <button @click="generateCode" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg transition-colors flex items-center justify-center text-lg"><i class="fas fa-qrcode mr-2"></i> צור קוד</button>
+                    <div class="mt-6 code-container" id="qrcode-container" x-ref="qrContainer"><span x-show="!generated.qr" class="text-gray-500">הקוד שלך יופיע כאן</span></div>
+                    <div x-show="generated.qr" x-transition class="mt-4 flex flex-col sm:flex-row gap-2">
+                        <button @click="downloadCode('png')" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg"><i class="fas fa-download mr-2"></i> PNG</button>
+                        <button @click="downloadCode('svg')" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"><i class="fas fa-download mr-2"></i> SVG</button>
+                    </div>
+                </div>
+
+                <!-- Sekce EAN-13 -->
+                <div x-show="activeTab === 'ean'" class="space-y-4 max-w-md mx-auto">
+                    <p class="mb-4 text-gray-300">הזן 12 או 13 ספרות ליצירת ברקוד EAN-13.</p>
+                    <div class="input-wrapper">
+                        <input type="text" x-model="text.ean" @input.debounce.200ms="validateEan" @keydown.enter="generateCode" placeholder="12 או 13 ספרות" 
+                               class="w-full p-3 bg-gray-800 border-2 rounded-lg focus:outline-none transition text-center ltr input-with-reset"
+                               :class="{'border-red-500': errors.ean, 'border-gray-600 focus:border-indigo-500': !errors.ean}">
+                        <button x-show="text.ean" @click="text.ean = ''; errors.ean = ''; generated.ean = false;" class="reset-btn" title="נקה שדה"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div x-show="errors.ean" x-text="errors.ean" class="text-red-400 text-sm mt-1"></div>
+                    <button @click="generateCode" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg transition-colors flex items-center justify-center text-lg"><i class="fas fa-barcode mr-2"></i> צור ברקוד</button>
+                    <div class="mt-6 code-container" x-ref="eanContainer"><span x-show="!generated.ean" class="text-gray-500">הברקוד שלך יופיע כאן</span></div>
+                    <div x-show="generated.ean" x-transition class="mt-4 flex flex-col sm:flex-row gap-2">
+                        <button @click="downloadCode('png')" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg"><i class="fas fa-download mr-2"></i> PNG</button>
+                        <button @click="downloadCode('svg')" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"><i class="fas fa-download mr-2"></i> SVG</button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- Patička -->
+        <footer class="w-full p-2 text-center text-gray-400 mt-4">
+            <div class="flex justify-center items-center mb-2">
+                <button @click="isShareModalOpen = true" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-1 px-3 rounded-lg transition-colors flex items-center text-sm">
+                    <i class="fas fa-share-alt mr-2"></i> שיתוף
+                </button>
+            </div>
+            <p class="text-sm">&copy; 2024 <a href="https://www.gimo.co.il" target="_blank" rel="noopener noreferrer" class="underline hover:text-white">גימו בע"מ</a>. כל הזכויות שמורות.</p>
+        </footer>
+
+        <!-- Modální okno pro sdílení -->
+        <div x-show="isShareModalOpen" x-transition class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
+           <!-- Obsah modálního okna zde... -->
+        </div>
+
+    </div>
+    
+    <!-- Knihovny -->
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-svg@1.1.0/dist/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('codeGenerator', () => ({
+                activeTab: 'barcode',
+                titles: { barcode: 'יצירת ברקוד', qr: 'יצירת קוד QR', ean: 'יצירת ברקוד' },
+                text: { barcode: '', qr: '', ean: '' },
+                generated: { barcode: false, qr: false, ean: false },
+                errors: { ean: '' },
+                isShareModalOpen: false,
+
+                get activeTitle() {
+                    return this.titles[this.activeTab];
+                },
+                
+                init() { console.log('Code Generator initialized.'); },
+
+                setActiveTab(tab) { this.activeTab = tab; },
+
+                validateEan() {
+                    const text = this.text.ean.trim();
+                    if (text && !/^\d{12,13}$/.test(text)) {
+                        this.errors.ean = 'יש להזין 12 או 13 ספרות בדיוק.';
+                    } else {
+                        this.errors.ean = '';
+                    }
+                },
+
+                generateCode() {
+                    const type = this.activeTab;
+                    const text = this.text[type].trim();
+                    const container = this.$refs[type + 'Container'];
+
+                    this.generated[type] = false;
+                    
+                    if (type === 'ean') {
+                        this.validateEan();
+                        if (this.errors.ean) {
+                            container.innerHTML = `<span x-show="!generated.ean" class="text-gray-500">הברקוד שלך יופיע כאן</span>`;
+                            return;
+                        }
+                    }
+
+                    if (!text) {
+                        container.innerHTML = '<span class="text-red-400">אנא הזן טקסט</span>';
+                        return;
+                    }
+
+                    container.innerHTML = '';
+
+                    try {
+                        if (type === 'barcode') {
+                            container.innerHTML = '<svg id="barcode-svg"></svg>';
+                            JsBarcode("#barcode-svg", text, { format: "CODE128", lineColor: "#000", width: 2, height: 80, displayValue: true });
+                        } else if (type === 'qr') {
+                            const svg = new QRCode({ content: text, padding: 2, width: 256, height: 256, ecl: "H", join: true, container: "svg-viewbox" }).svg();
+                            container.innerHTML = svg;
+                        } else if (type === 'ean') {
+                            container.innerHTML = '<svg id="ean-svg"></svg>';
+                            JsBarcode("#ean-svg", text, { format: "EAN13", lineColor: "#000", width: 2, height: 80, displayValue: true, textMargin: 0, fontSize: 14 });
+                        }
+                        this.generated[type] = true;
+                    } catch (e) {
+                        console.error(e);
+                        container.innerHTML = `<span class="text-red-400">שגיאה ביצירת הקוד. בדוק את הטקסט שהוזן.</span>`;
+                    }
+                },
+
+                downloadCode(format) {
+                    const type = this.activeTab;
+                    if (!this.generated[type]) return;
+
+                    const container = this.$refs[type + 'Container'];
+                    const svgEl = container.querySelector('svg');
+                    const svgData = new XMLSerializer().serializeToString(svgEl);
+                    const filename = `${type}.${format}`;
+
+                    if (format === 'svg') {
+                        const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+                        this.triggerDownload(URL.createObjectURL(blob), filename);
+                    } else if (format === 'png') {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        const svgSize = svgEl.getBoundingClientRect();
+                        
+                        const img = new Image();
+                        img.onload = () => {
+                            canvas.width = (type === 'qr') ? 256 : svgSize.width;
+                            canvas.height = (type === 'qr') ? 256 : svgSize.height;
+                            ctx.fillStyle = 'white';
+                            ctx.fillRect(0, 0, canvas.width, canvas.height);
+                            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                            this.triggerDownload(canvas.toDataURL('image/png'), filename);
+                        };
+                        img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+                    }
+                },
+
+                triggerDownload(url, filename) {
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    if (url.startsWith('blob:')) URL.revokeObjectURL(url);
+                }
+            }));
+        });
+    </script>
+    
+</body>
+</html>
