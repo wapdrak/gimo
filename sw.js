@@ -1,14 +1,14 @@
-// Název cache
-const CACHE_NAME = 'gimo-nastroje-cache-v1';
-// Soubory, které se mají uložit do mezipaměti
+// Název cache - ZVÝŠENÁ VERZE
+const CACHE_NAME = 'gimo-nastroje-cache-v3';
+// Soubory, které se mají uložit do mezipaměti (s relativními cestami)
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/send.html',
-  '/machsevon.html',
-  '/qr.html',
-  '/radio.html',
-  '/css/style.css',
+  './',
+  'index.html',
+  'send.html',
+  'machsevon.html',
+  'qr.html',
+  'radio.html',
+  'css/style.css',
   'https://cdn.tailwindcss.com',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css'
 ];
@@ -37,5 +37,21 @@ self.addEventListener('fetch', event => {
         return fetch(event.request);
       }
     )
+  );
+});
+
+// Aktivace nového Service Workeru a smazání staré cache
+self.addEventListener('activate', event => {
+  const cacheWhitelist = [CACHE_NAME];
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
   );
 });
