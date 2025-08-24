@@ -1,7 +1,8 @@
 {
     "name": "כלים של גימו",
     "short_name": "גימו",
-    "start_url": ".",
+    "start_url": "/gimo/",
+    "scope": "/gimo/",
     "display": "standalone",
     "background_color": "#111827",
     "theme_color": "#111827",
@@ -18,4 +19,4 @@
         "type": "image/jpeg"
       }
     ]
-  }  
+  }
