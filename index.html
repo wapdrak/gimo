@@ -10,8 +10,8 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" xintegrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <!-- Favicon (můžete změnit) -->
-    <link rel="icon" type="image/jpg" href="/img/gimologo2.jpg">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/img/icons/icon-192x192.png">
 
     <!-- PWA & Mobile App Meta Tags -->
     <link rel="manifest" href="manifest.json">
@@ -19,7 +19,44 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="כלים של גימו">
-    <link rel="apple-touch-icon" href="img/icons/icon-192x192.png">
+    <link rel="apple-touch-icon" href="/img/icons/icon-192x192.png">
+    
+    <!-- Schema.org for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "כלים של גימו",
+      "url": "https://wapdrak.github.io/gimo/",
+      "author": {
+        "@type": "Organization",
+        "name": "גימו בע\"מ"
+      },
+      "description": "סט כלים אונליין של גימו, כולל שולח הודעות, מחשבונים, יצירת קודים ורדיו אונליין.",
+      "hasPart": [
+        {
+          "@type": "WebApplication",
+          "name": "שולח הודעות אוניברסלי",
+          "url": "send.html"
+        },
+        {
+          "@type": "WebApplication",
+          "name": "מחשבונים",
+          "url": "machsevon.html"
+        },
+        {
+          "@type": "WebApplication",
+          "name": "יצירת קודים",
+          "url": "qr.html"
+        },
+        {
+          "@type": "WebApplication",
+          "name": "און ליין רדיו",
+          "url": "radio.html"
+        }
+      ]
+    }
+    </script>
 
     <style>
         /* --- סגנונות בסיסיים --- */
@@ -53,9 +90,7 @@
                     <li><a href="send.html" class="text-gray-300 hover:text-white transition-colors">שולח הודעות</a></li>
                     <li><a href="machsevon.html" class="text-gray-300 hover:text-white transition-colors">מחשבון</a></li>
                     <li><a href="qr.html" class="text-gray-300 hover:text-white transition-colors">יצירת קודים</a></li>
-                    <li><a href="radio.html" class="text-gray-300 hover:text-white transition-colors">אוליין רדיו</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-white transition-colors">קישור 2</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-white transition-colors">קישור 3</a></li>
+                    <li><a href="radio.html" class="text-gray-300 hover:text-white transition-colors">אונליין רדיו</a></li>
                 </ul>
             </div>
         </nav>
@@ -77,8 +112,6 @@
                         <a href="machsevon.html" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 px-4 rounded-lg transition-colors flex items-center justify-center text-center">מחשבון</a>
                         <a href="qr.html" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 px-4 rounded-lg transition-colors flex items-center justify-center text-center">יצירת קודים</a>
                         <a href="radio.html" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 px-4 rounded-lg transition-colors flex items-center justify-center text-center">אונליין רדיו</a>
-                        <a href="#" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 px-4 rounded-lg transition-colors flex items-center justify-center text-center">קישור 2</a>
-                        <a href="#" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 px-4 rounded-lg transition-colors flex items-center justify-center text-center">קישור 3</a>
                     </div>
                 </section>
 
@@ -92,7 +125,7 @@
                     <i class="fas fa-share-alt mr-2"></i> שיתוף
                 </button>
             </div>
-            <p class="text-sm">&copy; 2024 <a href="https://www.gimo.co.il" target="_blank" rel="noopener noreferrer" class="underline hover:text-white">גימו בע"מ</a>. כל הזכויות שמורות.</p>
+            <p class="text-sm">&copy; 2024 <a href="https://github.com/wapdrak" target="_blank" rel="noopener noreferrer" class="underline hover:text-white">WapDrak</a>. כל הזכויות שמורות.</p>
         </footer>
 
         <!-- Modální okno pro sdílení -->
