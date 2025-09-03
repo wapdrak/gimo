@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Přesměrování na mapy</title>
+    <style>
+        /* General styling for the page */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f7f6;
+            color: #333;
+            text-align: center;
+            padding: 1rem;
+        }
+        /* Styling for the main content container */
+        .container {
+            padding: 2rem 3rem;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+        }
+        h1 {
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+        }
+        p {
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        /* Styling for the fallback link */
+        a {
+            color: #007aff;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s ease-in-out;
+        }
+        a:hover {
+            border-color: #007aff;
+        }
+        /* Styling for code snippets for better readability */
+        code {
+            background-color: #eef1f1;
+            padding: 0.2em 0.4em;
+            border-radius: 4px;
+            font-family: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="message-container">
+        <h1>Přesměrování...</h1>
+        <p>Probíhá pokus o otevření zadané polohy ve vaší výchozí mapové aplikaci.</p>
+        <p>Pokud se nic nestane, vaše zařízení pravděpodobně nepodporuje odkazy typu <code>geo:</code>, nebo nemáte nainstalovanou žádnou mapovou aplikaci.</p>
+        <p><a id="fallback-link" href="#">Otevřít polohu ručně</a></p>
+    </div>
+
+    <script>
+        // This script runs automatically when the page is loaded
+        window.onload = function() {
+            // 1. Create a URLSearchParams object from the current window's URL query string
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            // 2. Get the value of the 'q' parameter (e.g., 'Gimo' from '?q=Gimo')
+            const searchQuery = urlParams.get('q');
+            
+            // Get references to the HTML elements we might want to change
+            const messageContainer = document.getElementById('message-container');
+            const fallbackLink = document.getElementById('fallback-link');
+
+            // 3. Check if the 'q' parameter exists and has a value
+            if (searchQuery) {
+                // 4. Construct the geo: URI for the search.
+                // The format geo:0,0?q=... is used to search for a location by name.
+                // encodeURIComponent ensures that special characters in the search query are handled correctly.
+                const geoUrl = `geo:0,0?q=${encodeURIComponent(searchQuery)}`;
+                
+                // Update the text and href of the fallback link so it's specific
+                fallbackLink.href = geoUrl;
+                fallbackLink.textContent = `Otevřít "${searchQuery}" v mapách`;
+
+                // 5. Attempt to redirect the browser to the constructed geo: URI
+                // This will trigger the operating system to open a map application.
+                window.location.href = geoUrl;
+                
+            } else {
+                // This block runs if the 'q' parameter is missing from the URL.
+                // It updates the container with an error message.
+                messageContainer.innerHTML = `
+                    <h1>Chyba</h1>
+                    <p style="color: #d93025;">V adrese URL chybí povinný parametr <code>q</code>.</p>
+                    <p>Prosím, doplňte adresu o hledaný výraz, například: <br><code>.../?q=Praha</code></p>
+                `;
+            }
+        };
+    </script>
+</body>
+</html>
