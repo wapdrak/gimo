@@ -56,7 +56,7 @@
             
             if (platform.toUpperCase().indexOf('WIN') !== -1) {
                 // Windows
-                mapUrl = `bingmaps:?q=${encodedQuery}`;
+                mapUrl = `https://www.bing.com/maps?q=${encodedQuery}`;
             } else if (platform.toUpperCase().indexOf('MAC') !== -1 || platform.toUpperCase().indexOf('IPAD') !== -1 || platform.toUpperCase().indexOf('IPHONE') !== -1 || platform.toUpperCase().indexOf('IPOD') !== -1) {
                 // Apple zařízení (macOS, iOS)
                 mapUrl = `https://maps.apple.com/?q=${encodedQuery}`;
