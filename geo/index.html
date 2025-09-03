@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Location Launcher</title>
+    <title>Location Redirect</title>
+    <!-- The redirect meta tag will be inserted here by JavaScript -->
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -67,13 +68,11 @@
 </head>
 <body>
     <div class="container" id="message-container">
-        <h1 id="heading">Open Location</h1>
-        <p id="paragraph">Click the button below to open the specified location in your default map application.</p>
+        <h1 id="heading">Attempting Redirect...</h1>
+        <p id="paragraph">Trying to open the location in your map app. If nothing happens, the redirect may have been blocked. Use the buttons below.</p>
         
-        <!-- The main button for the geo: link will be populated by the script -->
+        <!-- Fallback buttons in case the meta refresh fails -->
         <a id="geo-link" class="button" href="#">Open in Map App</a>
-        
-        <!-- The secondary web link will be populated by the script -->
         <a id="web-link" class="web-link" href="#" target="_blank"></a>
     </div>
 
@@ -87,15 +86,25 @@
             const webLink = document.getElementById('web-link');
 
             if (searchQuery) {
-                // Construct both the geo URI and a standard web map URL
+                // Construct the geo: URL
                 const geoUrl = `geo:0,0?q=${encodeURIComponent(searchQuery)}`;
+                
+                // --- Meta Tag Injection ---
+                // Create a new <meta> element
+                const meta = document.createElement('meta');
+                meta.httpEquiv = 'refresh';
+                // Set content for immediate redirect (0 seconds) to the geo URL
+                meta.content = `0;url=${geoUrl}`;
+                // Append the new meta tag to the document's <head>
+                document.head.appendChild(meta);
+                
+                // --- Fallback UI Setup ---
+                // We still set up the buttons in case the meta refresh is blocked by the browser.
                 const webMapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(searchQuery)}`;
                 
-                // Set up the main button
                 geoLink.href = geoUrl;
                 geoLink.textContent = `Open "${searchQuery}" in Map App`;
 
-                // Set up the secondary web map link
                 webLink.href = webMapUrl;
                 webLink.textContent = `Or search "${searchQuery}" on Google Maps (Web)`;
                 
