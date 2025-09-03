@@ -1,5 +1,5 @@
 <?php
-// --- Geo Redirector (Hybrid with OS Detection) ---
+// --- Geo Redirector (Hybrid with OS Detection v2) ---
 // This script detects the user's operating system to provide the optimal map link,
 // generates a dynamic HTML page that attempts an automatic redirect,
 // and immediately provides visible fallback links.
@@ -18,20 +18,18 @@ if ($searchQuery) {
     $userAgent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
     $mapUrl = ''; // Initialize the map URL for the native app
 
-    if (stripos($userAgent, 'android') !== false) {
-        // Android uses the geo: protocol
+    // Use more robust regex matching for higher accuracy
+    if (preg_match('/android/i', $userAgent)) {
+        // Android
         $mapUrl = "geo:0,0?q=" . $encodedQuery;
-    } elseif (stripos($userAgent, 'iphone') !== false || stripos($userAgent, 'ipad') !== false || stripos($userAgent, 'ipod') !== false || stripos($userAgent, 'macintosh') !== false) {
-        // For Apple devices, the universal web link is most robust.
-        // It works in the browser and prompts to open the native Apple Maps app.
+    } elseif (preg_match('/iphone|ipad|ipod|macintosh/i', $userAgent)) {
+        // Apple (iOS and macOS) - universal web link is most reliable
         $mapUrl = "https://maps.apple.com/?q=" . $encodedQuery;
-    } elseif (stripos($userAgent, 'windows') !== false) {
-        // Windows devices use the bingmaps: protocol to open the native Maps app.
-        // This is the modern standard, replacing older "ms-" prefixed protocols.
+    } elseif (preg_match('/(windows|win32|win64)/i', $userAgent)) {
+        // Windows - use a more robust pattern to catch various identifiers
         $mapUrl = "bingmaps:?q=" . $encodedQuery;
     } else {
-        // Fallback for other OS (Linux, etc.)
-        // The geo: protocol is a reasonable default.
+        // Default fallback for Linux, other OS, or if detection fails
         $mapUrl = "geo:0,0?q=" . $encodedQuery;
     }
 
