@@ -1,101 +1,110 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting to Maps</title>
-    <!-- Using Pico.css for a clean, modern look from a CDN -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+    <title>Location Launcher</title>
     <style>
-        /* A little extra style to vertically center the content */
         body {
-            display: grid;
-            place-items: center;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             min-height: 100vh;
-        }
-        /* Make the container a bit smaller and center text */
-        main.container {
-            max-width: 600px;
+            margin: 0;
+            background-color: #f4f7f6;
+            color: #333;
             text-align: center;
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+        .container {
+            padding: 2rem;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+        h1 {
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+        }
+        p {
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        .button {
+            display: inline-block;
+            background-color: #007aff;
+            color: white !important; /* Ensure text is white */
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin-bottom: 1rem;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .web-link {
+            display: block;
+            color: #555;
+            font-size: 0.9em;
+            text-decoration: underline;
         }
         code {
-            font-size: 0.9em;
+            background-color: #eef1f1;
+            padding: 0.2em 0.4em;
+            border-radius: 4px;
+            font-family: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", monospace;
+            word-wrap: break-word;
         }
     </style>
 </head>
 <body>
-    <!-- Main content container, styled by Pico.css -->
-    <main class="container">
-        <article id="message-container">
-            <h1 id="main-heading">Redirecting...</h1>
-            <p>Attempting to open the specified location in your default maps application.</p>
-            <p>If nothing happens, your device may not support opening map applications directly.</p>
-            <footer>
-                <a id="fallback-link" href="#" role="button">Open location manually</a>
-            </footer>
-        </article>
-    </main>
+    <div class="container" id="message-container">
+        <h1 id="heading">Open Location</h1>
+        <p id="paragraph">Click the button below to open the specified location in your default map application.</p>
+        
+        <!-- The main button for the geo: link will be populated by the script -->
+        <a id="geo-link" class="button" href="#">Open in Map App</a>
+        
+        <!-- The secondary web link will be populated by the script -->
+        <a id="web-link" class="web-link" href="#" target="_blank"></a>
+    </div>
 
-    <!-- CDN for UAParser.js library for reliable OS detection -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ua-parser-js/1.0.37/ua-parser.min.js"></script>
-    
     <script>
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const searchQuery = urlParams.get('q');
             
             const messageContainer = document.getElementById('message-container');
-            const fallbackLink = document.getElementById('fallback-link');
-            const mainHeading = document.getElementById('main-heading');
+            const geoLink = document.getElementById('geo-link');
+            const webLink = document.getElementById('web-link');
 
             if (searchQuery) {
-                const encodedQuery = encodeURIComponent(searchQuery);
-                let mapUrl;
+                // Construct both the geo URI and a standard web map URL
+                const geoUrl = `geo:0,0?q=${encodeURIComponent(searchQuery)}`;
+                const webMapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(searchQuery)}`;
+                
+                // Set up the main button
+                geoLink.href = geoUrl;
+                geoLink.textContent = `Open "${searchQuery}" in Map App`;
 
-                // --- Using UAParser.js for more reliable OS detection ---
-                const parser = new UAParser();
-                const osInfo = parser.getOS();
-                const os = osInfo.name || 'Unknown'; // Default to 'Unknown' if not found
-                
-                // Select the appropriate map URL scheme based on the detected OS name from the library
-                switch (os) {
-                    case 'iOS':
-                    case 'Mac OS':
-                        // The universal link http://maps.apple.com is the most reliable for the Apple ecosystem.
-                        mapUrl = `http://maps.apple.com/?q=${encodedQuery}`;
-                        break;
-                    case 'Windows':
-                        // ms-maps: is the protocol for the Windows Maps app.
-                        mapUrl = `ms-maps:?q=${encodedQuery}`;
-                        break;
-                    case 'Android':
-                    case 'Linux':
-                    case 'Unknown':
-                    default:
-                        // geo: is the standard for Android and a good fallback for other systems.
-                        mapUrl = `geo://0,0?q=${encodedQuery}`;
-                        break;
-                }
-
-                // Update the fallback link
-                fallbackLink.href = mapUrl;
-                fallbackLink.textContent = `Open "${searchQuery}" in maps`;
-                
-                // Display the detected OS and generated link for debugging/info
-                const infoParagraph = document.createElement('p');
-                infoParagraph.innerHTML = `<small>Detected OS: <code>${os} (${osInfo.version || 'N/A'})</code><br>Link used: <code>${mapUrl}</code></small>`;
-                messageContainer.insertBefore(infoParagraph, messageContainer.querySelector('footer'));
-                
-                // Attempt to redirect
-                window.location.href = mapUrl;
+                // Set up the secondary web map link
+                webLink.href = webMapUrl;
+                webLink.textContent = `Or search "${searchQuery}" on Google Maps (Web)`;
                 
             } else {
-                // This block runs if the 'q' parameter is missing.
-                mainHeading.textContent = 'Error';
+                // This block runs if the 'q' parameter is missing from the URL.
                 messageContainer.innerHTML = `
-                    <h1 id="main-heading">Error</h1>
-                    <p>The required parameter <code>q</code> is missing from the URL.</p>
-                    <p>Please add a search query to the address, for example: <br><code>.../?q=Prague</code></p>
+                    <h1>Error</h1>
+                    <p style="color: #d93025;">The required <code>q</code> parameter is missing from the URL.</p>
+                    <p>Please add a search term to the address, for example: <br><code>.../?q=London</code></p>
                 `;
             }
         };
