@@ -5,241 +5,140 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>&#128488; שולח הודעות אוניברסלי</title>
     
-    <!-- Tailwind CSS Framework -->
+    <!-- סקריפטים וסגנונות משותפים -->
+    <script src="https://kit.fontawesome.com/f4aaf3b4dc.js" crossorigin="anonymous"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     
-    <!-- intl-tel-input CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/20.3.0/css/intlTelInput.css" />
-    
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" xintegrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/img/icons/icon-192x192.png">
-
-    <!-- PWA & Mobile App Meta Tags -->
+    <!-- PWA & Mobile App Meta Tags (מהגרסה העברית הישנה) -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#111827">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Gimo Nástroje">
+    <meta name="apple-mobile-web-app-title" content="Gimo כלים">
     <link rel="apple-touch-icon" href="img/icons/icon-192x192.png">
-    
-    <!-- Schema.org for SEO -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "כלים של גימו",
-      "url": "https://wapdrak.github.io/gimo/",
-      "author": {
-        "@type": "Organization",
-        "name": "גימו בע\"מ"
-      },
-      "description": "סט כלים אונליין של גימו, כולל שולח הודעות, מחשבונים, יצירת קודים ורדיו אונליין.",
-      "hasPart": [
-        {
-          "@type": "WebApplication",
-          "name": "שולח הודעות אוניברסלי",
-          "url": "send.html"
-        },
-        {
-          "@type": "WebApplication",
-          "name": "מחשבונים",
-          "url": "machsevon.html"
-        },
-        {
-          "@type": "WebApplication",
-          "name": "יצירת קודים",
-          "url": "qr.html"
-        },
-        {
-          "@type": "WebApplication",
-          "name": "און ליין רדיו",
-          "url": "radio.html"
-        }
-      ]
-    }
-    </script>
+    <link rel="icon" type="image/jpg" href="img/gimologo2.jpg">
 
-    <!-- Schema.org for SEO -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "שולח הודעות אוניברסלי",
-      "description": "כלי לשליחת הודעות וואטסאפ, וייבר, טלגרם, SMS ועוד למספרי טלפון או שמות משתמש מבלי לשמור אותם באנשי הקשר.",
-      "applicationCategory": "CommunicationApplication",
-      "operatingSystem": "All",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "ILS"
-      },
-      "author": {
-        "@type": "Organization",
-        "name": "גימו בע\"מ",
-        "url": "https://www.gimo.co.il"
-      }
-    }
-    </script>
-    
+    <!-- סגנונות ספציפיים לדף זה -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/20.3.0/css/intlTelInput.css" />
     <style>
-        /* --- סגנונות בסיסיים --- */
-        html, body { 
-            height: 100%; 
-            margin: 0; 
-            padding: 0; 
-            overflow-x: hidden; 
-        }
-        body { 
-            font-family: 'Arial', sans-serif; 
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
-        }
-        .border-groove { 
-            border-style: groove; 
-        }
-        
-        /* Custom styles for intl-tel-input */
-        .iti { direction: ltr; }
+        .border-groove { border-style: groove; }
+        .iti { direction: ltr; width: 100%; }
         #phone { text-align: left; }
-        .iti__country-list {
-            left: 0 !important;
-            right: auto !important;
-            direction: ltr;
+        .iti__country-list { 
             background-color: #1f2937; 
-            border-color: #4b5563; 
+            border-color: #4b5563;
+            /* תיקון ל-RTL */
+            left: 0 !important; 
+            right: auto !important;
         }
-        .iti__country, .iti__search-input {
-            direction: ltr;
-            text-align: left;
-        }
+        .iti__country, .iti__search-input { direction: ltr; text-align: left; }
         .iti__country { color: #d1d5db; }
         .iti__country:hover { background-color: #374151; }
         .iti__dial-code { color: #9ca3af; }
-        .iti__search-input {
-            background-color: #374151;
-            color: #d1d5db;
-            border-color: #4b5563;
-        }
+        .iti__search-input { background-color: #374151; color: #d1d5db; border-color: #4b5563; }
         .iti--invalid .iti__tel-input { border-color: red !important; }
         .iti--valid .iti__tel-input { border-color: limegreen !important; }
-        
-        .validation-icon-container { direction: rtl; }
-        .validation-icon-container.invalid:after {
-            content: "✘"; color: red; font-size: 1.5rem; vertical-align: middle;
-        }
-        .validation-icon-container.valid:after {
-            content: "✔"; color: limegreen; font-size: 1.5rem; vertical-align: middle;
-        }
-
+        .validation-icon-container { direction: rtl; } /* שונה ל-RTL */
+        .validation-icon-container.invalid:after { content: "✘"; color: red; font-size: 1.5rem; vertical-align: middle; }
+        .validation-icon-container.valid:after { content: "✔"; color: limegreen; font-size: 1.5rem; vertical-align: middle; }
         #phone, #username { font-size: 16px; }
-        @media (min-width: 640px) {
-            #phone, #username { font-size: 1.5rem; }
-        }
+        @media (min-width: 640px) { #phone, #username { font-size: 1.5rem; } }
     </style>
 </head>
 <body class="bg-gray-900 text-gray-200 flex flex-col min-h-screen">
 
-    <div class="flex flex-col min-h-screen" x-data="contactForm" x-init="init()">
+    <div class="flex flex-col min-h-screen" x-data="app">
         
+        <!-- ניווט (זהה בכל הדפים) -->
         <nav class="z-50 bg-black bg-opacity-50 backdrop-blur-sm border-b border-gray-700 shadow-lg">
             <div class="max-w-7xl mx-auto px-4">
-                <ul class="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-sm sm:text-base h-12">
-                    <li><a href="index.html" class="text-gray-300 hover:text-white transition-colors">ראשי</a></li>
-                    <li><a href="send.html" class="text-white font-bold transition-colors">שולח הודעות</a></li>
-                    <li><a href="machsevon.html" class="text-gray-300 hover:text-white transition-colors">מחשבון</a></li>
-                    <li><a href="qr.html" class="text-gray-300 hover:text-white transition-colors">יצירת קודים</a></li>
-                    <li><a href="radio.html" class="text-gray-300 hover:text-white transition-colors">אוליין רדיו</a></li>
+                <ul id="main-nav" class="flex flex-wrap justify-center items-center gap-x-4 gap-y-1 text-sm sm:text-base py-2">
+                    <li><a href="index.html" class="text-gray-300 hover:text-white transition-colors" title="מעבר לדף הבית">ראשי</a></li>
+                    <li><a href="send.html" class="text-gray-300 hover:text-white transition-colors" title="מעבר לכלי שליחת הודעות">שולח הודעות</a></li>
+                    <li><a href="hesla.html" class="text-gray-300 hover:text-white transition-colors" title="מעבר למחולל סיסמאות">מחולל סיסמאות</a></li>
+                    <li><a href="decoder.html" class="text-gray-300 hover:text-white transition-colors" title="מעבר למפענח טקסטים">מפענח טקסטים</a></li>
+                    <li><a href="notes.html" class="text-gray-300 hover:text-white transition-colors" title="מעבר לפנקס רשימות">פנקס רשימות</a></li>
+                    <li><a href="txt.html" class="text-gray-300 hover:text-white transition-colors" title="מעבר לעורכי טקסט">עורכי טקסט</a></li>
+                    <li><a href="calc.html" class="text-gray-300 hover:text-white transition-colors" title="מעבר למחשבונים">מחשבון</a></li>
+                    <li><a href="qr.html" class="text-gray-300 hover:text-white transition-colors" title="מעבר למחולל קודים">מחולל קודים</a></li>
+                    <li><a href="radio.html" class="text-gray-300 hover:text-white transition-colors" title="מעבר לרדיו אונליין">רדיו אונליין</a></li>
                 </ul>
             </div>
         </nav>
 
+        <!-- תוכן הדף -->
         <header class="w-full p-4 text-center">
             <h1 class="text-2xl sm:text-4xl font-bold">
+                שולח הודעות<br>
                 <i class="fab fa-whatsapp" style="color:limegreen;"></i>
                 <i class="fab fa-viber" style="color:#7360F2;"></i>
                 <i class="fab fa-telegram-plane" style="color:#2AABEE;"></i>
-                שולח הודעות
+                <i class="fa-solid fa-comment-sms" style="color:#ffffff;"></i>
             </h1>
         </header>
 
         <main class="w-full max-w-2xl mx-auto flex-grow p-1 sm:p-2">
-            
             <div class="text-center border-4 border-groove border-black rounded-3xl p-4 sm:p-6 bg-black bg-opacity-70 text-white">
-                
                 <section>
                     <h2 class="text-base sm:text-lg text-gray-300 mt-2">
                         שלח הודעה לכל מספר או שם משתמש מבלי לשמור באנשי הקשר.
                     </h2>
-
                     <form id="contact-form" class="m-1" @submit.prevent>
-                        
-                        <textarea name="t" id="text" x-model="message" class="bg-black text-white placeholder-white rounded-2xl m-0.5 p-1 border-4 w-full max-w-md mx-auto mt-4" rows="4" placeholder="   תוכן ההודעה..." title="תוכן ההודעה (לוואטסאפ, טלגרם, SMS)" style="font-size:100%;"></textarea>
-
-                        <!-- Phone Number Section -->
                         <div class="my-4">
                             <div class="flex items-center gap-2">
                                 <div class="flex-grow">
-                                    <input id="phone" type="tel" @input="validateNumber" placeholder="מספר טלפון" class="bg-black text-yellow rounded-md border-4 border-gray-500 m-0.5 p-2 w-full">
+                                    <input id="phone" type="tel" @input="validateNumber" placeholder="מספר טלפון" class="bg-black text-yellow-300 rounded-md border-4 border-gray-500 m-0.5 p-2 w-full" title="הזן מספר טלפון כולל קידומת">
                                 </div>
-                                <span id="validation-icon" class="validation-icon-container"></span>
+                                <span id="validation-icon" class="validation-icon-container" title="מצב תקינות המספר"></span>
                             </div>
-                            
-                            <button type="button" @click="selectContact()" x-show="contactPickerSupported" class="flex items-center justify-center gap-2 mx-auto text-white bg-gray-700 rounded-lg border-4 py-2 px-3 w-full text-base sm:text-lg mt-2" title="בחר מתוך אנשי הקשר"><i class="fas fa-address-book"></i> בחר מתוך אנשי הקשר</button>
-                            
+                            <button type="button" @click="selectContact()" x-show="contactPickerSupported" class="flex items-center justify-center gap-2 mx-auto text-white bg-gray-700 rounded-lg border-4 py-2 px-3 w-full text-base sm:text-lg mt-2" title="בחר מתוך אנשי הקשר"><i class="fas fa-address-book ml-2"></i> בחר מתוך אנשי הקשר</button>
                             <div x-show="contactApiError" x-text="contactApiError" class="text-red-500 bg-black bg-opacity-70 rounded-lg p-2 mt-2 text-sm" x-transition></div>
-
+                            <textarea name="t" id="text" x-model="message" class="bg-black text-white placeholder-white rounded-2xl m-0.5 p-1 border-4 w-full max-w-md mx-auto mt-4" rows="4" placeholder="   תוכן ההודעה..." title="תוכן ההודעה (לוואטסאפ, טלגרם, SMS)" style="font-size:100%;"></textarea>
                             <div class="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-2">
-                                <button type="button" @click="handleAction('whatsapp')" class="flex items-center justify-center gap-2 mx-auto text-lime-500 bg-black rounded-lg border-4 py-2 px-3 w-full text-base sm:text-lg" title="שלח באמצעות WhatsApp"><i class="fab fa-whatsapp"></i> וואטסאפ</button>
-                                <button type="button" @click="handleAction('viber')" class="flex items-center justify-center gap-2 mx-auto bg-black rounded-lg border-4 py-2 px-3 w-full text-base sm:text-lg" style="color:#7360F2;" title="פתח ב-Viber"><i class="fab fa-viber"></i> וייבר</button>
-                                <button type="button" @click="handleAction('signal')" class="flex items-center justify-center gap-2 mx-auto text-blue-600 bg-black rounded-lg border-4 py-2 px-3 w-full text-base sm:text-lg" title="פתח ב-Signal"><i class="fas fa-comments"></i> סיגנל</button>
-                                <button type="button" @click="handleAction('sms')" class="flex items-center justify-center gap-2 mx-auto text-yellow bg-black rounded-lg border-4 py-2 px-3 w-full text-base sm:text-lg" title="שלח כהודעה"><i class="far fa-comment-alt"></i> הודעה</button>
-                                <button type="button" @click="handleAction('tel')" class="flex items-center justify-center gap-2 mx-auto text-yellow bg-black rounded-lg border-4 py-2 px-3 w-full text-base sm:text-lg col-span-2 sm:col-span-1" title="התקשר"><i class="fas fa-phone"></i> התקשר</button>
+                                <button type="button" @click="handleAction('whatsapp')" class="flex items-center justify-center gap-2 mx-auto text-lime-500 bg-black rounded-lg border-4 py-2 px-3 w-full text-base sm:text-lg" title="שלח באמצעות WhatsApp"><i class="fab fa-whatsapp ml-2"></i> וואטסאפ</button>
+                                <button type="button" @click="handleAction('viber')" class="flex items-center justify-center gap-2 mx-auto bg-black rounded-lg border-4 py-2 px-3 w-full text-base sm:text-lg" style="color:#7360F2;" title="פתח ב-Viber"><i class="fab fa-viber ml-2"></i> וייבר</button>
+                                <button type="button" @click="handleAction('signal')" class="flex items-center justify-center gap-2 mx-auto text-blue-600 bg-black rounded-lg border-4 py-2 px-3 w-full text-base sm:text-lg" title="פתח ב-Signal"><i class="fa-brands fa-signal-messenger ml-2"></i> סיגנל</button>
+                                <button type="button" @click="handleAction('sms')" class="flex items-center justify-center gap-2 mx-auto text-yellow-300 bg-black rounded-lg border-4 py-2 px-3 w-full text-base sm:text-lg" title="שלח כ-SMS"><i class="fa-solid fa-comment-sms ml-2"></i> הודעה</button>
+                                <button type="button" @click="handleAction('tel')" class="flex items-center justify-center gap-2 mx-auto text-yellow-300 bg-black rounded-lg border-4 py-2 px-3 w-full text-base sm:text-lg col-span-2 sm:col-span-1" title="התקשר"><i class="fas fa-phone ml-2"></i> התקשר</button>
                             </div>
                         </div>
-
-                        <!-- Separator -->
                         <div class="my-6 text-xl sm:text-2xl font-bold text-gray-400">או</div>
-
-                        <!-- Username Section -->
                         <div class="my-4">
-                             <input id="username" type="text" x-model="username" placeholder="שם משתמש..." title="הזן שם משתמש לטלגרם או למסנג'ר" class="bg-black text-yellow rounded-md border-4 border-gray-500 m-0.5 p-2 text-center w-full">
-                            <div class="mt-4 grid grid-cols-2 gap-2">
-                                <button type="button" @click="handleAction('telegram')" class="flex items-center justify-center gap-2 mx-auto text-blue-400 bg-black rounded-lg border-4 py-2 px-3 w-full text-base sm:text-lg" title="שלח באמצעות Telegram"><i class="fab fa-telegram-plane"></i> טלגרם</button>
-                                <button type="button" @click="handleAction('messenger')" class="flex items-center justify-center gap-2 mx-auto text-blue-500 bg-black rounded-lg border-4 py-2 px-3 w-full text-base sm:text-lg" title="שלח באמצעות Messenger"><i class="fab fa-facebook-messenger"></i> מסנג'ר</button>
+                             <input id="username" type="text" x-model="username" placeholder="שם משתמש..." title="הזן שם משתמש לטלגרם, מסנג'ר או סיגנל" class="bg-black text-yellow-300 rounded-md border-4 border-gray-500 m-0.5 p-2 text-center w-full">
+                            <div class="mt-4 grid grid-cols-3 gap-2">
+                                <button type="button" @click="handleAction('telegram')" class="flex items-center justify-center gap-2 mx-auto text-blue-400 bg-black rounded-lg border-4 py-2 px-3 w-full text-base sm:text-lg" title="שלח באמצעות Telegram"><i class="fab fa-telegram-plane ml-2"></i> טלגרם</button>
+                                <button type="button" @click="handleAction('messenger')" class="flex items-center justify-center gap-2 mx-auto text-blue-500 bg-black rounded-lg border-4 py-2 px-3 w-full text-base sm:text-lg" title="שלח באמצעות Messenger"><i class="fab fa-facebook-messenger ml-2"></i> מסנג'ר</button>
+                                <button type="button" @click="handleAction('signal-user')" class="flex items-center justify-center gap-2 mx-auto text-blue-600 bg-black rounded-lg border-4 py-2 px-3 w-full text-base sm:text-lg" title="פתח ב-Signal"><i class="fa-brands fa-signal-messenger ml-2"></i> סיגנל</button>
                             </div>
                         </div>
-                                                
                         <hr class="my-6 border-gray-600">
-
                         <input type="reset" value="&#xf021; איפוס" @click="resetForm" class="fa mx-auto text-white bg-black rounded-lg border-4 p-2 cursor-pointer w-full text-xl sm:text-3xl" title="אפס טופס" />
                     </form>
                 </section>
             </div>
         </main>
 
+        <!-- פוטר (מהגרסה העברית הישנה) -->
         <footer class="w-full p-2 text-center text-gray-400 mt-4">
             <div class="flex justify-center items-center mb-2">
-                <button @click="isShareModalOpen = true" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-1 px-3 rounded-lg transition-colors flex items-center text-sm">
-                    <i class="fas fa-share-alt mr-2"></i> שיתוף
+                <button @click="isShareModalOpen = true" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-1 px-3 rounded-lg transition-colors flex items-center text-sm" title="שתף את הדף הזה">
+                    <i class="fas fa-share-alt ml-2"></i> שיתוף
                 </button>
             </div>
-            <p class="text-sm">&copy; 2024 <a href="https://www.gimo.co.il" target="_blank" rel="noopener noreferrer" class="underline hover:text-white">גימו בע"מ</a>. כל הזכויות שמורות.</p>
+            <p class="text-sm">&copy; 2024 <a href="https://github.com/wapdrak" target="_blank" rel="noopener noreferrer" class="underline hover:text-white" title="מעבר ל-WapDrak ב-GitHub">WapDrak</a>. כל הזכויות שמורות.</p>
         </footer>
 
+        <!-- חלון מודאלי לשיתוף (זהה בכל הדפים) -->
         <div x-show="isShareModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
-            <div @click.away="isShareModalOpen = false" 
-                 class="bg-gray-800 rounded-2xl p-6 border border-gray-700 shadow-xl w-full max-w-lg">
+            <div @click.away="isShareModalOpen = false" class="bg-gray-800 rounded-2xl p-6 border border-gray-700 shadow-xl w-full max-w-lg">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-xl font-bold">שיתוף דף</h3>
-                    <button @click="isShareModalOpen = false" class="text-gray-400 hover:text-white">&times;</button>
+                    <button @click="isShareModalOpen = false" class="text-gray-400 hover:text-white" title="סגור">&times;</button>
                 </div>
                 <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4">
                     <template x-for="platform in sharePlatforms" :key="platform.name">
-                        <button x-show="platform.name !== 'system' || isNativeShareSupported" @click="share(platform.name)" :title="platform.title" class="flex flex-col items-center justify-center p-2 rounded-lg hover:bg-gray-700 transition-colors">
+                        <button @click="share(platform.name)" :title="platform.title" class="flex flex-col items-center justify-center p-2 rounded-lg hover:bg-gray-700 transition-colors">
                             <i :class="platform.icon + ' ' + platform.color" class="text-3xl mb-1"></i>
                             <span class="text-xs" x-text="platform.label"></span>
                         </button>
@@ -247,117 +146,121 @@
                 </div>
             </div>
         </div>
-
     </div>
     
+    <!-- סקריפטים ספציפיים לדף זה -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/20.3.0/js/intlTelInput.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
+    <!-- סקריפט אוניברסלי -->
     <script>
+        function createApp(pageSpecificLogic = {}) {
+            return {
+                isShareModalOpen: false,
+                sharePlatforms: [
+                    { name: 'system', title: 'שיתוף מערכת', icon: 'fas fa-external-link-alt', color: 'text-purple-400', label: 'מערכת' },
+                    { name: 'whatsapp', title: 'שיתוף ב-WhatsApp', icon: 'fab fa-whatsapp', color: 'text-green-500', label: 'WhatsApp' },
+                    { name: 'facebook', title: 'שיתוף בפייסבוק', icon: 'fab fa-facebook-f', color: 'text-blue-600', label: 'פייסבוק' },
+                    { name: 'twitter', title: 'שיתוף בטוויטר', icon: 'fab fa-twitter', color: 'text-blue-400', label: 'טוויטר' },
+                    { name: 'telegram', title: 'שיתוף בטלגרם', icon: 'fab fa-telegram-plane', color: 'text-blue-500', label: 'טלגרם' },
+                    { name: 'linkedin', title: 'שיתוף בלינקדאין', icon: 'fab fa-linkedin-in', color: 'text-blue-700', label: 'לינקדאין' },
+                    { name: 'email', title: 'שיתוף באימייל', icon: 'fas fa-envelope', color: 'text-gray-400', label: 'אימייל' },
+                    { name: 'sms', title: 'שיתוף ב-SMS', icon: 'fas fa-sms', color: 'text-yellow-500', label: 'SMS' },
+                    { name: 'print', title: 'הדפסה', icon: 'fas fa-print', color: 'text-gray-400', label: 'הדפסה' },
+                    { name: 'copy', title: 'העתקת כתובת', icon: 'fas fa-copy', color: 'text-gray-400', label: 'העתקה' },
+                ],
+                ...pageSpecificLogic,
+                automateNav() {
+                    const currentPage = window.location.pathname.split("/").pop();
+                    const navLinks = document.querySelectorAll('#main-nav a');
+                    navLinks.forEach(link => {
+                        const linkPage = link.getAttribute('href').split("/").pop();
+                        if (linkPage === currentPage) {
+                            link.classList.remove('text-gray-300', 'hover:text-white');
+                            link.classList.add('text-white', 'font-bold');
+                        }
+                    });
+                },
+                async share(platform) {
+                    const url = window.location.href;
+                    const title = document.title;
+                    let shareUrl = '';
+                    switch (platform) {
+                        case 'whatsapp': shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(title)}%0A${encodeURIComponent(url)}`; break;
+                        case 'facebook': shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`; break;
+                        case 'twitter': shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`; break;
+                        case 'telegram': shareUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`; break;
+                        case 'linkedin': shareUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`; break;
+                        case 'email': shareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=אני ממליץ על:%0A%0A${encodeURIComponent(url)}`; break;
+                        case 'sms': shareUrl = `sms:?&body=${encodeURIComponent(title)}%0A${encodeURIComponent(url)}`; break;
+                        case 'print': window.print(); return;
+                        case 'copy': this.copyShareLink(); return;
+                    }
+                    window.open(shareUrl, '_blank', 'width=600,height=400');
+                },
+                copyShareLink() {
+                    const textToCopy = window.location.href;
+                    const textArea = document.createElement('textarea');
+                    textArea.value = textToCopy;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    try { document.execCommand('copy'); } 
+                    catch (err) { console.error('שגיאה בהעתקת הקישור', err); }
+                    document.body.removeChild(textArea);
+                },
+                init() {
+                    this.automateNav();
+                    if (typeof this.pageInit === 'function') {
+                        this.pageInit();
+                    }
+                }
+            };
+        }
+
         document.addEventListener('alpine:init', () => {
-            Alpine.data('contactForm', () => ({
+            const pageSpecificLogic = {
                 phoneInput: null, message: '', username: '', phoneEl: null,
                 contactPickerSupported: false,
                 contactApiError: '',
                 isUtilsLoaded: false,
-                isShareModalOpen: false,
-                isNativeShareSupported: false,
-                sharePlatforms: [
-                    { name: 'system', title: 'שיתוף מערכת', icon: 'fas fa-external-link-alt', color: 'text-purple-400', label: 'מערכת' },
-                    { name: 'whatsapp', title: 'שיתוף בואטסאפ', icon: 'fab fa-whatsapp', color: 'text-green-500', label: 'WhatsApp' },
-                    { name: 'facebook', title: 'שיתוף בפייסבוק', icon: 'fab fa-facebook-f', color: 'text-blue-600', label: 'Facebook' },
-                    { name: 'twitter', title: 'שיתוף בטוויטר', icon: 'fab fa-twitter', color: 'text-blue-400', label: 'Twitter' },
-                    { name: 'telegram', title: 'שיתוף בטלגרם', icon: 'fab fa-telegram-plane', color: 'text-blue-500', label: 'Telegram' },
-                    { name: 'linkedin', title: 'שיתוף בלינקדאין', icon: 'fab fa-linkedin-in', color: 'text-blue-700', label: 'LinkedIn' },
-                    { name: 'email', title: 'שיתוף במייל', icon: 'fas fa-envelope', color: 'text-gray-400', label: 'מייל' },
-                    { name: 'sms', title: 'שיתוף בהודעה', icon: 'fas fa-sms', color: 'text-yellow-500', label: 'SMS' },
-                    { name: 'pinterest', title: 'שיתוף בפינטרסט', icon: 'fab fa-pinterest', color: 'text-red-600', label: 'Pinterest' },
-                    { name: 'reddit', title: 'שיתוף ברדיט', icon: 'fab fa-reddit-alien', color: 'text-orange-500', label: 'Reddit' },
-                    { name: 'print', title: 'הדפסה', icon: 'fas fa-print', color: 'text-gray-400', label: 'הדפסה' },
-                    { name: 'copy', title: 'העתקת כתובת', icon: 'fas fa-copy', color: 'text-gray-400', label: 'העתק' },
-                ],
-                init() {
+                pageInit() {
                     this.phoneEl = document.querySelector("#phone");
-                    
-                    // --- VYLEPŠENÍ: Načtení uložené země z localStorage ---
-                    const savedCountry = localStorage.getItem('selectedCountryIso') || 'il';
-
+                    const savedCountry = localStorage.getItem('selectedCountryIso') || 'il'; // שינוי ברירת מחדל לישראל
                     this.phoneInput = window.intlTelInput(this.phoneEl, {
-                        initialCountry: savedCountry, // Použití uložené země
+                        initialCountry: savedCountry,
                         showSearchBox: true,
                         separateDialCode: true,
                         utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/20.3.0/js/utils.js",
                     });
-                    
                     this.phoneInput.promise.then(() => {
                         this.isUtilsLoaded = true;
-
-                        // --- VYLEPŠENÍ: Uložení nové předvolby při změně ---
                         this.phoneEl.addEventListener('countrychange', () => {
                             const selectedCountry = this.phoneInput.getSelectedCountryData();
                             localStorage.setItem('selectedCountryIso', selectedCountry.iso2);
-                            this.validateNumber(); // Znovu validujeme po změně země
+                            this.validateNumber();
+                        });
+                        
+                        this.phoneEl.addEventListener('input', () => {
+                            let fullNumber = this.phoneInput.getNumber();
+                            if (fullNumber.startsWith('+')) {
+                                this.phoneInput.setNumber(fullNumber);
+                            }
+                            this.validateNumber();
                         });
 
                         this.validateNumber();
-                    }).catch(error => {
-                        console.error("Error loading utils script:", error);
-                    });
-
-                    // --- VYLEPŠENÍ: Detekce předvolby při psaní ---
-                    this.phoneEl.addEventListener('input', () => {
-                        let phoneNumber = this.phoneEl.value.trim();
-
-                        if (phoneNumber.startsWith('++')) {
-                            phoneNumber = '+' + phoneNumber.substring(2);
-                        }
-
-                        if (phoneNumber.startsWith('+')) {
-                            const allCountries = window.intlTelInputGlobals.getCountryData();
-                            let bestMatch = null;
-
-                            for (const country of allCountries) {
-                                const dialCodeWithPlus = '+' + country.dialCode;
-                                if (phoneNumber.startsWith(dialCodeWithPlus)) {
-                                    if (!bestMatch || country.dialCode.length > bestMatch.dialCode.length) {
-                                        bestMatch = country;
-                                    }
-                                }
-                            }
-
-                            if (bestMatch) {
-                                this.phoneInput.setCountry(bestMatch.iso2);
-                                this.phoneEl.value = phoneNumber.substring(1 + bestMatch.dialCode.length);
-                            }
-                        }
-                    });
-
+                    }).catch(error => console.error("שגיאה בטעינת סקריפט השירות:", error));
+                    
                     if ('contacts' in navigator && 'select' in navigator.contacts) {
                         this.contactPickerSupported = true;
                     }
-                    if (navigator.share) { this.isNativeShareSupported = true; }
                 },
                 isNumberValid() {
-                    const country = this.phoneInput.getSelectedCountryData().iso2;
-                    if (country === 'il') {
-                        const number = this.phoneEl.value;
-                        if (!number.trim()) return false;
-                        let sanitizedNumber = number.replace(/\D/g, '');
-                        if (sanitizedNumber.startsWith('0')) {
-                            if (sanitizedNumber.startsWith('05')) { return sanitizedNumber.length === 10; } 
-                            else { return sanitizedNumber.length === 9; }
-                        } else {
-                            if (sanitizedNumber.length === 9 && (sanitizedNumber.startsWith('5'))) { return true; }
-                            if (sanitizedNumber.length === 8 && !(sanitizedNumber.startsWith('5'))) { return true; }
-                            return false;
-                        }
-                    } else {
-                        if (!this.isUtilsLoaded) return false;
-                        return this.phoneInput.isValidNumber();
-                    }
+                    if (!this.isUtilsLoaded) return this.phoneEl.value.trim().length > 5;
+                    return this.phoneInput.isValidNumber();
                 },
                 validateNumber() {
-                    const itiElement = this.phoneInput.a; // The container div
+                    const itiElement = this.phoneInput.a.parentElement;
                     const iconElement = document.querySelector("#validation-icon");
                     itiElement.classList.remove('iti--valid', 'iti--invalid');
                     iconElement.classList.remove('valid', 'invalid');
@@ -380,7 +283,6 @@
                             this.validateNumber();
                         }
                     } catch (ex) {
-                        console.error("Error selecting contact.", ex);
                         this.contactApiError = 'בחירת אנשי קשר אינה נתמכת בתצוגה מקדימה זו.';
                         setTimeout(() => { this.contactApiError = ''; }, 5000);
                     }
@@ -388,27 +290,25 @@
                 handleAction(type) {
                     const isNumberGood = this.isNumberValid();
                     this.validateNumber();
-                    
                     const encodedMessage = encodeURIComponent(this.message.trim());
                     let url = '';
                     switch(type) {
                         case 'whatsapp': case 'sms': case 'tel': case 'signal': case 'viber':
                             if (isNumberGood) {
-                                this.phoneInput.setNumber(this.phoneEl.value);
                                 const fullNumber = this.phoneInput.getNumber();
-                                
                                 if (type === 'whatsapp') url = `https://api.whatsapp.com/send?phone=${fullNumber.substring(1)}&text=${encodedMessage}`;
                                 if (type === 'sms') url = `sms:${fullNumber}?body=${encodedMessage}`;
                                 if (type === 'tel') url = `tel:${fullNumber}`;
-                                if (type === 'signal') url = `signal://send?recipient=${fullNumber.substring(1)}`;
+                                if (type === 'signal') url = `https://signal.me/#p/${fullNumber}`;
                                 if (type === 'viber') url = `viber://chat?number=${fullNumber.substring(1)}`;
                             } else { this.phoneEl.focus(); }
                             break;
-                        case 'telegram': case 'messenger':
+                        case 'telegram': case 'messenger': case 'signal-user':
                             if (this.username.trim()) {
-                                const cleanUsername = this.username.trim();
+                                const cleanUsername = this.username.trim().replace('@', '');
                                 if (type === 'telegram') url = `https://t.me/${cleanUsername}?text=${encodedMessage}`;
                                 if (type === 'messenger') url = `https://m.me/${cleanUsername}`;
+                                if (type === 'signal-user') url = `https://signal.me/#p/${cleanUsername}`;
                             } else { document.querySelector("#username").focus(); }
                             break;
                     }
@@ -419,59 +319,24 @@
                     this.message = ''; 
                     this.username = '';
                     this.validateNumber();
-                },
-                async share(platform) {
-                    const url = window.location.href;
-                    const title = document.title;
-                    if (platform === 'system') {
-                        try { await navigator.share({ title, url }); } 
-                        catch (err) { console.warn('שיתוף מקורי אינו מותר בסביבה זו:', err.name); }
-                        return;
-                    }
-                    let shareUrl = '';
-                    switch (platform) {
-                        case 'whatsapp': shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(title)}%0A${encodeURIComponent(url)}`; break;
-                        case 'facebook': shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`; break;
-                        case 'twitter': shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`; break;
-                        case 'telegram': shareUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`; break;
-                        case 'linkedin': shareUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`; break;
-                        case 'email': shareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=ממליץ על%0A%0A${encodeURIComponent(url)}`; break;
-                        case 'sms': shareUrl = `sms:?&body=${encodeURIComponent(title)}%0A${encodeURIComponent(url)}`; break;
-                        case 'pinterest': shareUrl = `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(url)}&description=${encodeURIComponent(title)}`; break;
-                        case 'reddit': shareUrl = `https://reddit.com/submit?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`; break;
-                        case 'print': window.print(); return;
-                        case 'copy': this.copyToClipboard(); return;
-                    }
-                    window.open(shareUrl, '_blank', 'width=600,height=400');
-                },
-                copyToClipboard() {
-                    const textToCopy = window.location.href;
-                    const textArea = document.createElement('textarea');
-                    textArea.value = textToCopy;
-                    document.body.appendChild(textArea);
-                    textArea.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(textArea);
-                    const copyButton = this.sharePlatforms.find(p => p.name === 'copy');
-                    const originalLabel = copyButton.label;
-                    copyButton.label = 'הועתק!';
-                    setTimeout(() => { copyButton.label = originalLabel; }, 2000);
                 }
-            }));
+            };
+            Alpine.data('app', () => createApp(pageSpecificLogic));
         });
     </script>
     
+    <!-- רישום Service Worker עבור PWA -->
     <script>
-        // Registrace Service Workeru pro PWA
         if ('serviceWorker' in navigator) {
-          window.addEventListener('load', () => {
-            navigator.serviceWorker.register('sw.js').then(registration => {
-              console.log('ServiceWorker: Registrace úspěšná, rozsah: ', registration.scope);
-            }, err => {
-              console.log('ServiceWorker: Registrace selhala: ', err);
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').then(registration => {
+                    console.log('ServiceWorker: הרישום הצליח, היקף: ', registration.scope);
+                }, err => {
+                    console.log('ServiceWorker: הרישום נכשל: ', err);
+                });
             });
-          });
         }
     </script>
 </body>
 </html>
+
