@@ -1,7 +1,7 @@
 {
     "name": "כלים של גימו",
     "short_name": "גימו",
-    "start_url": "/gimo/",
+    "start_url": "/gimo/?utm_source=app&utm_medium=wapdrak",
     "scope": "/gimo/",
     "display": "standalone",
     "background_color": "#111827",
